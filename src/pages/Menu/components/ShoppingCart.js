@@ -39,6 +39,11 @@ export default function ShoppingCart(props) {
         //   state.cart = [];
       });
   }
+  let cartTotal = 0;
+  for (const entry of cart) {
+    cartTotal += entry.item.Price * entry.amount;
+  }
+
   return (
     <div className="border-2 w-64  fixed top-4 right-4 bg-white p-4">
       Your shopping Cart:
@@ -80,6 +85,12 @@ export default function ShoppingCart(props) {
           );
         })}
       </p>
+      {cart.length > 0 && (
+        <div className="mt-6">
+          Total: {cartTotal}
+          {cart[0].item.Currency}
+        </div>
+      )}
       {cart.length > 0 && (
         <div>
           <button

@@ -92,7 +92,7 @@ export default function Menu(props) {
           </button>
         </div>
       </div>
-      <ShoppingCart />
+      {isOrderingEnabled && <ShoppingCart />}
       {menuType === "normal" && (
         <NormalMenu
           itemsList={itemsList}
