@@ -1,0 +1,65 @@
+import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+
+const initialState = {
+  cart: [],
+};
+
+export const shoppingCartSlice = createSlice({
+  name: "shoppingCart",
+  initialState,
+  reducers: {
+    addItem: (state, action) => {
+      const entry = state.cart.find((entry) => {
+        return entry.item.ID === action.payload.ID;
+      });
+      if (entry) {
+        console.log("item exists");
+        entry.amount += 1;
+      } else {
+        console.log("item doest  exists");
+        state.cart.push({ item: action.payload, amount: 1 });
+      }
+    },
+    increaseAmount: (state, action) => {
+      const entry = state.cart.find((entry) => {
+        return entry.item.ID === action.payload.ID;
+      });
+      if (entry) {
+        entry.amount += 1;
+      } else {
+        // this shouldnt ever execute
+      }
+    },
+    decreaseAmount: (state, action) => {
+      const entry = state.cart.find((entry) => {
+        return entry.item.ID === action.payload.ID;
+      });
+      if (entry) {
+        if (entry.amount === 1) {
+          state.cart = state.cart.filter((entry) => {
+            return entry.item.ID !== action.payload.ID;
+          });
+        } else {
+          entry.amount -= 1;
+        }
+      } else {
+        // this shouldnt ever execute
+      }
+    },
+    clearCart: (state) => {
+      state.cart = [];
+    },
+  },
+});
+
+// Action creators are generated for each case reducer function
+export const {
+  addItem,
+  increaseAmount,
+  decreaseAmount,
+  clearCart,
+  placeOrder,
+} = shoppingCartSlice.actions;
+
+export default shoppingCartSlice.reducer;

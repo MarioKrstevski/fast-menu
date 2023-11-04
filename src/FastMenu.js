@@ -1,5 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Provider } from "react-redux";
+import Menu from "./pages/Menu/Menu";
+import { store } from "./redux/store";
 export function FastMenu(props) {
   const [csvFile, setCSVFile] = useState(null);
 
@@ -22,7 +26,7 @@ export function FastMenu(props) {
   };
   return (
     <div>
-      FastMenu works
+      {/* FastMenu works
       <section>
         <div>
           Select file
@@ -34,7 +38,14 @@ export function FastMenu(props) {
           />
           <button onClick={handleSubmit}>Submit</button>
         </div>
-      </section>
+      </section> */}
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="menu/:companyName" element={<Menu />} />
+          </Routes>
+        </BrowserRouter>
+      </Provider>
     </div>
   );
 }
