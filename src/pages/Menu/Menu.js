@@ -7,12 +7,15 @@ import NormalMenu from "./components/NormalMenu";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleOrdersEnabled } from "../../redux/globalSettingsSlice";
 import ShoppingCart from "./components/ShoppingCart";
+import CheckoutModal from "./components/CheckoutModal";
 
 export default function Menu(props) {
   const { companyName } = useParams();
   const [menu, setMenu] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [menuType, setMenuType] = useState("normal");
+  const [isCheckoutModalVisible, setIsCheckoutModalVisible] =
+    useState(true);
 
   const isOrderingEnabled = useSelector(
     (state) => state.globalSettings.ordersEnabled
@@ -92,7 +95,16 @@ export default function Menu(props) {
           </button>
         </div>
       </div>
-      {isOrderingEnabled && <ShoppingCart />}
+      {isOrderingEnabled && (
+        <ShoppingCart
+          setIsCheckoutModalVisible={setIsCheckoutModalVisible}
+        />
+      )}
+      {isCheckoutModalVisible && (
+        <CheckoutModal
+          setIsCheckoutModalVisible={setIsCheckoutModalVisible}
+        />
+      )}
       {menuType === "normal" && (
         <NormalMenu
           itemsList={itemsList}

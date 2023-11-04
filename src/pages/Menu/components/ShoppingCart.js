@@ -16,7 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
-export default function ShoppingCart(props) {
+export default function ShoppingCart({ setIsCheckoutModalVisible }) {
   const cart = useSelector((state) => state.shoppingCart.cart);
   const [isShoppingCartOpen, setIsShoppingCartOpen] = useState(false);
 
@@ -195,11 +195,13 @@ export default function ShoppingCart(props) {
             </div>
 
             <button
+              onClick={() => {
+                setIsCheckoutModalVisible(true);
+              }}
               type="button"
               className="checkout px-4 py-2  transition-shadow duration-200 shadow-sm hover:shadow-md inline-flex justify-center items-center rounded-md  border  text-base sm:text-sm  font-medium  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 w-full bg-gray-900 text-white border-black"
             >
-              {" "}
-              Checkout{" "}
+              Checkout
             </button>
           </div>
         </div>
