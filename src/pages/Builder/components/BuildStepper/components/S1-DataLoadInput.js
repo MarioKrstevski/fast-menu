@@ -73,10 +73,10 @@ export default function S1DataLoadInput(props) {
         id="spreadsheet"
         type="text"
         value={gs.spreadSheetURL}
-        autocomplete="on"
+        autoComplete="on"
         onChange={tryConnectToSpreadsheet}
         placeholder="Insert your spreadsheet url or id"
-        autofocus="autofocus"
+        autoFocus={"autofocus"}
         className={`input is-success is-large w-[94%] placeholder-gray-500 border rounded p-2  ${
           isSuccesfullyConnected
             ? "border-green-400"

@@ -6,7 +6,7 @@ export default function MenuDescription(props) {
     return;
   }
   return (
-    <div class="markup-content text-center py-12">
+    <div className="markup-content text-center py-12">
       <div>
         <p className="whitespace-pre-line">{gs.menuDescription}</p>
       </div>

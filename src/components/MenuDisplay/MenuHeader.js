@@ -6,7 +6,7 @@ export default function MenuHeader(props) {
 
   return (
     <nav
-      class={`
+      className={`
     h-20
     p-6
     flex
@@ -20,11 +20,11 @@ export default function MenuHeader(props) {
   `}
       style={{ backgroundColor: "rgb(255, 255, 255)" }}
     >
-      <div class="flex items-center flex-shrink-0 text-gray-900 h-full">
+      <div className="flex items-center flex-shrink-0 text-gray-900 h-full">
         {gs.logoURL ? (
           <img src={gs.logoURL} alt="Logo" className="h-full" />
         ) : (
-          <span class="font-semibold text-xl tracking-tight">
+          <span className="font-semibold text-xl tracking-tight">
             {gs.websiteName}
           </span>
         )}
