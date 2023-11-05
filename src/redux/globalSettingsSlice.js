@@ -8,15 +8,18 @@ const initialState = {
   client: "agora",
   subdomain: "agora",
   logoURL: "https://redux-toolkit.js.org/img/redux.svg",
-  favicon: "",
+  faviconURL: "",
   isNavbarFixed: false,
-  header: {
+  hero: {
     isShown: false,
-    title: "",
-    subheading: "",
-    image: "",
+    title: "Header TItle",
+    titleColor: "#FFFFFF",
+    subheading: "Header Subheading",
+    subheadingColor: "#FFFFFF",
+    image:
+      "https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg",
   },
-  menuDescription: "",
+  menuDescription: "Menu Description",
   footer: {
     isShown: false,
     text: "",
@@ -45,10 +48,25 @@ export const globalSettingsSlice = createSlice({
     toggleOrdersEnabled: (state) => {
       state.ordersEnabled = !state.ordersEnabled;
     },
+    updateStep1: (state, action) => {
+      state[action.payload.field] = action.payload.value;
+    },
+    updateStep2: (state, action) => {
+      if (action.payload.field.includes(".")) {
+        const [key1, key2] = action.payload.field.split(".");
+        state[key1][key2] = action.payload.value;
+        state[key1] = {
+          ...state[key1],
+        };
+      } else {
+        state[action.payload.field] = action.payload.value;
+      }
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { toggleOrdersEnabled } = globalSettingsSlice.actions;
+export const { toggleOrdersEnabled, updateStep1, updateStep2 } =
+  globalSettingsSlice.actions;
 
 export default globalSettingsSlice.reducer;

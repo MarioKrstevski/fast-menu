@@ -22,11 +22,11 @@ export default function BuilderStepper(props) {
   return (
     <div className="w-[40%] min-w-[200px] max-w-[330px] border-r-2 h-full border-r-gray-400 flex flex-col">
       <div className="flex  justify-between items-center p-4 border-b h-20">
-        <div className="text-lg font-bold w-[120px]">
+        <div className="text-lg font-bold w-[120px] ">
           {" "}
           {steps[currentStep - 1].title}
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center ">
           <span
             data-label="Sync spreadsheet"
             className="is-primary is-left is-medium b-tooltip"
@@ -49,7 +49,7 @@ export default function BuilderStepper(props) {
           </button>
         </div>
       </div>
-      <div className="global-settings h-full overflow-auto p-2">
+      <div className="global-settings h-full overflow-y-auto  overflow-x-hidden p-2 ">
         {steps[currentStep - 1].component}
       </div>
       <div class=" bg-gray-200 mt-auto">
