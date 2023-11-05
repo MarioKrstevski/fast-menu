@@ -6,12 +6,67 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { clearCart } from "../../../redux/shoppingCartSlice";
+import axios from "axios";
+import OrderPlacedMessage from "./OrderPlacedModal";
+import { useState } from "react";
+function generateOrderMessage(formData, cart) {
+  //   console.log(formData, cart);
 
+  let items = ``;
+  let totalPrice = 0;
+
+  for (const entry of cart) {
+    const costPerItem = entry.item.Price * entry.amount;
+    totalPrice += costPerItem;
+    items += `*${entry.amount}* x *${entry.item.Name}*: ${
+      costPerItem * entry.amount
+    }${entry.item.Currency} \n`;
+  }
+
+  const finalMessage = `New Order! 
+  
+Order for: *${formData.name}*
+  
+--- 
+
+${items} 
+--- 
+*Total:*  _${totalPrice}${cart[0].item.Currency}_
+--- 
+
+*Payment method:* ${
+    formData.paymentType === "bycash"
+      ? "Cash"
+      : formData.paymentType === "bycard"
+      ? "Card"
+      : "undefined"
+  } 
+*Delivery mode:* ${
+    formData.wayToPackage === "pickup" ? "Pick up" : "Send to address"
+  }
+${
+  formData.wayToPackage === "delivery"
+    ? `*Address* : ${formData.address}`
+    : ""
+}
+*Contact details* 
+---
+*Name:* ${formData.name} 
+*Phone number:* ${formData.phone} 
+*Notes:* ${formData.notes}
+---
+ 
+`;
+
+  return finalMessage;
+}
 export default function CheckoutModal({ setIsCheckoutModalVisible }) {
+  const [isOrderSent, setIsOrderSent] = useState(false);
   const {
     register,
     handleSubmit,
-    setValue,
     watch,
     formState: { errors },
   } = useForm({
@@ -21,9 +76,30 @@ export default function CheckoutModal({ setIsCheckoutModalVisible }) {
     },
     mode: "onChange",
   });
-  const onSubmit = (data) => console.log(data);
+  const dispatch = useDispatch();
+  const cart = useSelector((store) => store.shoppingCart.cart);
+  function processOrder(message) {
+    axios
+      .post("http://localhost:8000/placeOrder", {
+        message,
+      })
+      .then((data) => {
+        console.log("order placed succesfully", data);
+        dispatch(clearCart());
+        setIsOrderSent(true);
+      })
+      .catch((err) => {
+        console.log("error placing oreder", err);
+      });
+  }
+  const onSubmit = (data) => {
+    const message = generateOrderMessage(data, cart);
+    // console.log("message final", message);
+    setIsOrderSent(true);
+    processOrder(message);
+  };
   return (
-    <div className="modal overflow-hidden fixed top-0 left-0 right-0 bottom-0 z-30 w-full">
+    <div className="modal overflow-hidden fixed flex flex-col justify-center top-0 left-0 right-0 bottom-0 z-30 w-full">
       <div
         onClick={() => {
           setIsCheckoutModalVisible(false);
@@ -31,15 +107,15 @@ export default function CheckoutModal({ setIsCheckoutModalVisible }) {
         className="modal-backdrop bg-black bg-opacity-50 mx-auto my-0 fixed top-0 left-0 right-0 bottom-0 z-10 "
       ></div>
 
-      <div
-        // className="modal-dialog  flex  relative w-full my-14 rounded-lg z-20 "
-        className="modal mx-auto dialog relative z-20 flex align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle w-full sm:max-w-lg sm:w-full"
-      >
+      <div className="modal mx-auto dialog relative z-20 flex align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle w-full sm:max-w-lg sm:w-full">
         <div className="modal-body w-full mx-auto rounded-lg">
-          <div className="checkout-form bg-white rounded-lg w-full">
+          <div
+            style={{ display: isOrderSent ? "none" : "block" }}
+            className="checkout-form bg-white rounded-lg w-full"
+          >
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6">
-                <div className="grid grid-cols-6 gap-6">
+                <div className="grid grid-cols-6 gap-4">
                   <div className="col-span-6">
                     <label
                       className="block text-sm font-medium text-gray-700"
@@ -85,7 +161,7 @@ export default function CheckoutModal({ setIsCheckoutModalVisible }) {
                   <div className="col-span-6">
                     <label
                       className="block text-sm font-medium text-gray-700"
-                      htmlFor="street_address"
+                      htmlFor="address"
                     >
                       Street address
                     </label>
@@ -243,6 +319,11 @@ export default function CheckoutModal({ setIsCheckoutModalVisible }) {
               </div>
             </form>
           </div>
+          {isOrderSent && (
+            <OrderPlacedMessage
+              setIsCheckoutModalVisible={setIsCheckoutModalVisible}
+            />
+          )}
         </div>
       </div>
     </div>

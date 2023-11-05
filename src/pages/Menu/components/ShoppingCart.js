@@ -22,35 +22,6 @@ export default function ShoppingCart({ setIsCheckoutModalVisible }) {
 
   const dispatch = useDispatch();
 
-  function placeOrder() {
-    let message = ``;
-    message += `Mario has ordered \n`;
-
-    let totalPrice = 0;
-
-    for (const entry of cart) {
-      const costPerItem = entry.item.Price * entry.amount;
-      totalPrice += costPerItem;
-      message += ` *${entry.item.Name}* x ${entry.amount} - ${costPerItem}${entry.item.Currency} \n`;
-    }
-
-    message += ` \n`;
-    message += ` _Total : ${totalPrice}${cart[0].item.Currency}_`;
-
-    axios
-      .post("http://localhost:8000/placeOrder", {
-        message,
-      })
-      .then((data) => {
-        console.log("order placed succesfully", data);
-        dispatch(clearCart());
-        // show that order is placed visually
-      })
-      .catch((err) => {
-        console.log("error placing oreder", err);
-        //   state.cart = [];
-      });
-  }
   let cartTotal = 0;
   for (const entry of cart) {
     cartTotal += entry.item.Price * entry.amount;
