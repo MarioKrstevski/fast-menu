@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import Menu from "./pages/Menu/Menu";
 import { store } from "./redux/store";
+import Builder from "./pages/Builder/Builder";
 export function FastMenu(props) {
   const [csvFile, setCSVFile] = useState(null);
 
@@ -43,6 +44,7 @@ export function FastMenu(props) {
         <BrowserRouter>
           <Routes>
             <Route path="menu/:companyName" element={<Menu />} />
+            <Route path="builder" element={<Builder />} />
           </Routes>
         </BrowserRouter>
       </Provider>
