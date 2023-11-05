@@ -52,3 +52,14 @@ code {
 .p-multiselect-panel  .p-multiselect-items-wrapper .p-multiselect-item .p-checkbox-box {
   border: 1px solid black;
 }
+.card-design .p-dropdown {
+
+  border: 1px solid black;
+}
+.card-design .p-dropdown-label {
+  padding: 6px 10px;
+}
+
+.p-dropdown-item {
+  padding: 6px 10px;
+}

@@ -77,7 +77,7 @@ export default function S1DataLoadInput(props) {
         onChange={tryConnectToSpreadsheet}
         placeholder="Insert your spreadsheet url or id"
         autofocus="autofocus"
-        class={`input is-success is-large w-[94%] placeholder-gray-500 border rounded p-2  ${
+        className={`input is-success is-large w-[94%] placeholder-gray-500 border rounded p-2  ${
           isSuccesfullyConnected
             ? "border-green-400"
             : "border-black "
@@ -113,13 +113,15 @@ export default function S1DataLoadInput(props) {
           </>
         )}
       </div>
-      <p class="mt-4 text-sm text-gray-600">
+      <p className="mt-4 text-sm text-gray-600">
         The ID is the value between the "/d/" and the "/edit" in the
         URL of your spreadsheet.{" "}
       </p>
-      <div class="mt-4 p-3 text-sm bg-gray-100 break-words text-gray-600 rounded-lg">
+      <div className="mt-4 p-3 text-sm bg-gray-100 break-words text-gray-600 rounded-lg">
         https://docs.google.com/spreadsheets/d/
-        <span class="text-green-800 font-bold">spreadsheetId</span>
+        <span className="text-green-800 font-bold">
+          spreadsheetId
+        </span>
         /edit#gid=0
       </div>
     </div>

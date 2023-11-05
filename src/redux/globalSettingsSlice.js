@@ -40,7 +40,15 @@ const initialState = {
     font: "",
   },
   card: {
-    customFields: "",
+    customFields: "Price",
+    filterBy: "Section",
+    image: "Image",
+    title: "Name",
+    description: "Description",
+    caption: "Caption",
+    buttonAction: "cart",
+    buttonText: "Add to Cart",
+    buttonColor: "blue",
   },
 };
 

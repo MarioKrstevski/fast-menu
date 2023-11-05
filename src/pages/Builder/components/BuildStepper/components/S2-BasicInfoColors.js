@@ -43,9 +43,9 @@ export default function S2BasicInfoColors(props) {
         >
           Subdomain name
         </label>{" "}
-        <div data-v-449b025c="" class="flex">
-          <p data-v-449b025c="" class="control">
-            <span data-v-449b025c="" class="text-normal">
+        <div data-v-449b025c="" className="flex">
+          <p data-v-449b025c="" className="control">
+            <span data-v-449b025c="" className="text-normal">
               fastmenu.com/
             </span>
           </p>
@@ -63,7 +63,7 @@ export default function S2BasicInfoColors(props) {
               type="text"
               autocomplete="on"
               placeholder="mywebsite"
-              class="bg-white inline-block h-6 ml-1 border-gray-300 rounded text-slate-800 border p-2 w-11/12"
+              className="bg-white inline-block h-6 ml-1 border-gray-300 rounded text-slate-800 border p-2 w-11/12"
             />{" "}
           </div>
         </div>
@@ -304,9 +304,16 @@ export default function S2BasicInfoColors(props) {
           Menu Description
         </label>{" "}
         <div className="control is-clearfix">
-          <input
+          <textarea
             value={gs.menuDescription}
+            name="menuDescription"
+            className="border w-full border-slate-500 p-2"
+            id="menuDescription"
+            cols="28"
+            rows="4"
             onChange={(e) => {
+              console.log("textarea", e.target.value);
+              console.log("test", e.target.value.includes("\n"));
               dispatch(
                 updateStep2({
                   field: "menuDescription",
@@ -314,12 +321,7 @@ export default function S2BasicInfoColors(props) {
                 })
               );
             }}
-            type="text"
-            id="menuDescription"
-            autocomplete="on"
-            placeholder="My brand new website"
-            className="bg-white w-full border-gray-300 rounded text-slate-800 border p-2 h-8"
-          />
+          ></textarea>
         </div>
       </div>
     </div>
