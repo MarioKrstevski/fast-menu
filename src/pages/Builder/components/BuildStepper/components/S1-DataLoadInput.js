@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateStep1 } from "../../../../../redux/globalSettingsSlice";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { updateMenu } from "../../../../../redux/menuSlice";
 
 export default function S1DataLoadInput(props) {
   const [isSuccesfullyConnected, setIsSuccesfullyConnected] =
@@ -11,7 +12,24 @@ export default function S1DataLoadInput(props) {
   const [csvFile, setCSVFile] = useState(null);
   const [isFileSubmitted, setIsFileSubmitted] = useState(false);
   const gs = useSelector((store) => store.globalSettings);
+  const menu = useSelector((store) => store.globalSettings);
   const dispatch = useDispatch();
+
+  function loadMenuAtStart() {
+    axios
+      .get("http://localhost:8000/menu", {
+        params: {
+          companyName: gs.client,
+        },
+      })
+      .then((res) => {
+        console.log("data", res);
+        dispatch(updateMenu(res.data));
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }
   function tryConnectToSpreadsheet(e) {
     dispatch(
       updateStep1({ field: "spreadSheetURL", value: e.target.value })
@@ -43,6 +61,9 @@ export default function S1DataLoadInput(props) {
     setCSVFile(e.target.files[0]);
   };
 
+  useEffect(() => {
+    loadMenuAtStart();
+  }, []);
   return (
     <div className="p-2">
       <label htmlFor="spreadsheet" className="my-2">

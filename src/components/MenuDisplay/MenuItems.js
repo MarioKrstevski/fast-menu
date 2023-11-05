@@ -3,26 +3,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function MenuItems(props) {
-  const [menu, setMenu] = useState([]);
-  const globalSettings = useSelector((store) => store.globalSettings);
+  const gs = useSelector((store) => store.globalSettings);
+  const menu = useSelector((store) => store.menu);
   const dispatch = useDispatch();
-  const gs = globalSettings;
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/menu", {
-        params: {
-          companyName: gs.client,
-        },
-      })
-      .then((data) => {
-        console.log("data", data);
-        setMenu(data.data);
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
-  }, []);
   return (
     <div className="min-h-full max-w-full overflow-hidden">
       <div className="filters"></div>

@@ -39,6 +39,9 @@ const initialState = {
     backgroundColor: "#BDC3C8",
     font: "",
   },
+  card: {
+    customFields: "",
+  },
 };
 
 export const globalSettingsSlice = createSlice({
@@ -62,11 +65,26 @@ export const globalSettingsSlice = createSlice({
         state[action.payload.field] = action.payload.value;
       }
     },
+    updateStep3: (state, action) => {
+      if (action.payload.field.includes(".")) {
+        const [key1, key2] = action.payload.field.split(".");
+        state[key1][key2] = action.payload.value;
+        state[key1] = {
+          ...state[key1],
+        };
+      } else {
+        state[action.payload.field] = action.payload.value;
+      }
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { toggleOrdersEnabled, updateStep1, updateStep2 } =
-  globalSettingsSlice.actions;
+export const {
+  toggleOrdersEnabled,
+  updateStep1,
+  updateStep2,
+  updateStep3,
+} = globalSettingsSlice.actions;
 
 export default globalSettingsSlice.reducer;

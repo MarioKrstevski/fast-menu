@@ -43,7 +43,7 @@ export default function BuilderStepper(props) {
           </span>
           <button
             type="button"
-            className="button text-center font-normal text-gray-700 rounded-sm text-xs bg-slate-900 text-white p-1"
+            className="button text-center font-normal text-gray-700 rounded-sm text-xs bg-slate-900 text-white px-2 p-1"
           >
             <span> Upgrade to PRO </span>
           </button>
