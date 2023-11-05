@@ -52,22 +52,22 @@ export default function BuilderStepper(props) {
       <div className="global-settings h-full overflow-y-auto  overflow-x-hidden p-2 ">
         {steps[currentStep - 1].component}
       </div>
-      <div class=" bg-gray-200 mt-auto">
+      <div className=" bg-gray-200 mt-auto">
         <div
-          class="text-sm px-4 py-2 text-white font-semibold flex justify-between bg-green-500"
+          className="text-sm px-4 py-2 text-white font-semibold flex justify-between bg-green-500"
           style={{ display: "none" }}
         >
           <div>Free trial ends in 5 days</div>
           <div>
-            <div role="button" class="hover:underline">
+            <div role="button" className="hover:underline">
               Upgrade Now
             </div>
           </div>
         </div>
-        <div class="container flex justify-between items-center p-4">
+        <div className="container flex justify-between items-center p-4">
           <button
             type="button"
-            class={`button font-semibold ${
+            className={`button font-semibold ${
               currentStep === 1 ? "text-gray-500" : ""
             }`}
             disabled={currentStep === 1}
@@ -79,17 +79,17 @@ export default function BuilderStepper(props) {
               }
             }}
           >
-            <span class="icon is-small">
+            <span className="icon is-small">
               <FontAwesomeIcon icon={faAngleLeft} />
             </span>{" "}
             <span> Back </span>{" "}
           </button>
-          <div class="font-bold">
+          <div className="font-bold">
             {currentStep} / {steps.length}
           </div>
           <button
             type="button"
-            class={`button font-semibold ${
+            className={`button font-semibold ${
               currentStep === steps.length ? "text-gray-500" : ""
             }`}
             disabled={currentStep === steps.length}
@@ -103,7 +103,7 @@ export default function BuilderStepper(props) {
           >
             {" "}
             <span> Next </span>{" "}
-            <span class="icon is-small">
+            <span className="icon is-small">
               <FontAwesomeIcon icon={faAngleRight} />
             </span>
           </button>

@@ -48,7 +48,7 @@ const initialState = {
     caption: "Caption",
     buttonAction: "cart",
     buttonText: "Add to Cart",
-    buttonColor: "blue",
+    buttonColor: "#ffffff",
   },
 };
 

@@ -27,7 +27,7 @@ export default function S2BasicInfoColors(props) {
             }}
             type="text"
             id="websiteName"
-            autocomplete="on"
+            autoComplete="on"
             placeholder="My brand new website"
             className="bg-white w-full border-gray-300 rounded text-slate-800 border p-2 h-8"
           />
@@ -43,11 +43,9 @@ export default function S2BasicInfoColors(props) {
         >
           Subdomain name
         </label>{" "}
-        <div data-v-449b025c="" className="flex">
-          <p data-v-449b025c="" className="control">
-            <span data-v-449b025c="" className="text-normal">
-              fastmenu.com/
-            </span>
+        <div className="flex">
+          <p className="control">
+            <span className="text-normal">fastmenu.com/</span>
           </p>
           <div>
             <input
@@ -61,7 +59,7 @@ export default function S2BasicInfoColors(props) {
                 );
               }}
               type="text"
-              autocomplete="on"
+              autoComplete="on"
               placeholder="mywebsite"
               className="bg-white inline-block h-6 ml-1 border-gray-300 rounded text-slate-800 border p-2 w-11/12"
             />{" "}
@@ -93,7 +91,7 @@ export default function S2BasicInfoColors(props) {
             }}
             type="text"
             id="logoURL"
-            autocomplete="on"
+            autoComplete="on"
             placeholder="My brand new website"
             className="bg-white border-gray-300 rounded text-slate-800 border w-full p-2 h-8"
           />
@@ -120,7 +118,7 @@ export default function S2BasicInfoColors(props) {
             }}
             type="text"
             id="faviconURL"
-            autocomplete="on"
+            autoComplete="on"
             placeholder="My brand new website"
             className="bg-white w-full border-gray-300 rounded text-slate-800 border p-2 h-8"
           />
@@ -140,7 +138,7 @@ export default function S2BasicInfoColors(props) {
           }}
           type="checkbox"
           id="isNavbarFixed"
-          autocomplete="on"
+          autoComplete="on"
           placeholder="My brand new website"
           className="bg-white  border-gray-300 rounded text-slate-800 border p-2 h-8"
         />
@@ -170,7 +168,7 @@ export default function S2BasicInfoColors(props) {
           }}
           type="checkbox"
           id="isHeaderShown"
-          autocomplete="on"
+          autoComplete="on"
           placeholder="My brand new website"
           className="bg-white  border-gray-300 rounded text-slate-800 border p-2 h-8"
         />
@@ -201,7 +199,7 @@ export default function S2BasicInfoColors(props) {
             }}
             type="text"
             id="headerTitle"
-            autocomplete="on"
+            autoComplete="on"
             placeholder="My brand new website"
             className="bg-white w-10/12 border-gray-300 rounded text-slate-800 border p-2 h-8"
           />
@@ -217,7 +215,7 @@ export default function S2BasicInfoColors(props) {
             }}
             type="color"
             id="headerTitleColor"
-            autocomplete="on"
+            autoComplete="on"
             placeholder="My brand new website"
             className="bg-white w-2/12 border-gray-300 rounded text-slate-800 border  h-8"
           />
@@ -243,7 +241,7 @@ export default function S2BasicInfoColors(props) {
             }}
             type="text"
             id="headerSubheading"
-            autocomplete="on"
+            autoComplete="on"
             placeholder="My brand new website"
             className="bg-white w-10/12 border-gray-300 rounded text-slate-800 border p-2 h-8"
           />
@@ -259,7 +257,7 @@ export default function S2BasicInfoColors(props) {
             }}
             type="color"
             id="subheadingColorColor"
-            autocomplete="on"
+            autoComplete="on"
             placeholder="My brand new website"
             className="bg-white w-2/12 border-gray-300 rounded text-slate-800 border  h-8"
           />
@@ -285,7 +283,7 @@ export default function S2BasicInfoColors(props) {
             }}
             type="text"
             id="heroImage"
-            autocomplete="on"
+            autoComplete="on"
             placeholder="My brand new website"
             className="bg-white w-full border-gray-300 rounded text-slate-800 border p-2 h-8"
           />

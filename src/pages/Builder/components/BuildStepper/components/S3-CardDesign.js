@@ -14,12 +14,13 @@ export default function S3CardDesign(props) {
 
   const dispatch = useDispatch();
 
-  const allFields = Object.keys(menu[0]).map((cf) => ({
-    name: cf,
-  }));
+  const allFields = menu.length
+    ? Object.keys(menu[0]).map((cf) => ({
+        name: cf,
+      }))
+    : [];
 
   const allFieldThatAreLinks = allFields.filter((field) => {
-    console.log("test", menu[0], field.name);
     if (
       typeof menu[0][field.name] === "string" &&
       (menu[0][field.name].includes("http") ||
@@ -35,7 +36,12 @@ export default function S3CardDesign(props) {
           name: cf,
         }));
 
-  console.log("customFields", customFields);
+  const cardButtonActionOptions = [
+    {
+      name: "cart",
+    },
+    { name: "link" },
+  ];
 
   return (
     <div className="p-2 card-design">
@@ -165,7 +171,58 @@ export default function S3CardDesign(props) {
 
       <div className="my-2 font-bold">Button Action</div>
 
+      <Dropdown
+        value={cardButtonActionOptions.find(
+          (field) => field.name === gs.card.buttonAction
+        )}
+        onChange={(e) => {
+          dispatch(
+            updateStep3({
+              field: "card.buttonAction",
+              value: e.value.name,
+            })
+          );
+        }}
+        options={cardButtonActionOptions}
+        optionLabel="name"
+        placeholder="Select action"
+        className="w-full md:w-14rem"
+      />
+
       <div className="my-2 font-bold">Button Text</div>
+
+      <div className="flex align-middle gap-1">
+        <input
+          value={gs.card.buttonText}
+          onChange={(e) => {
+            dispatch(
+              updateStep3({
+                field: "card.buttonText",
+                value: e.target.value,
+              })
+            );
+          }}
+          type="text"
+          autoComplete="on"
+          placeholder="My brand new website"
+          className="bg-white w-10/12 border-gray-300 rounded text-slate-800 border p-2 h-8"
+        />
+        <input
+          value={gs.hero.buttonColor}
+          onChange={(e) => {
+            dispatch(
+              updateStep3({
+                field: "card.buttonColor",
+                value: e.target.value,
+              })
+            );
+          }}
+          type="color"
+          autoComplete="on"
+          placeholder="My brand new website"
+          className="bg-white w-2/12 border-gray-300 rounded text-slate-800 border  h-8"
+        />
+      </div>
     </div>
   );
 }
