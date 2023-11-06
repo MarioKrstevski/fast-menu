@@ -14,27 +14,52 @@ export default function S2BasicInfoColors(props) {
         >
           Website name
         </label>{" "}
-        <div className="control is-clearfix">
-          <input
-            value={gs.websiteName}
-            onChange={(e) => {
-              dispatch(
-                updateStep2({
-                  field: "websiteName",
-                  value: e.target.value,
-                })
-              );
-            }}
-            type="text"
-            id="websiteName"
-            autoComplete="on"
-            placeholder="My brand new website"
-            className="bg-white w-full border-gray-300 rounded text-slate-800 border p-2 h-8"
-          />
-        </div>
+        <input
+          value={gs.websiteName}
+          onChange={(e) => {
+            dispatch(
+              updateStep2({
+                field: "websiteName",
+                value: e.target.value,
+              })
+            );
+          }}
+          type="text"
+          id="websiteName"
+          autoComplete="on"
+          placeholder="My brand new website"
+          className="bg-white w-full border-gray-300 rounded text-slate-800 border p-2 h-8"
+        />
       </div>
 
       {/* ---- */}
+
+      <div className="field">
+        <label
+          htmlFor="whatsappNumberConnected"
+          className="text-slate-900 font-bold mb-2 mt-3 block"
+        >
+          Website name
+        </label>{" "}
+        <input
+          value={gs.whatsappNumberConnected}
+          onChange={(e) => {
+            dispatch(
+              updateStep2({
+                field: "whatsappNumberConnected",
+                value: e.target.value,
+              })
+            );
+          }}
+          type="text"
+          id="whatsappNumberConnected"
+          autoComplete="on"
+          placeholder="My brand new website"
+          className="bg-white w-full border-gray-300 rounded text-slate-800 border p-2 h-8"
+        />
+      </div>
+
+      {/* --- */}
 
       <div className="field">
         <label

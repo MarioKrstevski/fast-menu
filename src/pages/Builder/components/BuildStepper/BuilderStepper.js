@@ -20,8 +20,11 @@ const steps = [
 export default function BuilderStepper(props) {
   const [currentStep, setCurrentStep] = useState(1);
   return (
-    <div className="w-[40%] min-w-[200px] max-w-[330px] border-r-2 h-full border-r-gray-400 flex flex-col">
-      <div className="flex  justify-between items-center p-4 border-b h-20">
+    <div className="w-[300px] border-r-2 h-full border-r-gray-400 flex flex-col">
+      <div
+        id="build-stepper"
+        className="flex  justify-between items-center p-4 border-b h-20"
+      >
         <div className="text-lg font-bold w-[120px] ">
           {" "}
           {steps[currentStep - 1].title}

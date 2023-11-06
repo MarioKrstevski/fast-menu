@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   ordersEnabled: true,
+  whatsappNumberConnected: "38977766669",
   spreadSheetURL:
     "https://docs.google.com/spreadsheets/d/1i8s74vfPOwOyckvrwzxXBE7j_-0LPJR2rGRgyfwNDWU/edit#gid=0",
   websiteName: "Agora",
@@ -48,7 +49,8 @@ const initialState = {
     caption: "Caption",
     buttonAction: "cart",
     buttonText: "Add to Cart",
-    buttonColor: "#ffffff",
+    buttonBgColor: "#731574",
+    buttonTextColor: "#ffffff",
   },
 };
 

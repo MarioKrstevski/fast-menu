@@ -37,11 +37,15 @@ export default function S3CardDesign(props) {
         }));
 
   const cardButtonActionOptions = [
-    {
-      name: "cart",
-    },
     { name: "link" },
+    { name: "no action" },
   ];
+
+  if (gs.ordersEnabled) {
+    cardButtonActionOptions.push({
+      name: "cart",
+    });
+  }
 
   return (
     <div className="p-2 card-design">
@@ -205,14 +209,29 @@ export default function S3CardDesign(props) {
           type="text"
           autoComplete="on"
           placeholder="My brand new website"
-          className="bg-white w-10/12 border-gray-300 rounded text-slate-800 border p-2 h-8"
+          className="bg-white w-8/12 border-gray-300 rounded text-slate-800 border p-2 h-8"
         />
         <input
-          value={gs.hero.buttonColor}
+          value={gs.card.buttonBgColor}
           onChange={(e) => {
             dispatch(
               updateStep3({
-                field: "card.buttonColor",
+                field: "card.buttonBgColor",
+                value: e.target.value,
+              })
+            );
+          }}
+          type="color"
+          autoComplete="on"
+          placeholder="My brand new website"
+          className="bg-white w-2/12 border-gray-300 rounded text-slate-800 border  h-8"
+        />
+        <input
+          value={gs.card.buttonTextColor}
+          onChange={(e) => {
+            dispatch(
+              updateStep3({
+                field: "card.buttonTextColor",
                 value: e.target.value,
               })
             );

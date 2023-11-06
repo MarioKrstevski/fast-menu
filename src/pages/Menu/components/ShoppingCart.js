@@ -5,7 +5,6 @@ import {
   increaseAmount,
   clearItem,
 } from "../../../redux/shoppingCartSlice";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMinus,
@@ -27,13 +26,24 @@ export default function ShoppingCart({ setIsCheckoutModalVisible }) {
     cartTotal += entry.item.Price * entry.amount;
   }
 
+  const bs = document.getElementById("build-stepper");
+  const isInBuilder = bs;
+  let updatedWidth = {};
+  if (bs) {
+    const bsWidth = bs.offsetWidth;
+    updatedWidth = {
+      width: `calc(100vw - ${bsWidth}px)`,
+    };
+  }
   return (
     <div
-      className={`shopping-cart p-4 fixed z-20 w-full h-full flex flex-col items-end transition duration-300 ease-in-out ${
+      className={`shopping-cart fixed p-4 top-0 z-20  w-full h-full flex flex-col items-end transition duration-300 ease-in-out ${
         isShoppingCartOpen
           ? "bg-black bg-opacity-30 "
           : "  pointer-events-none"
-      }`}
+      }
+      `}
+      style={{ ...updatedWidth }}
       onClick={() => {
         console.log("test");
         setIsShoppingCartOpen(false);
