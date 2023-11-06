@@ -58,6 +58,10 @@ export const globalSettingsSlice = createSlice({
   name: "globalSettings",
   initialState,
   reducers: {
+    updateGlobalSettings(state, action) {
+      console.log("smeneto", action.payload);
+      return action.payload;
+    },
     toggleOrdersEnabled: (state) => {
       state.ordersEnabled = !state.ordersEnabled;
     },
@@ -95,6 +99,7 @@ export const {
   updateStep1,
   updateStep2,
   updateStep3,
+  updateGlobalSettings,
 } = globalSettingsSlice.actions;
 
 export default globalSettingsSlice.reducer;

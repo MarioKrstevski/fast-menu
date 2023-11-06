@@ -1,5 +1,17 @@
 // here we ask for google permissions...
-
+import { useDispatch } from "react-redux";
+import { updateGlobalSettings } from "../../redux/globalSettingsSlice";
+import axios from "axios";
+import DashboardMenu from "./DashboardMenu";
+import WebsitesList from "./WebsitesList";
 export function Dashboard(props) {
-  return <div>Dashboard works</div>;
+  const dispatch = useDispatch((store) => store.globalSettings);
+  //get global settings
+
+  return (
+    <div className="h-[100vh] overflow-y-auto bg-[#f5f5f5]">
+      <DashboardMenu />
+      <WebsitesList />
+    </div>
+  );
 }

@@ -1,3 +1,4 @@
+import axios from "axios";
 import BuilderStepper from "./components/BuildStepper/BuilderStepper";
 import WebsitePreview from "./components/WebsitePreview";
 

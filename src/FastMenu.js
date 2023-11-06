@@ -6,6 +6,7 @@ import Menu from "./pages/Menu/Menu";
 import { store } from "./redux/store";
 import Builder from "./pages/Builder/Builder";
 import WebsitePreview from "./pages/Builder/components/WebsitePreview";
+import { Dashboard } from "./pages/Dashboard/Dashboard";
 export function FastMenu(props) {
   const [csvFile, setCSVFile] = useState(null);
 
@@ -28,24 +29,12 @@ export function FastMenu(props) {
   };
   return (
     <div>
-      {/* FastMenu works
-      <section>
-        <div>
-          Select file
-          <input
-            type="file"
-            name="csvFile"
-            accept=".csv"
-            onChange={handleFileChange}
-          />
-          <button onClick={handleSubmit}>Submit</button>
-        </div>
-      </section> */}
       <Provider store={store}>
         <BrowserRouter>
           <Routes>
             <Route path="menu/:companyName" element={<Menu />} />
             <Route path="builder" element={<Builder />} />
+            <Route path="Dashboard" element={<Dashboard />} />
           </Routes>
         </BrowserRouter>
       </Provider>

@@ -5,7 +5,10 @@ import ClientInfo from "./components/ClientInfo";
 import SimpleMenu from "./components/SimpleMenu";
 import NormalMenu from "./components/NormalMenu";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleOrdersEnabled } from "../../redux/globalSettingsSlice";
+import {
+  toggleOrdersEnabled,
+  updateGlobalSettings,
+} from "../../redux/globalSettingsSlice";
 import ShoppingCart from "./components/ShoppingCart";
 import CheckoutModal from "./components/CheckoutModal";
 import WebsitePreview from "../Builder/components/WebsitePreview";
@@ -16,16 +19,17 @@ export default function Menu(props) {
   const gs = useSelector((store) => store.globalSettings);
   const dispatch = useDispatch();
   function loadMenuAtStart() {
-    console.log("yess");
     axios
       .get("http://localhost:8000/menu", {
         params: {
-          companyName: gs.subdomain,
+          // companyName: gs.subdomain,
+          companyName,
         },
       })
       .then((res) => {
         console.log("data", res);
-        dispatch(updateMenu(res.data));
+        dispatch(updateMenu(res.data.menu));
+        dispatch(updateGlobalSettings(res.data.globalSettings));
       })
       .catch((err) => {
         console.log("err", err);

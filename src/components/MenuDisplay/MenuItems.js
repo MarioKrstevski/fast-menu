@@ -4,7 +4,6 @@ import { useState } from "react";
 import { addItem } from "../../redux/shoppingCartSlice";
 
 function Card({ item }) {
-  // console.log("item", item);
   const gs = useSelector((store) => store.globalSettings);
   const dispatch = useDispatch();
 
@@ -34,7 +33,7 @@ function Card({ item }) {
             </p>
             <ul className="mt-4">
               {gs.card.customFields.split(",").map((cf) => (
-                <li className="flex justify-between">
+                <li key={cf} className="flex justify-between">
                   <span className="font-bold">{cf}</span>
                   <span className="text-right">
                     {item[cf]}
@@ -89,7 +88,7 @@ function Pill({ label, active, updateFilter }) {
         updateFilter(label);
       }}
       type="button"
-      class={`px-4 whitespace-nowrap py-2 w-auto transition-shadow duration-200 shadow-sm hover:shadow-md inline-flex justify-center items-center rounded-md border text-base sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-2 mb-2 
+      className={`px-4 whitespace-nowrap py-2 w-auto transition-shadow duration-200 shadow-sm hover:shadow-md inline-flex justify-center items-center rounded-md border text-base sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-2 mb-2 
       ${
         active
           ? "bg-gray-900 text-white"
@@ -143,9 +142,9 @@ export default function MenuItems(props) {
 
           <div className="items  flex flex-wrap">
             {currentFilter === "All"
-              ? menu.map((item) => <Card item={item} />)
+              ? menu.map((item) => <Card key={item.ID} item={item} />)
               : groupedByFilter[currentFilter].map((item) => (
-                  <Card item={item} />
+                  <Card key={item.ID} item={item} />
                 ))}
           </div>
         </div>
