@@ -3,11 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef } from "react";
 import { QRCode } from "react-qrcode-logo";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 export default function S7QRCode(props) {
   const qrRef = useRef();
   const gs = useSelector((store) => store.globalSettings);
   const qrlink = "http://localhost:3000/menu/" + gs.subdomain;
   //   const qrlink = "http://www.fastmenu.com/menu/" + gs.subdomain;
+  const navigate = useNavigate();
   return (
     <div>
       <div className="h-full flex flex-col items-center">
@@ -34,15 +36,20 @@ export default function S7QRCode(props) {
           </div>
         </div>
         <div className="w-full">
-          <button
-            type="button"
-            className="px-4 py-2 rounded bg-slate-800 hover:bg-slate-900 active:bg-slate-950 text-white border-transparent flex justify-center gap-2 w-full text-lg"
+          <a
+            target="_blank"
+            href={"http://localhost:3000/menu/" + gs.subdomain}
           >
-            <span> Publish </span>{" "}
-            <span className="icon is-medium">
-              <FontAwesomeIcon icon={faAngleRight} />
-            </span>
-          </button>
+            <button
+              type="button"
+              className="px-4 py-2 rounded bg-slate-800 hover:bg-slate-900 active:bg-slate-950 text-white border-transparent flex justify-center gap-2 w-full text-lg"
+            >
+              <span> Publish </span>{" "}
+              <span className="icon is-medium">
+                <FontAwesomeIcon icon={faAngleRight} />
+              </span>
+            </button>
+          </a>
         </div>
       </div>
     </div>

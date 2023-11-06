@@ -8,14 +8,47 @@ import { useSelector, useDispatch } from "react-redux";
 import { toggleOrdersEnabled } from "../../redux/globalSettingsSlice";
 import ShoppingCart from "./components/ShoppingCart";
 import CheckoutModal from "./components/CheckoutModal";
+import WebsitePreview from "../Builder/components/WebsitePreview";
+import { updateMenu } from "../../redux/menuSlice";
 
 export default function Menu(props) {
+  const { companyName } = useParams();
+  const gs = useSelector((store) => store.globalSettings);
+  const dispatch = useDispatch();
+  function loadMenuAtStart() {
+    console.log("yess");
+    axios
+      .get("http://localhost:8000/menu", {
+        params: {
+          companyName: gs.subdomain,
+        },
+      })
+      .then((res) => {
+        console.log("data", res);
+        dispatch(updateMenu(res.data));
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }
+  //Load Menu
+  useEffect(() => {
+    loadMenuAtStart();
+  }, []);
+  return (
+    <div>
+      <WebsitePreview />
+    </div>
+  );
+}
+
+function Men2(props) {
   const { companyName } = useParams();
   const [menu, setMenu] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [menuType, setMenuType] = useState("normal");
   const [isCheckoutModalVisible, setIsCheckoutModalVisible] =
-    useState(true);
+    useState(false);
 
   const isOrderingEnabled = useSelector(
     (state) => state.globalSettings.ordersEnabled

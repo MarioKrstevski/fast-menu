@@ -9,7 +9,7 @@ function Card({ item }) {
   const dispatch = useDispatch();
 
   return (
-    <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 px-2 mb-4">
+    <div className="w-full  sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 px-2 mb-8 md:mb-4">
       <div className="content-card overflow-hidden bg-white rounded shadow flex flex-grow flex-col text-gray-800 text-left h-full">
         <div className="relative w-full pb-[100%] bg-gray-300">
           <img
@@ -19,7 +19,7 @@ function Card({ item }) {
             lazy="loaded"
           />
         </div>
-        <div className="h-full p-6 flex flex-col justify-between">
+        <div className="h-full p-4 flex flex-col justify-between">
           <div>
             <p className="font-semibold text-2xl">
               {item[gs.card.title]}
@@ -89,7 +89,7 @@ function Pill({ label, active, updateFilter }) {
         updateFilter(label);
       }}
       type="button"
-      class={`px-4 py-2 w-auto transition-shadow duration-200 shadow-sm hover:shadow-md inline-flex justify-center items-center rounded-md border text-base sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-2 mb-2 
+      class={`px-4 whitespace-nowrap py-2 w-auto transition-shadow duration-200 shadow-sm hover:shadow-md inline-flex justify-center items-center rounded-md border text-base sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-2 mb-2 
       ${
         active
           ? "bg-gray-900 text-white"
@@ -119,11 +119,13 @@ export default function MenuItems(props) {
 
   return (
     <div className="min-h-full max-w-full overflow-hidden">
-      {menu.length === 0 && <div>Loading Item</div>}
+      {menu.length === 0 && (
+        <div className="text-center my-8">Loading Menu</div>
+      )}
 
       {menu.length > 0 && (
-        <div className="main">
-          <div className="filters flex flex-wrap px-2 mt-4">
+        <div className="main w-[90%] mx-auto sm:w-full ">
+          <div className="filters flex flex-nowrap  overflow-y-auto py-2 px-2 mt-4 mb-2 sm:flex-wrap ">
             <Pill
               label={"All"}
               active={currentFilter === "All"}

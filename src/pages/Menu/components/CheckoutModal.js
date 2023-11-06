@@ -109,7 +109,7 @@ export default function CheckoutModal({ setIsCheckoutModalVisible }) {
         className="modal-backdrop bg-black bg-opacity-50 mx-auto my-0 fixed top-0 left-0 right-0 bottom-0 z-10 "
       ></div>
 
-      <div className="modal mx-auto dialog relative z-20 flex align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle w-full sm:max-w-lg sm:w-full">
+      <div className="modal mx-auto dialog relative z-20 flex align-bottom bg-white rounded-lg text-left overflow-auto shadow-xl transform transition-all sm:my-8 sm:align-middle w-full sm:max-w-lg sm:w-full">
         <div className="modal-body w-full mx-auto rounded-lg">
           <div
             style={{ display: isOrderSent ? "none" : "block" }}

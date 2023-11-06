@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import Menu from "./pages/Menu/Menu";
 import { store } from "./redux/store";
 import Builder from "./pages/Builder/Builder";
+import WebsitePreview from "./pages/Builder/components/WebsitePreview";
 export function FastMenu(props) {
   const [csvFile, setCSVFile] = useState(null);
 
