@@ -1,21 +1,21 @@
 import {
   faAngleLeft,
   faAngleRight,
-  faRecycle,
   faSyncAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import S1DataLoadInput from "./components/S1-DataLoadInput";
 import { useState } from "react";
-import S2BasicInfoColors from "./components/S2-BasicInfoColors";
-import S3CardDesign from "./components/S3-CardDesign";
-import S7QRCode from "./components/S7-QRCode";
+
+import DataLoadInput from "./steps/DataLoadInput";
+import BasicInfoColors from "./steps/BasicInfoColors";
+import CardDesign from "./steps/CardDesign";
+import QRCodeInfo from "./steps/QRCodeInfo";
 
 const steps = [
-  { component: <S1DataLoadInput />, title: "Insert Spreadsheet" },
-  { component: <S2BasicInfoColors />, title: "Website Info" },
-  { component: <S3CardDesign />, title: "Items Design" },
-  { component: <S7QRCode />, title: "QR Code" },
+  { component: <DataLoadInput />, title: "Insert Spreadsheet" },
+  { component: <BasicInfoColors />, title: "Website Info" },
+  { component: <CardDesign />, title: "Items Design" },
+  { component: <QRCodeInfo />, title: "QR Code" },
 ];
 export default function BuilderStepper(props) {
   const [currentStep, setCurrentStep] = useState(1);

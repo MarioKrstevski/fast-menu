@@ -6,7 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { updateGlobalSettings } from "../../redux/globalSettingsSlice";
+import { updateGlobalSettings } from "../../../redux/globalSettingsSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 

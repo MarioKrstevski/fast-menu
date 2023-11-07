@@ -2,8 +2,8 @@
 import { useDispatch } from "react-redux";
 import { updateGlobalSettings } from "../../redux/globalSettingsSlice";
 import axios from "axios";
-import DashboardMenu from "./DashboardMenu";
-import WebsitesList from "./WebsitesList";
+import DashboardMenu from "./components/DashboardMenu";
+import WebsitesList from "./components/WebsitesList";
 export function Dashboard(props) {
   const dispatch = useDispatch((store) => store.globalSettings);
   //get global settings

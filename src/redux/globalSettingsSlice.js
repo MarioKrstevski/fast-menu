@@ -59,27 +59,9 @@ export const globalSettingsSlice = createSlice({
   initialState,
   reducers: {
     updateGlobalSettings(state, action) {
-      console.log("smeneto", action.payload);
       return action.payload;
     },
-    toggleOrdersEnabled: (state) => {
-      state.ordersEnabled = !state.ordersEnabled;
-    },
-    updateStep1: (state, action) => {
-      state[action.payload.field] = action.payload.value;
-    },
-    updateStep2: (state, action) => {
-      if (action.payload.field.includes(".")) {
-        const [key1, key2] = action.payload.field.split(".");
-        state[key1][key2] = action.payload.value;
-        state[key1] = {
-          ...state[key1],
-        };
-      } else {
-        state[action.payload.field] = action.payload.value;
-      }
-    },
-    updateStep3: (state, action) => {
+    updateSetting: (state, action) => {
       if (action.payload.field.includes(".")) {
         const [key1, key2] = action.payload.field.split(".");
         state[key1][key2] = action.payload.value;
@@ -96,9 +78,7 @@ export const globalSettingsSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const {
   toggleOrdersEnabled,
-  updateStep1,
-  updateStep2,
-  updateStep3,
+  updateSetting,
   updateGlobalSettings,
 } = globalSettingsSlice.actions;
 

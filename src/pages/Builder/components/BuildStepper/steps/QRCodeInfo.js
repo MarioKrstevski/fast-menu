@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { QRCode } from "react-qrcode-logo";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-export default function S7QRCode(props) {
+export default function QRCodeInfo(props) {
   const qrRef = useRef();
   const gs = useSelector((store) => store.globalSettings);
   const qrlink = "http://localhost:3000/menu/" + gs.subdomain;

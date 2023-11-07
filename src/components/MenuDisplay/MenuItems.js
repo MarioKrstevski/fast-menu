@@ -110,7 +110,6 @@ export default function MenuItems(props) {
 
   const groupedByFilter = lodash.groupBy(menu, gs.card.filterBy);
   const filters = Object.keys(groupedByFilter);
-  console.log("filters", filters);
 
   function updateFilter(newFilter) {
     setCurrentFilter(newFilter);

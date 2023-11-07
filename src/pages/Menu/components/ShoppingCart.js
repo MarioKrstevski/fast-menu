@@ -45,7 +45,6 @@ export default function ShoppingCart({ setIsCheckoutModalVisible }) {
       `}
       style={{ ...updatedWidth }}
       onClick={() => {
-        console.log("test");
         setIsShoppingCartOpen(false);
       }}
     >

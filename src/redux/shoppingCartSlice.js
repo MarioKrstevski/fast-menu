@@ -13,10 +13,8 @@ export const shoppingCartSlice = createSlice({
         return entry.item.ID === action.payload.ID;
       });
       if (entry) {
-        console.log("item exists");
         entry.amount += 1;
       } else {
-        console.log("item doest  exists");
         state.cart.push({ item: action.payload, amount: 1 });
       }
     },

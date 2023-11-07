@@ -1,9 +1,9 @@
 import { MultiSelect } from "primereact/multiselect";
 import { Dropdown } from "primereact/dropdown";
 import { useDispatch, useSelector } from "react-redux";
-import { updateStep3 } from "../../../../../redux/globalSettingsSlice";
+import { updateSetting } from "../../../../../redux/globalSettingsSlice";
 
-export default function S3CardDesign(props) {
+export default function CardDesign(props) {
   const menu = useSelector((store) => {
     return store.menu.menu;
   });
@@ -57,7 +57,7 @@ export default function S3CardDesign(props) {
         onChange={(e) => {
           console.log("e", e.value);
           dispatch(
-            updateStep3({
+            updateSetting({
               field: "card.filterBy",
               value: e.value.name,
             })
@@ -79,7 +79,7 @@ export default function S3CardDesign(props) {
         )}
         onChange={(e) => {
           dispatch(
-            updateStep3({
+            updateSetting({
               field: "card.image",
               value: e.value.name,
             })
@@ -98,7 +98,7 @@ export default function S3CardDesign(props) {
         )}
         onChange={(e) => {
           dispatch(
-            updateStep3({
+            updateSetting({
               field: "card.title",
               value: e.value.name,
             })
@@ -118,7 +118,7 @@ export default function S3CardDesign(props) {
         )}
         onChange={(e) => {
           dispatch(
-            updateStep3({
+            updateSetting({
               field: "card.description",
               value: e.value.name,
             })
@@ -137,7 +137,7 @@ export default function S3CardDesign(props) {
         )}
         onChange={(e) => {
           dispatch(
-            updateStep3({
+            updateSetting({
               field: "card.caption",
               value: e.value.name,
             })
@@ -157,7 +157,7 @@ export default function S3CardDesign(props) {
             // setSelectedCities(e.value);
             console.log("selcities", e.value);
             dispatch(
-              updateStep3({
+              updateSetting({
                 field: "card.customFields",
                 value: e.value.map((item) => item.name).join(","),
               })
@@ -181,7 +181,7 @@ export default function S3CardDesign(props) {
         )}
         onChange={(e) => {
           dispatch(
-            updateStep3({
+            updateSetting({
               field: "card.buttonAction",
               value: e.value.name,
             })
@@ -200,7 +200,7 @@ export default function S3CardDesign(props) {
           value={gs.card.buttonText}
           onChange={(e) => {
             dispatch(
-              updateStep3({
+              updateSetting({
                 field: "card.buttonText",
                 value: e.target.value,
               })
@@ -215,7 +215,7 @@ export default function S3CardDesign(props) {
           value={gs.card.buttonBgColor}
           onChange={(e) => {
             dispatch(
-              updateStep3({
+              updateSetting({
                 field: "card.buttonBgColor",
                 value: e.target.value,
               })
@@ -230,7 +230,7 @@ export default function S3CardDesign(props) {
           value={gs.card.buttonTextColor}
           onChange={(e) => {
             dispatch(
-              updateStep3({
+              updateSetting({
                 field: "card.buttonTextColor",
                 value: e.target.value,
               })

@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateGlobalSettings,
-  updateStep1,
+  updateSetting,
 } from "../../../../../redux/globalSettingsSlice";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { updateMenu } from "../../../../../redux/menuSlice";
 
-export default function S1DataLoadInput(props) {
+export default function DataLoadInput(props) {
   const [isSuccesfullyConnected, setIsSuccesfullyConnected] =
     useState(false);
   const [csvFile, setCSVFile] = useState(null);
@@ -25,7 +25,6 @@ export default function S1DataLoadInput(props) {
         },
       })
       .then((res) => {
-        console.log("data", res);
         dispatch(updateMenu(res.data.menu));
         dispatch(updateGlobalSettings(res.data.globalSettings));
       })
@@ -35,7 +34,10 @@ export default function S1DataLoadInput(props) {
   }
   function tryConnectToSpreadsheet(e) {
     dispatch(
-      updateStep1({ field: "spreadSheetURL", value: e.target.value })
+      updateSetting({
+        field: "spreadSheetURL",
+        value: e.target.value,
+      })
     );
 
     setTimeout(() => {

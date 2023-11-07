@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { updateStep2 } from "../../../../../redux/globalSettingsSlice";
+import { updateSetting } from "../../../../../redux/globalSettingsSlice";
 
-export default function S2BasicInfoColors(props) {
+export default function BasicInfoColors(props) {
   const gs = useSelector((store) => store.globalSettings);
   const dispatch = useDispatch();
 
@@ -18,7 +18,7 @@ export default function S2BasicInfoColors(props) {
           value={gs.websiteName}
           onChange={(e) => {
             dispatch(
-              updateStep2({
+              updateSetting({
                 field: "websiteName",
                 value: e.target.value,
               })
@@ -45,7 +45,7 @@ export default function S2BasicInfoColors(props) {
           value={gs.whatsappNumberConnected}
           onChange={(e) => {
             dispatch(
-              updateStep2({
+              updateSetting({
                 field: "whatsappNumberConnected",
                 value: e.target.value,
               })
@@ -77,7 +77,7 @@ export default function S2BasicInfoColors(props) {
               value={gs.subdomain}
               onChange={(e) => {
                 dispatch(
-                  updateStep2({
+                  updateSetting({
                     field: "subdomain",
                     value: e.target.value,
                   })
@@ -108,7 +108,7 @@ export default function S2BasicInfoColors(props) {
             value={gs.logoURL}
             onChange={(e) => {
               dispatch(
-                updateStep2({
+                updateSetting({
                   field: "logoURL",
                   value: e.target.value,
                 })
@@ -135,7 +135,7 @@ export default function S2BasicInfoColors(props) {
             value={gs.faviconURL}
             onChange={(e) => {
               dispatch(
-                updateStep2({
+                updateSetting({
                   field: "faviconURL",
                   value: e.target.value,
                 })
@@ -155,7 +155,7 @@ export default function S2BasicInfoColors(props) {
           value={gs.isNavbarFixed}
           onChange={(e) => {
             dispatch(
-              updateStep2({
+              updateSetting({
                 field: "isNavbarFixed",
                 value: e.target.checked,
               })
@@ -185,7 +185,7 @@ export default function S2BasicInfoColors(props) {
           value={gs.hero.isShown}
           onChange={(e) => {
             dispatch(
-              updateStep2({
+              updateSetting({
                 field: "hero.isShown",
                 value: e.target.checked,
               })
@@ -216,7 +216,7 @@ export default function S2BasicInfoColors(props) {
             value={gs.hero.title}
             onChange={(e) => {
               dispatch(
-                updateStep2({
+                updateSetting({
                   field: "hero.title",
                   value: e.target.value,
                 })
@@ -232,7 +232,7 @@ export default function S2BasicInfoColors(props) {
             value={gs.hero.titleColor}
             onChange={(e) => {
               dispatch(
-                updateStep2({
+                updateSetting({
                   field: "hero.titleColor",
                   value: e.target.value,
                 })
@@ -258,7 +258,7 @@ export default function S2BasicInfoColors(props) {
             value={gs.hero.subheading}
             onChange={(e) => {
               dispatch(
-                updateStep2({
+                updateSetting({
                   field: "hero.subheading",
                   value: e.target.value,
                 })
@@ -274,7 +274,7 @@ export default function S2BasicInfoColors(props) {
             value={gs.hero.subheadingColor}
             onChange={(e) => {
               dispatch(
-                updateStep2({
+                updateSetting({
                   field: "hero.subheadingColor",
                   value: e.target.value,
                 })
@@ -300,7 +300,7 @@ export default function S2BasicInfoColors(props) {
             value={gs.hero.image}
             onChange={(e) => {
               dispatch(
-                updateStep2({
+                updateSetting({
                   field: "hero.image",
                   value: e.target.value,
                 })
@@ -338,7 +338,7 @@ export default function S2BasicInfoColors(props) {
               console.log("textarea", e.target.value);
               console.log("test", e.target.value.includes("\n"));
               dispatch(
-                updateStep2({
+                updateSetting({
                   field: "menuDescription",
                   value: e.target.value,
                 })
