@@ -1,0 +1,36 @@
+// used to plan out data and stuff, its never used anywhere
+
+on signup we add to users table
+
+USERS
+
+{
+    id,
+}
+
+
+USERS:ID { 
+    menus: [ menuID ], 
+    clientName,   
+    email,
+    pass,
+    isPro,
+    isAuthnticated,
+    createdAt,
+    name,
+    contactNumber
+}
+
+
+MENUS [menuID]
+
+MENU:subdomain {
+    menuID,
+    items: []
+}
+
+GS:subdomain {
+
+}
+
+

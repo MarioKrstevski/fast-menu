@@ -1,40 +1,60 @@
 import { useState } from "react";
 import axios from "axios";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Provider } from "react-redux";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
+import { Provider, useSelector } from "react-redux";
 import Menu from "./pages/Menu/Menu";
 import { store } from "./redux/store";
 import Builder from "./pages/Builder/Builder";
 import WebsitePreview from "./pages/Builder/components/WebsitePreview";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
+import Landing from "./pages/Landing/Landing";
+import Login from "./pages/Login/Login";
+import NotFound from "./pages/NotFound.js/NotFound";
+import SignUp from "./pages/SignUp/SignUp";
+
+function ProtectedRoute({ redirectPath = "/", children }) {
+  const user = useSelector((store) => store.auth.user);
+  console.log("user", user);
+  if (!user) {
+    return <Navigate to={redirectPath} replace />;
+  }
+
+  return children;
+}
 export function FastMenu(props) {
-  const [csvFile, setCSVFile] = useState(null);
-
-  const handleSubmit = () => {
-    const formData = new FormData();
-    formData.append("csvFile", csvFile);
-
-    const url = "http://localhost:8000/upload";
-    axios
-      .post(url, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((data) => console.log("data", data))
-      .catch((err) => console.log("err", err));
-  };
-  const handleFileChange = (e) => {
-    setCSVFile(e.target.files[0]);
-  };
   return (
     <div>
       <Provider store={store}>
         <BrowserRouter>
           <Routes>
+            <Route path="/" element={<Landing />} />
             <Route path="menu/:companyName" element={<Menu />} />
-            <Route path="builder" element={<Builder />} />
-            <Route path="Dashboard" element={<Dashboard />} />
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<SignUp />} />
+
+            <Route
+              path="Dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="builder"
+              element={
+                <ProtectedRoute>
+                  <Builder />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </Provider>

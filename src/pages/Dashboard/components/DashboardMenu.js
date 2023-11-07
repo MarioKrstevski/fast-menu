@@ -1,9 +1,12 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../redux/authSlice";
 
 export default function DashboardMenu(props) {
   const [toggleLogout, setToggleLogout] = useState(false);
+  const dispatch = useDispatch();
   return (
     <div className="bg-slate-950 text-white">
       <div className="container">
@@ -21,15 +24,15 @@ export default function DashboardMenu(props) {
               alt="Profile image"
               className="h-8 w-8 rounded-full border-2 border-white cursor-pointer"
             />
-            <div
-              tabIndex="0"
-              className="absolute  bg-white mt-24 shadow-md rounded-lg right-0 outline-none"
-              style={{ display: toggleLogout ? "block" : "none" }}
+
+            <button
+              onClick={() => {
+                dispatch(logout());
+              }}
+              className="button is-white has-text-weight-bold p-6"
             >
-              <a className="button is-white has-text-weight-bold p-6">
-                Log out
-              </a>
-            </div>
+              Log out
+            </button>
           </div>
         </nav>
       </div>
