@@ -93,6 +93,7 @@ export default function DataLoadInput(props) {
           Select file from device
         </label>
         <input
+          className="w-full"
           id="spreadsheetupload"
           type="file"
           name="csvFile"

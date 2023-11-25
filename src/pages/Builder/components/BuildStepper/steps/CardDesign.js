@@ -132,14 +132,16 @@ export default function CardDesign(props) {
       {/* ---- */}
       <div className="my-2 font-bold">Caption</div>
       <Dropdown
+        showClear
         value={allFields.find(
           (field) => field.name === gs.card.caption
         )}
         onChange={(e) => {
+          console.log("e", e.value);
           dispatch(
             updateSetting({
               field: "card.caption",
-              value: e.value.name,
+              value: e.value ? e.value.name : "",
             })
           );
         }}

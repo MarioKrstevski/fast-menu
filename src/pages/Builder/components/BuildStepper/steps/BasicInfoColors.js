@@ -39,7 +39,7 @@ export default function BasicInfoColors(props) {
           htmlFor="whatsappNumberConnected"
           className="text-slate-900 font-bold mb-2 mt-3 block"
         >
-          Website name
+          Phone Number
         </label>{" "}
         <input
           value={gs.whatsappNumberConnected}

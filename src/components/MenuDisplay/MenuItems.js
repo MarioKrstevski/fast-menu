@@ -44,7 +44,7 @@ function Card({ item }) {
             </ul>
 
             {gs.card.buttonAction === "no action" && null}
-            {gs.card.buttonAction === "cart" && (
+            {gs.card.buttonAction === "cart" && gs.ordersEnabled && (
               <button
                 onClick={() => {
                   dispatch(addItem(item));

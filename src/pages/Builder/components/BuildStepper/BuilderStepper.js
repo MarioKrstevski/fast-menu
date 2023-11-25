@@ -10,6 +10,7 @@ import DataLoadInput from "./steps/DataLoadInput";
 import BasicInfoColors from "./steps/BasicInfoColors";
 import CardDesign from "./steps/CardDesign";
 import QRCodeInfo from "./steps/QRCodeInfo";
+import { useSelector } from "react-redux";
 
 const steps = [
   { component: <DataLoadInput />, title: "Insert Spreadsheet" },
@@ -18,9 +19,14 @@ const steps = [
   { component: <QRCodeInfo />, title: "QR Code" },
 ];
 export default function BuilderStepper(props) {
+  const gs = useSelector((state) => state.globalSettings);
+
+  window.ss = function () {
+    console.log(gs);
+  };
   const [currentStep, setCurrentStep] = useState(1);
   return (
-    <div className="w-[300px] border-r-2 h-full border-r-gray-400 flex flex-col">
+    <div className="w-[400px] overflow-x-hidden border-r-2 h-full border-r-gray-400 flex flex-col">
       <div
         id="build-stepper"
         className="flex  justify-between items-center p-4 border-b h-20"
@@ -52,7 +58,7 @@ export default function BuilderStepper(props) {
           </button>
         </div>
       </div>
-      <div className="global-settings h-full overflow-y-auto  overflow-x-hidden p-2 ">
+      <div className=" global-settings h-full overflow-y-auto   p-2 ">
         {steps[currentStep - 1].component}
       </div>
       <div className=" bg-gray-200 mt-auto">

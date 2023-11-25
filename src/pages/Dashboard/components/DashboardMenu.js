@@ -1,11 +1,13 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../../redux/authSlice";
 
 export default function DashboardMenu(props) {
   const [toggleLogout, setToggleLogout] = useState(false);
+  const user = useSelector((state) => state.auth.user);
+  console.log("user", user);
   const dispatch = useDispatch();
   return (
     <div className="bg-slate-950 text-white">
@@ -16,6 +18,7 @@ export default function DashboardMenu(props) {
             <span>Fast Menu</span>
           </div>
           <div className="relative flex items-center mr-4">
+            <span className="px-2">Hello {user.contactName}</span>
             <img
               onClick={() => {
                 setToggleLogout(!toggleLogout);

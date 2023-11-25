@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../redux/authSlice";
+import axios from "axios";
 
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [loginError, setloginError] = useState("");
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -17,11 +18,25 @@ export default function Login() {
     setPassword(e.target.value);
   };
 
+  async function trylogin() {
+    return axios.post("http://localhost:8000/login", {
+      email,
+      password,
+    });
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
+    trylogin()
+      .then((res) => {
+        console.log("responser", res);
+        dispatch(login(res.data.user));
+        navigate("/dashboard");
+      })
+      .catch((err) => {
+        console.log("err", err);
+        setloginError(err.response.data.message);
+      });
     // Handle the login logic here
-    dispatch(login("demo"));
-    navigate("/dashboard");
   };
 
   return (
@@ -67,6 +82,11 @@ export default function Login() {
           >
             Log In
           </button>
+          <div className="status-message  mt-2">
+            {loginError && (
+              <div className="text-red-600">{loginError}</div>
+            )}
+          </div>
         </form>
       </div>
     </div>

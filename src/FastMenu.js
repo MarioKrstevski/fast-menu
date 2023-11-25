@@ -19,7 +19,7 @@ import SignUp from "./pages/SignUp/SignUp";
 
 function ProtectedRoute({ redirectPath = "/", children }) {
   const user = useSelector((store) => store.auth.user);
-  console.log("user", user);
+  // console.log("user", user);
   if (!user) {
     return <Navigate to={redirectPath} replace />;
   }
