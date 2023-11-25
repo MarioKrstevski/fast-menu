@@ -1,5 +1,4 @@
-import { useState } from "react";
-import axios from "axios";
+import { Toaster } from "react-hot-toast";
 import {
   BrowserRouter,
   Navigate,
@@ -57,6 +56,7 @@ export function FastMenu(props) {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
+        <Toaster />
       </Provider>
     </div>
   );

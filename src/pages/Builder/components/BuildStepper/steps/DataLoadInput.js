@@ -14,15 +14,16 @@ export default function DataLoadInput(props) {
     useState(false);
   const [csvFile, setCSVFile] = useState(null);
   const [isFileSubmitted, setIsFileSubmitted] = useState(false);
+  const [isValidSheetsLink, setIsValidSheetsLink] = useState(true);
   const gs = useSelector((store) => store.globalSettings);
   const menuId = useSelector((store) => store.menu.menuId);
   const dispatch = useDispatch();
 
-  function loadMenuAtStart() {
+  function be_loadMenuItems() {
     axios
-      .get("http://localhost:8000/menu", {
+      .get("http://localhost:8000/menuItems", {
         params: {
-          menuId,
+          newLink: gs.spreadSheetURL,
         },
       })
       .then((res) => {
@@ -32,7 +33,17 @@ export default function DataLoadInput(props) {
         console.log("err", err);
       });
   }
-  function tryConnectToSpreadsheet(e) {
+  function checkForValidSpreadsheetLink(link) {
+    // Regular expression to match the correct link structure
+    const regex =
+      /https:\/\/docs\.google\.com\/spreadsheets\/d\/([a-zA-Z0-9_-]+)\/edit/;
+
+    // Use the regular expression to check if the link matches
+    return regex.test(link);
+  }
+  function reloadMenuFromNewSheetURL(e) {
+    setIsValidSheetsLink(true);
+
     dispatch(
       updateSetting({
         field: "spreadSheetURL",
@@ -40,10 +51,13 @@ export default function DataLoadInput(props) {
       })
     );
 
-    setTimeout(() => {
-      setIsSuccesfullyConnected(true);
-      e.target.blur();
-    }, 500);
+    const isValidLink = checkForValidSpreadsheetLink(e.target.value);
+    if (!isValidLink) {
+      setIsValidSheetsLink(false);
+    }
+  }
+  function handleLoadMenuFromSheets() {
+    be_loadMenuItems();
   }
   const handleSubmit = () => {
     const formData = new FormData();
@@ -66,28 +80,38 @@ export default function DataLoadInput(props) {
     setCSVFile(e.target.files[0]);
   };
 
-  useEffect(() => {
-    loadMenuAtStart();
-  }, []);
   return (
     <div className="p-2">
-      <label htmlFor="spreadsheet" className="my-2">
-        Spreadsheet URL
-      </label>
-      <input
-        id="spreadsheet"
-        type="text"
-        value={gs.spreadSheetURL}
-        autoComplete="on"
-        onChange={tryConnectToSpreadsheet}
-        placeholder="Insert your spreadsheet url or id"
-        autoFocus={"autofocus"}
-        className={`input is-success is-large w-[94%] placeholder-gray-500 border rounded p-2  ${
-          isSuccesfullyConnected
-            ? "border-green-400"
-            : "border-black "
-        }`}
-      />
+      <div className="mb-4 break-words">
+        <label htmlFor="spreadsheet" className="my-2">
+          Spreadsheet URL
+        </label>
+        <input
+          id="spreadsheet"
+          type="text"
+          value={gs.spreadSheetURL}
+          autoComplete="on"
+          onChange={reloadMenuFromNewSheetURL}
+          placeholder="Insert your spreadsheet url or id"
+          autoFocus={"autofocus"}
+          className={`input is-success is-large w-[94%] placeholder-gray-500 border rounded p-2  ${
+            isSuccesfullyConnected
+              ? "border-green-400"
+              : "border-black "
+          }`}
+        />
+        {!isValidSheetsLink && (
+          <div className="text-red-500 text-sm">
+            The link is invalid, correct it
+          </div>
+        )}
+        <button
+          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 my-2 border border-gray-400 rounded shadow"
+          onClick={handleLoadMenuFromSheets}
+        >
+          Sync Menu
+        </button>
+      </div>
       <div className="my-4 break-words">
         <label htmlFor="spreadsheetupload">
           Select file from device

@@ -4,13 +4,15 @@ import {
   faSyncAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import DataLoadInput from "./steps/DataLoadInput";
 import BasicInfoColors from "./steps/BasicInfoColors";
 import CardDesign from "./steps/CardDesign";
 import QRCodeInfo from "./steps/QRCodeInfo";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateMenu } from "../../../../redux/menuSlice";
+import axios from "axios";
 
 const steps = [
   { component: <DataLoadInput />, title: "Insert Spreadsheet" },
@@ -20,9 +22,38 @@ const steps = [
 ];
 export default function BuilderStepper(props) {
   const gs = useSelector((state) => state.globalSettings);
+  const dispatch = useDispatch();
+  const menuId = useSelector((store) => store.menu.menuId);
+  const menu = useSelector((store) => store.menu.menu);
 
+  function be_loadMenuItems() {
+    axios
+      .get("http://localhost:8000/menu", {
+        params: {
+          menuId,
+        },
+      })
+      .then((res) => {
+        dispatch(updateMenu(res.data.menu));
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }
+  function handleLoadMenu() {
+    be_loadMenuItems();
+  }
+
+  //load menu if link exists and they haven't been loaded before
+  useEffect(() => {
+    const menuIsLoaded = menu.length !== 0;
+    if (!menuIsLoaded && gs.spreadSheetURL) {
+      handleLoadMenu();
+    }
+  }, []);
   window.ss = function () {
     console.log(gs);
+    console.log(menu);
   };
   const [currentStep, setCurrentStep] = useState(1);
   return (
@@ -42,6 +73,7 @@ export default function BuilderStepper(props) {
             style={{ transitionDelay: "0ms" }}
           >
             <button
+              onClick={handleLoadMenu}
               type="button"
               className="button w-8 is-small mr-2"
             >
