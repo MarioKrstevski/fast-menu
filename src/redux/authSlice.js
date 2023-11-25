@@ -14,10 +14,15 @@ export const authSlice = createSlice({
     logout(state) {
       state.user = null;
     },
+    updateWithNewMenus(state, action) {
+      console.log("action", action);
+      state.user = { ...state.user, menus: action.payload };
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { login, logout } = authSlice.actions;
+export const { login, logout, updateWithNewMenus } =
+  authSlice.actions;
 
 export default authSlice.reducer;

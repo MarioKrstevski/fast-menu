@@ -10,8 +10,8 @@ export default function DashboardMenu(props) {
   console.log("user", user);
   const dispatch = useDispatch();
   return (
-    <div className="bg-slate-950 text-white">
-      <div className="container">
+    <div className="bg-slate-950 text-white flex justify-center">
+      <div className="container ">
         <nav className="h-12 w-full  flex justify-between px-8 items-center">
           <div className="logo flex gap-1">
             <img src="" alt="logo" />

@@ -20,12 +20,16 @@ export default function Landing(props) {
             <li className="text-gray-700 hover:text-indigo-500 cursor-pointer">
               Contact
             </li>
-            <li className="text-indigo-500 font-semibold cursor-pointer">
-              <Link to={"login"}> Login </Link>
-            </li>
-            <li className="bg-indigo-500 text-white rounded py-2 px-4 cursor-pointer">
-              <Link to={"signup"}> SignUp </Link>
-            </li>
+            <Link to={"login"}>
+              <li className="text-indigo-500 font-semibold cursor-pointer">
+                Login
+              </li>
+            </Link>
+            <Link to={"signup"}>
+              <li className="bg-indigo-500 text-white rounded py-2 px-4 cursor-pointer">
+                SignUp
+              </li>
+            </Link>
           </ul>
         </div>
       </nav>

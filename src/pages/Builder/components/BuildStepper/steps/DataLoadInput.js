@@ -15,18 +15,18 @@ export default function DataLoadInput(props) {
   const [csvFile, setCSVFile] = useState(null);
   const [isFileSubmitted, setIsFileSubmitted] = useState(false);
   const gs = useSelector((store) => store.globalSettings);
+  const menuId = useSelector((store) => store.menu.menuId);
   const dispatch = useDispatch();
 
   function loadMenuAtStart() {
     axios
       .get("http://localhost:8000/menu", {
         params: {
-          companyName: gs.subdomain,
+          menuId,
         },
       })
       .then((res) => {
         dispatch(updateMenu(res.data.menu));
-        dispatch(updateGlobalSettings(res.data.globalSettings));
       })
       .catch((err) => {
         console.log("err", err);

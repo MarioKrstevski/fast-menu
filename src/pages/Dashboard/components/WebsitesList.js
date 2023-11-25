@@ -11,6 +11,8 @@ import { updateGlobalSettings } from "../../../redux/globalSettingsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { updateWithNewMenus } from "../../../redux/authSlice";
+import { updateMenuId } from "../../../redux/menuSlice";
 
 function NewMenuCreationIndicator() {
   return (
@@ -33,41 +35,48 @@ export default function WebsitesList(props) {
 
   const [isCreatingNewMenu, setIsCreatingNewMenu] = useState(false);
 
-  async function generateNewMenu() {
+  async function be_loadGlobalSettingsForMenu(menuId) {
+    return axios.get("http://localhost:8000/globalSettings", {
+      params: {
+        menuId,
+      },
+    });
+  }
+
+  function loadGlobalSettingsForMenu(menuId) {
+    console.log("menuId", menuId);
+    be_loadGlobalSettingsForMenu(menuId)
+      .then((res) => {
+        console.log("res gs", res.data);
+        dispatch(updateGlobalSettings(res.data.globalSettings));
+        dispatch(updateMenuId(menuId));
+        navigate("/builder");
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }
+
+  async function be_generateNewMenu() {
     return axios.get("http://localhost:8000/generateNewMenu", {
       params: {
         client: user.clientName,
       },
     });
   }
-  function loadGlobalSettings(client) {
-    console.log("starting");
-    axios
-      .get("http://localhost:8000/globalSettings", {
-        params: {
-          client,
-        },
-      })
-      .then((res) => {
-        console.log("res", res.data);
-        dispatch(updateGlobalSettings(res.data));
-        navigate("/builder");
-      })
-      .catch((err) => console.log("error", err));
-  }
 
   function createNewMenu() {
     setIsCreatingNewMenu(true);
 
-    setTimeout(() => {
-      setIsCreatingNewMenu(false);
-    }, 1000);
-
-    generateNewMenu()
+    be_generateNewMenu()
       .then((res) => {
-        console.log("res", res.data);
+        console.log("new menu created", res.data.newMenus);
+        dispatch(updateWithNewMenus(res.data.newMenus));
       })
-      .catch((err) => console.log("error", err));
+      .catch((err) => console.log("error", err))
+      .finally(() => {
+        setIsCreatingNewMenu(false);
+      });
   }
 
   return (
@@ -138,9 +147,7 @@ xl:grid-cols-3
               <div className="p-6 text-left rounded-b-lg flex justify-between">
                 <div>
                   <a
-                    onClick={() => {
-                      loadGlobalSettings(menu.subdomain);
-                    }}
+                    onClick={() => loadGlobalSettingsForMenu(menu.id)}
                     className="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white hover:text-white font-bold p-3 rounded shadow-md"
                   >
                     <FontAwesomeIcon icon={faEdit} className="mr-2" />
