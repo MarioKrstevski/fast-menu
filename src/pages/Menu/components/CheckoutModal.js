@@ -86,7 +86,6 @@ export default function CheckoutModal({ setIsCheckoutModalVisible }) {
         number: gs.whatsappNumberConnected,
       })
       .then((data) => {
-        console.log("order placed succesfully", data);
         dispatch(clearCart());
         setIsOrderSent(true);
       })
@@ -96,7 +95,6 @@ export default function CheckoutModal({ setIsCheckoutModalVisible }) {
   }
   const onSubmit = (data) => {
     const message = generateOrderMessage(data, cart);
-    // console.log("message final", message);
     setIsOrderSent(true);
     processOrder(message);
   };

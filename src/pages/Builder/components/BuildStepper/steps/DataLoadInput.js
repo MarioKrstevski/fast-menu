@@ -71,10 +71,9 @@ export default function DataLoadInput(props) {
         },
       })
       .then((data) => {
-        console.log("data", data);
         setIsFileSubmitted(true);
       })
-      .catch((err) => console.log("err", err));
+      .catch((err) => {});
   };
   const handleFileChange = (e) => {
     setCSVFile(e.target.files[0]);

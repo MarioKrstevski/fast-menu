@@ -44,10 +44,8 @@ export default function WebsitesList(props) {
   }
 
   function loadGlobalSettingsForMenu(menuId) {
-    console.log("menuId", menuId);
     be_loadGlobalSettingsForMenu(menuId)
       .then((res) => {
-        console.log("res gs", res.data);
         dispatch(updateGlobalSettings(res.data.globalSettings));
         dispatch(updateMenuId(menuId));
         navigate("/builder");
@@ -70,7 +68,6 @@ export default function WebsitesList(props) {
 
     be_generateNewMenu()
       .then((res) => {
-        console.log("new menu created", res.data.newMenus);
         dispatch(updateWithNewMenus(res.data.newMenus));
       })
       .catch((err) => console.log("error", err))

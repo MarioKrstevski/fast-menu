@@ -335,8 +335,6 @@ export default function BasicInfoColors(props) {
             cols="28"
             rows="4"
             onChange={(e) => {
-              console.log("textarea", e.target.value);
-              console.log("test", e.target.value.includes("\n"));
               dispatch(
                 updateSetting({
                   field: "menuDescription",

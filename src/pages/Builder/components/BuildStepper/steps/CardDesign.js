@@ -55,7 +55,6 @@ export default function CardDesign(props) {
           (field) => field.name === gs.card.filterBy
         )}
         onChange={(e) => {
-          console.log("e", e.value);
           dispatch(
             updateSetting({
               field: "card.filterBy",
@@ -137,7 +136,6 @@ export default function CardDesign(props) {
           (field) => field.name === gs.card.caption
         )}
         onChange={(e) => {
-          console.log("e", e.value);
           dispatch(
             updateSetting({
               field: "card.caption",
@@ -157,7 +155,6 @@ export default function CardDesign(props) {
           value={customFields}
           onChange={(e) => {
             // setSelectedCities(e.value);
-            console.log("selcities", e.value);
             dispatch(
               updateSetting({
                 field: "card.customFields",

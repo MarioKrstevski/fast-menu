@@ -49,15 +49,12 @@ export default function SignUp() {
 
     be_checkClientNameAvailability(e.target.value)
       .then((res) => {
-        console.log("done");
         setIsClientNameAvailable(true);
       })
       .catch((err) => {
-        console.log("not");
         setIsClientNameAvailable(false);
       })
       .finally(() => {
-        console.log("finaly");
         setTestedName(e.target.value);
         setIsCheckingAvailableClientName(false);
       });
@@ -83,11 +80,9 @@ export default function SignUp() {
     setsignUpSuccess("");
     signup()
       .then((res) => {
-        console.log("final res", res);
         setsignUpSuccess(res.data);
       })
       .catch((err) => {
-        console.log("err", err);
         setsignUpError(err.response.data);
       });
   };

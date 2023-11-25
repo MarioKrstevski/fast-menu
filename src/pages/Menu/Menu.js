@@ -19,7 +19,6 @@ export default function Menu(props) {
         },
       })
       .then((res) => {
-        console.log("data", res);
         dispatch(updateMenu(res.data.menu));
         dispatch(updateGlobalSettings(res.data.globalSettings));
       })

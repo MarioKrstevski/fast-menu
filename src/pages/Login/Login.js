@@ -28,7 +28,6 @@ export default function Login() {
     e.preventDefault();
     trylogin()
       .then((res) => {
-        console.log("responser", res);
         dispatch(login(res.data.user));
         navigate("/dashboard");
       })

@@ -22,23 +22,14 @@ export default function QRCodeInfo(props) {
         globalSettings,
       })
       .then((res) => {
-        console.log("res", res);
-        // toast.success("Settings Updated!", {
-        //   position: "bottom-left",
-        // });
-
         setSettingsUpdated(true);
         setTimeout(() => {
           setSettingsUpdated(false);
         }, 2000);
       })
-      .catch((err) => {
-        console.log("err", err);
-      });
+      .catch((err) => {});
   }
   function handleSaveGlobalSettings() {
-    console.log("gs", gs);
-
     be_saveGlobalSettings(menuId, gs);
   }
 

@@ -7,7 +7,6 @@ import { logout } from "../../../redux/authSlice";
 export default function DashboardMenu(props) {
   const [toggleLogout, setToggleLogout] = useState(false);
   const user = useSelector((state) => state.auth.user);
-  console.log("user", user);
   const dispatch = useDispatch();
   return (
     <div className="bg-slate-950 text-white flex justify-center">

@@ -15,7 +15,6 @@ export const authSlice = createSlice({
       state.user = null;
     },
     updateWithNewMenus(state, action) {
-      console.log("action", action);
       state.user = { ...state.user, menus: action.payload };
     },
   },
