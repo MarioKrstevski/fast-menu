@@ -33,6 +33,20 @@ export default function QRCodeInfo(props) {
     be_saveGlobalSettings(menuId, gs);
   }
 
+  function be_publishMenu(menuId) {
+    axios
+      .post("http://localhost:8000/publishMenu", {
+        menuId,
+      })
+      .then((res) => {
+        console.log("res", res);
+      })
+      .catch((err) => {});
+  }
+  function handlePublishMenu() {
+    be_publishMenu(menuId);
+  }
+
   return (
     <div>
       <div className="h-full flex flex-col items-center">
@@ -78,9 +92,10 @@ export default function QRCodeInfo(props) {
           >
             <button
               type="button"
+              onClick={handlePublishMenu}
               className="px-4 py-2 mt-2 rounded bg-slate-800 hover:bg-slate-900 active:bg-slate-950 text-white border-transparent flex justify-center gap-2 w-full text-lg"
             >
-              <span> Publish </span>{" "}
+              <span> Publish </span>
               <span className="icon is-medium">
                 <FontAwesomeIcon icon={faAngleRight} />
               </span>

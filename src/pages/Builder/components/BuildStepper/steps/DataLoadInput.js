@@ -27,7 +27,7 @@ export default function DataLoadInput(props) {
         },
       })
       .then((res) => {
-        dispatch(updateMenu(res.data.menu));
+        dispatch(updateMenu(res.data.menuItems));
       })
       .catch((err) => {
         console.log("err", err);

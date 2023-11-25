@@ -3,6 +3,7 @@ import {
   faEllipsisH,
   faExternalLinkAlt,
   faPlus,
+  faRefresh,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -31,7 +32,8 @@ export default function WebsitesList(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
-  const gs = useSelector((state) => state.globalSettings);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFetchingMenus, setIsFetchingMenus] = useState(false);
 
   const [isCreatingNewMenu, setIsCreatingNewMenu] = useState(false);
 
@@ -55,19 +57,41 @@ export default function WebsitesList(props) {
       });
   }
 
-  async function be_generateNewMenu() {
+  async function be_generateNewMenu(client) {
     return axios.get("http://localhost:8000/generateNewMenu", {
       params: {
-        client: user.clientName,
+        client,
       },
     });
   }
 
+  async function be_getMenusForClient(client) {
+    return axios.get("http://localhost:8000/getMenus", {
+      params: {
+        client,
+      },
+    });
+  }
+  function handleRefreshMenus() {
+    setIsFetchingMenus(true);
+    setTimeout(() => {
+      setIsFetchingMenus(false);
+    }, 1000);
+    be_getMenusForClient(user.clientName)
+      .then((res) => {
+        dispatch(updateWithNewMenus(res.data.menus));
+      })
+      .catch((err) => console.log("error", err))
+      .finally(() => {
+        setIsCreatingNewMenu(false);
+      });
+  }
+
   function createNewMenu() {
     setIsCreatingNewMenu(true);
-
-    be_generateNewMenu()
+    be_generateNewMenu(user.clientName)
       .then((res) => {
+        console.log("res", res);
         dispatch(updateWithNewMenus(res.data.newMenus));
       })
       .catch((err) => console.log("error", err))
@@ -77,7 +101,29 @@ export default function WebsitesList(props) {
   }
 
   return (
-    <div className="container mx-auto py-4 px-4 sm:px-0">
+    <div className="container  mx-auto py-4 px-4 sm:px-0">
+      {isModalOpen && (
+        <div
+          onClick={() => {
+            setIsModalOpen(false);
+          }}
+          className={` bg-black opacity-60 global-modal fixed p-4 top-0 left-0 z-20  w-full h-full flex flex-col items-end transition duration-300 ease-in-out `}
+        ></div>
+      )}
+
+      <div className="refresh-menus">
+        <button
+          onClick={handleRefreshMenus}
+          className="bg-white my-2 hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 mt-2 border border-gray-400 rounded shadow"
+        >
+          <FontAwesomeIcon
+            icon={faRefresh}
+            spin={isFetchingMenus}
+            className="mx-2"
+          />
+          Refresh Menus
+        </button>
+      </div>
       <div
         className="     grid
 gap-4
@@ -111,7 +157,12 @@ xl:grid-cols-3
                 </button>
                 <div className="d-flex">
                   {!menu.isPro && (
-                    <button className="text-gray-600 hover:text-gray-800 font-bold py-2 px-4 text-xs inline-flex items-center bg-gray-100 rounded-full">
+                    <button
+                      onClick={() => {
+                        setIsModalOpen(true);
+                      }}
+                      className="text-gray-600 hover:text-gray-800 font-bold py-2 px-4 text-xs inline-flex items-center bg-gray-100 rounded-full"
+                    >
                       Upgrade to PRO
                     </button>
                   )}
@@ -150,13 +201,15 @@ xl:grid-cols-3
                     <FontAwesomeIcon icon={faEdit} className="mr-2" />
                     Edit{" "}
                   </a>
-                  <a className="ml-4 cursor-pointer text-white hover:text-white p-3 bg-gray-800 hover:bg-gray-900 rounded shadow-md font-bold">
-                    <FontAwesomeIcon
-                      icon={faExternalLinkAlt}
-                      className="mr-2"
-                    />
-                    Visit
-                  </a>
+                  {menu.isPublished && (
+                    <a className="ml-4 cursor-pointer text-white hover:text-white p-3 bg-gray-800 hover:bg-gray-900 rounded shadow-md font-bold">
+                      <FontAwesomeIcon
+                        icon={faExternalLinkAlt}
+                        className="mr-2"
+                      />
+                      Visit
+                    </a>
+                  )}
                 </div>
                 <div>
                   <span className="ml-4" style={{ display: "none" }}>

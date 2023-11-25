@@ -31,7 +31,7 @@ export function FastMenu(props) {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path="menu/:companyName" element={<Menu />} />
+            <Route path="menu/:subdomain" element={<Menu />} />
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignUp />} />
 

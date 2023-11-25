@@ -26,7 +26,8 @@ export default function BuilderStepper(props) {
   const menuId = useSelector((store) => store.menu.menuId);
   const menu = useSelector((store) => store.menu.menu);
 
-  function be_loadMenuItems() {
+  function be_loadMenuItems(menuId) {
+    console.log("trying to load menu item", menuId);
     axios
       .get("http://localhost:8000/menu", {
         params: {
@@ -34,18 +35,19 @@ export default function BuilderStepper(props) {
         },
       })
       .then((res) => {
-        dispatch(updateMenu(res.data.menu));
+        dispatch(updateMenu(res.data.menuItems));
       })
       .catch((err) => {
         console.log("err", err);
       });
   }
   function handleLoadMenu() {
-    be_loadMenuItems();
+    be_loadMenuItems(menuId);
   }
 
-  //load menu if link exists and they haven't been loaded before
+  //load menu if spreadSheetURL is setup and they haven't been loaded before
   useEffect(() => {
+    console.log("menu", menu);
     const menuIsLoaded = menu.length !== 0;
     if (!menuIsLoaded && gs.spreadSheetURL) {
       handleLoadMenu();
