@@ -47,6 +47,7 @@ function Card({ item }) {
             {gs.card.buttonAction === "cart" && gs.ordersEnabled && (
               <button
                 onClick={() => {
+                  console.log("added Item", item);
                   dispatch(addItem(item));
                 }}
                 className="w-full mt-4 bg-blue-500 hover:bg-blue-700 font-medium py-2 px-4 rounded text-center hover:shadow-md transition-shadow duration-300 focus:outline-none"

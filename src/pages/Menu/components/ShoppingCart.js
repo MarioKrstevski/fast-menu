@@ -17,6 +17,9 @@ import { useState } from "react";
 
 export default function ShoppingCart({ setIsCheckoutModalVisible }) {
   const cart = useSelector((state) => state.shoppingCart.cart);
+  const gs = useSelector((state) => state.globalSettings);
+
+  console.log("gs", gs);
   const [isShoppingCartOpen, setIsShoppingCartOpen] = useState(false);
 
   const dispatch = useDispatch();
@@ -112,16 +115,17 @@ export default function ShoppingCart({ setIsCheckoutModalVisible }) {
                     <div className="h-16 w-16 min-w-[64px] rounded-lg overflow-hidden bg-gray-100">
                       <img
                         className="object-cover h-full w-full inset-0"
-                        src={entry.item.Image}
+                        src={entry.item[gs.card.image]}
                         lazy="loaded"
                       />
                     </div>
 
                     <div className="px-2 sm:px-4 flex flex-col justify-between">
                       <p className="overflow-ellipsis font-semibold overflow-hidden">
-                        {entry.item.Name}
+                        {entry.item[gs.card.title]}
                       </p>
                       <div>
+                        {/* Maybe we should change this based on fields in gs, but those fields probably wont be used in gs/cards */}
                         {entry.item.Price}
                         <span>{entry.item.Currency}</span>
                       </div>

@@ -13,7 +13,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { updateWithNewMenus } from "../../../redux/authSlice";
-import { updateMenuId } from "../../../redux/menuSlice";
+import {
+  updateMenuId,
+  updateMenuProStatus,
+} from "../../../redux/menuSlice";
 import { updateSelectedMenuForPlan } from "../../../redux/planUpgradeSlice";
 import UpgradeToProPlanModal from "./UpgradeToProPlanModal";
 
@@ -47,11 +50,13 @@ export default function WebsitesList(props) {
     });
   }
 
-  function loadGlobalSettingsForMenu(menuId) {
+  function loadNeededMenuInformation(menuId, isPro) {
     be_loadGlobalSettingsForMenu(menuId)
       .then((res) => {
         dispatch(updateGlobalSettings(res.data.globalSettings));
         dispatch(updateMenuId(menuId));
+        dispatch(updateMenuProStatus(isPro));
+        dispatch(updateSelectedMenuForPlan(menuId));
         navigate("/builder");
       })
       .catch((err) => {
@@ -113,7 +118,7 @@ export default function WebsitesList(props) {
           onClick={() => {
             setIsModalOpen(false);
           }}
-          className={` bg-black/25 global-modal fixed p-4 top-0 left-0 z-20  w-full h-full flex flex-col items-center transition duration-300 ease-in-out `}
+          className={` bg-black/40 global-modal fixed p-4 top-0 left-0 z-20  w-full h-full flex flex-col items-center transition duration-300 ease-in-out `}
         >
           <UpgradeToProPlanModal
             closeModal={() => {
@@ -210,7 +215,9 @@ xl:grid-cols-3
               <div className="p-6 text-left rounded-b-lg flex justify-between">
                 <div>
                   <a
-                    onClick={() => loadGlobalSettingsForMenu(menu.id)}
+                    onClick={() =>
+                      loadNeededMenuInformation(menu.id, menu.isPro)
+                    }
                     className="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white hover:text-white font-bold p-3 rounded shadow-md"
                   >
                     <FontAwesomeIcon icon={faEdit} className="mr-2" />

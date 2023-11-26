@@ -23,6 +23,7 @@ export default function UpgradeToProPlanModal({ closeModal }) {
     be_subscribeMenuToPro()
       .then((res) => {
         console.log("sub to pro done", res);
+
         closeModal();
       })
       .catch((err) => {
@@ -141,7 +142,7 @@ export default function UpgradeToProPlanModal({ closeModal }) {
         <div className="mb-4">
           <label
             className="block text-sm font-medium text-gray-600"
-            for="cardNumber"
+            htmlFor="cardNumber"
           >
             Card Number:
           </label>
@@ -154,7 +155,7 @@ export default function UpgradeToProPlanModal({ closeModal }) {
 
           <label
             className="block text-sm font-medium text-gray-600 mt-2"
-            for="expirationDate"
+            htmlFor="expirationDate"
           >
             Expiration Date:
           </label>
@@ -167,7 +168,7 @@ export default function UpgradeToProPlanModal({ closeModal }) {
 
           <label
             className="block text-sm font-medium text-gray-600 mt-2"
-            for="cvv"
+            htmlFor="cvv"
           >
             CVV:
           </label>
