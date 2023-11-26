@@ -1,9 +1,74 @@
 import { useDispatch, useSelector } from "react-redux";
 import { updateSetting } from "../../../../../redux/globalSettingsSlice";
+import { useRef, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 export default function BasicInfoColors(props) {
   const gs = useSelector((store) => store.globalSettings);
   const dispatch = useDispatch();
+  const subdomainRef = useRef(gs.subdomain);
+  console.log("domrref", subdomainRef.current);
+
+  const [subdomainAvailability, setSubdomainAvailability] =
+    useState("");
+
+  const [isValidSubdomain, setIsValidSubdomain] = useState(true);
+
+  const [
+    isSubdomainAvailabilityLoading,
+    setIsSubdomainAvailabilityLoading,
+  ] = useState(false);
+
+  function be_checkSubdomainAvailability(subdomain) {
+    console.log("here");
+    return axios.get("http://localhost:8000/subdomainAvailability", {
+      params: {
+        subdomain,
+      },
+    });
+  }
+  function handleCheckSubdomainAvailability() {
+    if (!isValidSubdomain) {
+      return;
+    }
+    setIsSubdomainAvailabilityLoading(true);
+
+    if (subdomainRef.current === gs.subdomain) {
+      setSubdomainAvailability("owned");
+
+      setTimeout(() => {
+        setIsSubdomainAvailabilityLoading(false);
+      }, 300);
+      return;
+    }
+
+    be_checkSubdomainAvailability(gs.subdomain)
+      .then((res) => {
+        console.log("res", res);
+        setSubdomainAvailability(res.data);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      })
+      .finally(() => {
+        setIsSubdomainAvailabilityLoading(false);
+      });
+  }
+
+  function isValidSubdomainCheck(value) {
+    // Use a regular expression to check if the value contains only small letters and dashes
+    const regex = /^[a-z-]+$/;
+    return regex.test(value);
+  }
+  function checkSubdomainStructure() {
+    if (isValidSubdomainCheck(gs.subdomain)) {
+      setIsValidSubdomain(true);
+    } else {
+      setIsValidSubdomain(false);
+    }
+  }
 
   return (
     <div className="p-2">
@@ -75,7 +140,9 @@ export default function BasicInfoColors(props) {
           <div>
             <input
               value={gs.subdomain}
+              onBlur={checkSubdomainStructure}
               onChange={(e) => {
+                setSubdomainAvailability("");
                 dispatch(
                   updateSetting({
                     field: "subdomain",
@@ -86,9 +153,55 @@ export default function BasicInfoColors(props) {
               type="text"
               autoComplete="on"
               placeholder="mywebsite"
-              className="bg-white inline-block h-6 ml-1 border-gray-300 rounded text-slate-800 border p-2 w-11/12"
-            />{" "}
+              className={`bg-white inline-block h-6 ml-1  rounded text-slate-800 border p-2 w-11/12 ${
+                subdomainAvailability === "taken" || !isValidSubdomain
+                  ? "border-red-300"
+                  : subdomainAvailability === "owned" ||
+                    subdomainAvailability === "free"
+                  ? "border-green-300"
+                  : "border-gray-300"
+              }`}
+            />
           </div>
+        </div>
+        <div>
+          {!isValidSubdomain && (
+            <span className="text-sm text-red-600">
+              Subdomain can only contain small letters and dashes
+            </span>
+          )}
+
+          {subdomainAvailability === "taken" && (
+            <span className="text-sm text-red-600">
+              This domain is not available
+            </span>
+          )}
+
+          {subdomainAvailability === "owned" && (
+            <span className="text-sm text-green-600">
+              You already own this subdomain
+            </span>
+          )}
+
+          {subdomainAvailability === "free" && (
+            <span className="text-sm text-green-600">
+              This domain is available
+            </span>
+          )}
+        </div>
+        <div>
+          <button
+            onClick={handleCheckSubdomainAvailability}
+            type="button"
+            className="mt-2 font-semibold text-sm text-white bg-blue-500 active:bg-blue-600 whitespace-nowrap text-center px-2 py-1 rounded border "
+          >
+            <span> Check availability </span>
+            {isSubdomainAvailabilityLoading && (
+              <span>
+                <FontAwesomeIcon icon={faSpinner} />
+              </span>
+            )}
+          </button>
         </div>
       </div>
 
