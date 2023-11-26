@@ -1,18 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { updateSetting } from "../../../../../redux/globalSettingsSlice";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { updateMenuChangesCheck } from "../../../../../redux/menuSlice";
 
 export default function BasicInfoColors(props) {
   const gs = useSelector((store) => store.globalSettings);
   const dispatch = useDispatch();
-  const subdomainRef = useRef(gs.subdomain);
-  console.log("domrref", subdomainRef.current);
 
   const [subdomainAvailability, setSubdomainAvailability] =
     useState("");
+
+  const { subdomainWhenLoaded } = useSelector((state) => state.menu);
+  console.log("domrref", subdomainWhenLoaded);
 
   const [isValidSubdomain, setIsValidSubdomain] = useState(true);
 
@@ -35,8 +37,9 @@ export default function BasicInfoColors(props) {
     }
     setIsSubdomainAvailabilityLoading(true);
 
-    if (subdomainRef.current === gs.subdomain) {
+    if (subdomainWhenLoaded === gs.subdomain) {
       setSubdomainAvailability("owned");
+      dispatch(updateMenuChangesCheck(true));
 
       setTimeout(() => {
         setIsSubdomainAvailabilityLoading(false);
@@ -48,6 +51,13 @@ export default function BasicInfoColors(props) {
       .then((res) => {
         console.log("res", res);
         setSubdomainAvailability(res.data);
+        if (res.data === "taken") {
+          dispatch(updateMenuChangesCheck(false));
+        }
+
+        if (res.data === "free") {
+          dispatch(updateMenuChangesCheck(true));
+        }
       })
       .catch((err) => {
         console.log("err", err);
@@ -65,10 +75,18 @@ export default function BasicInfoColors(props) {
   function checkSubdomainStructure() {
     if (isValidSubdomainCheck(gs.subdomain)) {
       setIsValidSubdomain(true);
+      dispatch(updateMenuChangesCheck(true));
     } else {
       setIsValidSubdomain(false);
+      dispatch(updateMenuChangesCheck(false));
     }
   }
+
+  //check for domain availability, useful for when they navigate further in stepper with wrong link
+  // and when they come back they need the info still
+  useEffect(() => {
+    checkSubdomainStructure();
+  }, []);
 
   return (
     <div className="p-2">
@@ -143,6 +161,7 @@ export default function BasicInfoColors(props) {
               onBlur={checkSubdomainStructure}
               onChange={(e) => {
                 setSubdomainAvailability("");
+                setIsValidSubdomain(true);
                 dispatch(
                   updateSetting({
                     field: "subdomain",

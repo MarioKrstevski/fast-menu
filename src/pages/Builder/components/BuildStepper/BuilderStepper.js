@@ -108,7 +108,7 @@ export default function BuilderStepper(props) {
                   setIsModalOpen(true);
                 }}
                 type="button"
-                className="button text-center font-normal text-gray-700 rounded-sm text-xs bg-slate-900 text-white px-2 p-1"
+                className="button text-center font-normal rounded-sm text-xs bg-slate-900 text-white px-2 p-1"
               >
                 <span> Upgrade to PRO </span>
               </button>

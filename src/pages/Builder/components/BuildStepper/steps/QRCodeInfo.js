@@ -13,7 +13,8 @@ export default function QRCodeInfo(props) {
   const [settingsUpdated, setSettingsUpdated] = useState(false);
   //   const qrlink = "http://www.fastmenu.com/menu/" + gs.subdomain;
   const navigate = useNavigate();
-  const menuId = useSelector((store) => store.menu.menuId);
+  const { menuId, canPublishOrSaveChanges, isPublished } =
+    useSelector((state) => state.menu);
 
   function be_saveGlobalSettings(menuId, globalSettings) {
     axios
@@ -47,6 +48,7 @@ export default function QRCodeInfo(props) {
     be_publishMenu(menuId);
   }
 
+  console.log("isPublished", isPublished);
   return (
     <div>
       <div className="h-full flex flex-col items-center">
@@ -85,23 +87,30 @@ export default function QRCodeInfo(props) {
             </div>
           )}
         </div>
-        <div className="w-full">
-          <a
-            target="_blank"
-            href={"http://localhost:3000/menu/" + gs.subdomain}
-          >
-            <button
-              type="button"
-              onClick={handlePublishMenu}
-              className="px-4 py-2 mt-2 rounded bg-slate-800 hover:bg-slate-900 active:bg-slate-950 text-white border-transparent flex justify-center gap-2 w-full text-lg"
+        {!isPublished && (
+          <div className="w-full">
+            <a
+              target="_blank"
+              href={"http://localhost:3000/menu/" + gs.subdomain}
             >
-              <span> Publish </span>
-              <span className="icon is-medium">
-                <FontAwesomeIcon icon={faAngleRight} />
-              </span>
-            </button>
-          </a>
-        </div>
+              <button
+                disabled={!canPublishOrSaveChanges}
+                type="button"
+                onClick={handlePublishMenu}
+                className={`px-4 py-2 mt-2 rounded  text-white border-transparent flex justify-center gap-2 w-full text-lg ${
+                  canPublishOrSaveChanges
+                    ? "bg-slate-800 hover:bg-slate-900 active:bg-slate-950 cursor-pointer"
+                    : "bg-gray-500"
+                }`}
+              >
+                <span> Publish </span>
+                <span className="icon is-medium">
+                  <FontAwesomeIcon icon={faAngleRight} />
+                </span>
+              </button>
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

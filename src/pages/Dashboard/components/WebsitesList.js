@@ -14,8 +14,10 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { updateWithNewMenus } from "../../../redux/authSlice";
 import {
+  updateIsPublished,
   updateMenuId,
   updateMenuProStatus,
+  updateSubdomainWhenLoaded,
 } from "../../../redux/menuSlice";
 import { updateSelectedMenuForPlan } from "../../../redux/planUpgradeSlice";
 import UpgradeToProPlanModal from "./UpgradeToProPlanModal";
@@ -50,13 +52,17 @@ export default function WebsitesList(props) {
     });
   }
 
-  function loadNeededMenuInformation(menuId, isPro) {
+  function loadNeededMenuInformation(menuId, isPro, isPublished) {
     be_loadGlobalSettingsForMenu(menuId)
       .then((res) => {
         dispatch(updateGlobalSettings(res.data.globalSettings));
         dispatch(updateMenuId(menuId));
         dispatch(updateMenuProStatus(isPro));
         dispatch(updateSelectedMenuForPlan(menuId));
+        dispatch(
+          updateSubdomainWhenLoaded(res.data.globalSettings.subdomain)
+        );
+        dispatch(updateIsPublished(isPublished));
         navigate("/builder");
       })
       .catch((err) => {
@@ -216,7 +222,11 @@ xl:grid-cols-3
                 <div>
                   <a
                     onClick={() =>
-                      loadNeededMenuInformation(menu.id, menu.isPro)
+                      loadNeededMenuInformation(
+                        menu.id,
+                        menu.isPro,
+                        menu.isPublished
+                      )
                     }
                     className="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white hover:text-white font-bold p-3 rounded shadow-md"
                   >
@@ -224,7 +234,13 @@ xl:grid-cols-3
                     Edit{" "}
                   </a>
                   {menu.isPublished && (
-                    <a className="ml-4 cursor-pointer text-white hover:text-white p-3 bg-gray-800 hover:bg-gray-900 rounded shadow-md font-bold">
+                    <a
+                      target="_blank"
+                      href={
+                        "http://localhost:3000/menu/" + menu.subdomain
+                      }
+                      className="ml-4 cursor-pointer text-white hover:text-white p-3 bg-gray-800 hover:bg-gray-900 rounded shadow-md font-bold"
+                    >
                       <FontAwesomeIcon
                         icon={faExternalLinkAlt}
                         className="mr-2"
