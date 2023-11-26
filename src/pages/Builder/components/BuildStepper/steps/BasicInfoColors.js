@@ -95,6 +95,29 @@ export default function BasicInfoColors(props) {
           htmlFor="websiteName"
           className="text-slate-900 font-bold mb-2 mt-3 block"
         >
+          Menu Name
+        </label>{" "}
+        <input
+          value={gs.menuName}
+          onChange={(e) => {
+            dispatch(
+              updateSetting({
+                field: "menuName",
+                value: e.target.value,
+              })
+            );
+          }}
+          type="text"
+          id="menuName"
+          placeholder="Website Name (for Dashboard)"
+          className="bg-white w-full border-gray-300 rounded text-slate-800 border p-2 h-8"
+        />
+      </div>
+      <div className="field">
+        <label
+          htmlFor="websiteName"
+          className="text-slate-900 font-bold mb-2 mt-3 block"
+        >
           Website name
         </label>{" "}
         <input
