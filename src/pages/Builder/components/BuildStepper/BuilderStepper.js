@@ -27,7 +27,6 @@ export default function BuilderStepper(props) {
   const menu = useSelector((store) => store.menu.menu);
 
   function be_loadMenuItems(menuId) {
-    console.log("trying to load menu item", menuId);
     axios
       .get("http://localhost:8000/menu", {
         params: {
@@ -47,7 +46,6 @@ export default function BuilderStepper(props) {
 
   //load menu if spreadSheetURL is setup and they haven't been loaded before
   useEffect(() => {
-    console.log("menu", menu);
     const menuIsLoaded = menu.length !== 0;
     if (!menuIsLoaded && gs.spreadSheetURL) {
       handleLoadMenu();

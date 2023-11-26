@@ -14,6 +14,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { updateWithNewMenus } from "../../../redux/authSlice";
 import { updateMenuId } from "../../../redux/menuSlice";
+import { updateSelectedMenuForPlan } from "../../../redux/planUpgradeSlice";
+import UpgradeToProPlanModal from "./UpgradeToProPlanModal";
 
 function NewMenuCreationIndicator() {
   return (
@@ -73,12 +75,14 @@ export default function WebsitesList(props) {
     });
   }
   function handleRefreshMenus() {
+    console.log("menus refreshed");
     setIsFetchingMenus(true);
     setTimeout(() => {
       setIsFetchingMenus(false);
     }, 1000);
     be_getMenusForClient(user.clientName)
       .then((res) => {
+        console.log("newMenus", res.data.menus);
         dispatch(updateWithNewMenus(res.data.menus));
       })
       .catch((err) => console.log("error", err))
@@ -100,6 +104,8 @@ export default function WebsitesList(props) {
       });
   }
 
+  console.log("user", user);
+
   return (
     <div className="container  mx-auto py-4 px-4 sm:px-0">
       {isModalOpen && (
@@ -107,8 +113,15 @@ export default function WebsitesList(props) {
           onClick={() => {
             setIsModalOpen(false);
           }}
-          className={` bg-black opacity-60 global-modal fixed p-4 top-0 left-0 z-20  w-full h-full flex flex-col items-end transition duration-300 ease-in-out `}
-        ></div>
+          className={` bg-black/25 global-modal fixed p-4 top-0 left-0 z-20  w-full h-full flex flex-col items-center transition duration-300 ease-in-out `}
+        >
+          <UpgradeToProPlanModal
+            closeModal={() => {
+              setIsModalOpen(false);
+              handleRefreshMenus();
+            }}
+          />
+        </div>
       )}
 
       <div className="refresh-menus">
@@ -159,6 +172,8 @@ xl:grid-cols-3
                   {!menu.isPro && (
                     <button
                       onClick={() => {
+                        console.log("menu", menu.id);
+                        dispatch(updateSelectedMenuForPlan(menu.id));
                         setIsModalOpen(true);
                       }}
                       className="text-gray-600 hover:text-gray-800 font-bold py-2 px-4 text-xs inline-flex items-center bg-gray-100 rounded-full"
