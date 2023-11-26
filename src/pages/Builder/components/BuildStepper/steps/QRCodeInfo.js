@@ -1,17 +1,25 @@
-import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAlignLeft,
+  faAngleRight,
+  faArrowLeft,
+  faExternalLinkAlt,
+  faLeftLong,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useRef, useState } from "react";
 import { QRCode } from "react-qrcode-logo";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { updateIsPublished } from "../../../../../redux/menuSlice";
 export default function QRCodeInfo(props) {
   const qrRef = useRef();
   const gs = useSelector((store) => store.globalSettings);
   const qrlink = "http://localhost:3000/menu/" + gs.subdomain;
   const [settingsUpdated, setSettingsUpdated] = useState(false);
   //   const qrlink = "http://www.fastmenu.com/menu/" + gs.subdomain;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { menuId, canPublishOrSaveChanges, isPublished } =
     useSelector((state) => state.menu);
@@ -41,6 +49,7 @@ export default function QRCodeInfo(props) {
       })
       .then((res) => {
         console.log("res", res);
+        dispatch(updateIsPublished(true));
       })
       .catch((err) => {});
   }
@@ -48,7 +57,6 @@ export default function QRCodeInfo(props) {
     be_publishMenu(menuId);
   }
 
-  console.log("isPublished", isPublished);
   return (
     <div>
       <div className="h-full flex flex-col items-center">
@@ -87,6 +95,7 @@ export default function QRCodeInfo(props) {
             </div>
           )}
         </div>
+
         {!isPublished && (
           <div className="w-full">
             <a
@@ -111,6 +120,39 @@ export default function QRCodeInfo(props) {
             </a>
           </div>
         )}
+
+        {isPublished && (
+          <div className="w-full">
+            <a
+              target="_blank"
+              href={"http://localhost:3000/menu/" + gs.subdomain}
+            >
+              <button
+                type="button"
+                className={`px-4 py-2 mt-2 rounded   border border-black flex justify-center gap-2 w-full  `}
+              >
+                <span>
+                  <FontAwesomeIcon
+                    icon={faExternalLinkAlt}
+                    className="mr-2"
+                  />
+                </span>
+                <span> Visit </span>
+              </button>
+            </a>
+          </div>
+        )}
+
+        <div>
+          <button
+            onClick={() => {
+              navigate("/dashboard");
+            }}
+            className="my-2 mt-16  bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            <FontAwesomeIcon icon={faArrowLeft} /> Back to Dashboard
+          </button>
+        </div>
       </div>
     </div>
   );

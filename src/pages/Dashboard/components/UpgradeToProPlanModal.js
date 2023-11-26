@@ -3,6 +3,12 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 export default function UpgradeToProPlanModal({ closeModal }) {
+  const [ccState, setCcState] = useState({
+    creaditCardNumber: "4242 4242 4242 4242",
+    expirationDate: "01/25",
+    cvv: "424",
+  });
+
   const [selectedPlan, setSelectedPlan] = useState("basic");
 
   const menuId = useSelector(
@@ -31,12 +37,22 @@ export default function UpgradeToProPlanModal({ closeModal }) {
       });
   }
 
+  function handleCCUpdate(key, value) {
+    setCcState((pV) => ({
+      ...pV,
+      [key]: value,
+    }));
+  }
+  const submitIsDisabled =
+    !ccState.creaditCardNumber ||
+    !ccState.cvv ||
+    !ccState.expirationDate;
   return (
     <div
       onClick={(e) => {
         e.stopPropagation();
       }}
-      className="flex items-center justify-center w-1/2 min-w-[450px]"
+      className="flex items-center justify-center  w-full m-2 sm:w-2/3 md:w-2/3 lg:w-1/2 lg:min-w-[450px] "
     >
       <div className="bg-white p-8 rounded-lg shadow-md max-w-md  w-full">
         <div className="mb-4 text-center">
@@ -151,6 +167,10 @@ export default function UpgradeToProPlanModal({ closeModal }) {
             type="text"
             id="cardNumber"
             placeholder="1234 5678 9012 3456"
+            value={ccState.creaditCardNumber}
+            onChange={(e) => {
+              handleCCUpdate("creaditCardNumber", e.target.value);
+            }}
           />
 
           <label
@@ -164,6 +184,10 @@ export default function UpgradeToProPlanModal({ closeModal }) {
             type="text"
             id="expirationDate"
             placeholder="MM/YY"
+            value={ccState.expirationDate}
+            onChange={(e) => {
+              handleCCUpdate("expirationDate", e.target.value);
+            }}
           />
 
           <label
@@ -177,14 +201,29 @@ export default function UpgradeToProPlanModal({ closeModal }) {
             type="text"
             id="cvv"
             placeholder="123"
+            value={ccState.cvv}
+            onChange={(e) => {
+              handleCCUpdate("cvv", e.target.value);
+            }}
           />
         </div>
 
         <button
+          disabled={submitIsDisabled}
           onClick={handleSubscription}
           id="submit-premium"
           type="submit"
-          className="w-full bg-gray-900 hover:bg-white hover:shadow-outline hover:text-black border hover:border-black focus:shadow-outline text-white focus:bg-white focus:text-black py-3 px-4 mt-4 rounded-md shadow"
+          className={` 
+          w-full text-white py-3 px-4 mt-4 rounded-md shadow
+         
+           ${
+             submitIsDisabled
+               ? "bg-gray-500"
+               : `bg-gray-900 hover:bg-white hover:shadow-outline hover:text-black border hover:border-black 
+           focus:shadow-outline  focus:bg-white focus:text-black `
+           }
+          
+          `}
         >
           Subscribe
         </button>

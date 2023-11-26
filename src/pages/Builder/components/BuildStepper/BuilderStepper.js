@@ -29,8 +29,6 @@ export default function BuilderStepper(props) {
   const [isProNow, setIsProNow] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  console.log("isPro", isPro);
-
   function be_loadMenuItems(menuId) {
     return axios.get("http://localhost:8000/menu", {
       params: {
@@ -41,6 +39,7 @@ export default function BuilderStepper(props) {
   function handleLoadMenu() {
     be_loadMenuItems(menuId)
       .then((res) => {
+        console.log("ressss", res);
         dispatch(updateMenu(res.data.menuItems));
       })
       .catch((err) => {

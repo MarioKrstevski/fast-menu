@@ -104,7 +104,7 @@ function Pill({ label, active, updateFilter }) {
 
 export default function MenuItems(props) {
   const gs = useSelector((store) => store.globalSettings);
-  const menu = useSelector((store) => store.menu.menu);
+  const { menu } = useSelector((store) => store.menu);
   const dispatch = useDispatch();
 
   const [currentFilter, setCurrentFilter] = useState("All");
@@ -115,6 +115,7 @@ export default function MenuItems(props) {
   function updateFilter(newFilter) {
     setCurrentFilter(newFilter);
   }
+  console.log("menu", menu);
 
   return (
     <div className="min-h-full max-w-full overflow-hidden">

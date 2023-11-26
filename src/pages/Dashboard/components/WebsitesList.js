@@ -11,7 +11,7 @@ import axios from "axios";
 import { updateGlobalSettings } from "../../../redux/globalSettingsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { updateWithNewMenus } from "../../../redux/authSlice";
 import {
   updateIsPublished,
@@ -21,6 +21,7 @@ import {
 } from "../../../redux/menuSlice";
 import { updateSelectedMenuForPlan } from "../../../redux/planUpgradeSlice";
 import UpgradeToProPlanModal from "./UpgradeToProPlanModal";
+import { OverlayPanel } from "primereact/overlaypanel";
 
 function NewMenuCreationIndicator() {
   return (
@@ -37,6 +38,8 @@ function NewMenuCreationIndicator() {
 
 export default function WebsitesList(props) {
   const dispatch = useDispatch();
+  const opRef = useRef();
+  const deleteMenuRef = useRef();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -85,6 +88,25 @@ export default function WebsitesList(props) {
       },
     });
   }
+
+  async function be_deleteMenu(menuId) {
+    console.log("menuid", menuId);
+    return axios.delete("http://localhost:8000/deleteMenu", {
+      params: {
+        menuId,
+      },
+    });
+  }
+  function handleDeleteMenu(menuId) {
+    be_deleteMenu(menuId)
+      .then((res) => {
+        console.log("res", res);
+        handleRefreshMenus();
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }
   function handleRefreshMenus() {
     console.log("menus refreshed");
     setIsFetchingMenus(true);
@@ -115,7 +137,10 @@ export default function WebsitesList(props) {
       });
   }
 
-  console.log("user", user);
+  //refresh menu on load
+  useEffect(() => {
+    handleRefreshMenus();
+  }, []);
 
   return (
     <div className="container  mx-auto py-4 px-4 sm:px-0">
@@ -124,7 +149,7 @@ export default function WebsitesList(props) {
           onClick={() => {
             setIsModalOpen(false);
           }}
-          className={` bg-black/40 global-modal fixed p-4 top-0 left-0 z-20  w-full h-full flex flex-col items-center transition duration-300 ease-in-out `}
+          className={` bg-black/40 overflow-y-auto  global-modal fixed p-4 top-0 left-0 z-20  w-full h-full flex flex-col items-center transition duration-300 ease-in-out `}
         >
           <UpgradeToProPlanModal
             closeModal={() => {
@@ -176,9 +201,26 @@ xl:grid-cols-3
               className="transition-shadow duration-300 w-full h-64 text-center rounded shadow-lg hover:shadow-xl bg-white overflow-hidden relative flex flex-col justify-between items-stretch"
             >
               <div className="flex justify-between items-center p-3">
-                <button className="focus:outline-none text-gray-600 hover:text-gray-800 font-bold py-2 px-4 text-lg inline-flex items-center">
+                <button
+                  onClick={(e) => {
+                    opRef.current.toggle(e);
+                    deleteMenuRef.current = menu.id;
+                  }}
+                  className="focus:outline-none text-gray-600 hover:text-gray-800 font-bold py-2 px-4 text-lg inline-flex items-center"
+                >
                   <FontAwesomeIcon icon={faEllipsisH} />
                 </button>
+                <OverlayPanel ref={opRef}>
+                  <button
+                    onClick={() => {
+                      handleDeleteMenu(deleteMenuRef.current);
+                    }}
+                  >
+                    {" "}
+                    Delete Menu{" "}
+                  </button>
+                </OverlayPanel>
+
                 <div className="d-flex">
                   {!menu.isPro && (
                     <button
@@ -228,7 +270,7 @@ xl:grid-cols-3
                         menu.isPublished
                       )
                     }
-                    className="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white hover:text-white font-bold p-3 rounded shadow-md"
+                    className="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white hover:text-white font-semibold px-3 py-2 rounded shadow-md"
                   >
                     <FontAwesomeIcon icon={faEdit} className="mr-2" />
                     Edit{" "}
@@ -239,7 +281,7 @@ xl:grid-cols-3
                       href={
                         "http://localhost:3000/menu/" + menu.subdomain
                       }
-                      className="ml-4 cursor-pointer text-white hover:text-white p-3 bg-gray-800 hover:bg-gray-900 rounded shadow-md font-bold"
+                      className="ml-4 cursor-pointer text-white hover:text-white font-semibold px-3 py-2 bg-gray-800 hover:bg-gray-900 rounded shadow-md "
                     >
                       <FontAwesomeIcon
                         icon={faExternalLinkAlt}

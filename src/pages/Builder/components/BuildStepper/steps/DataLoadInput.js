@@ -19,19 +19,12 @@ export default function DataLoadInput(props) {
   const menuId = useSelector((store) => store.menu.menuId);
   const dispatch = useDispatch();
 
-  function be_loadMenuItems() {
-    axios
-      .get("http://localhost:8000/menuItems", {
-        params: {
-          newLink: gs.spreadSheetURL,
-        },
-      })
-      .then((res) => {
-        dispatch(updateMenu(res.data.menuItems));
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
+  function be_loadMenuItems(newSpreadSheetURL) {
+    return axios.get("http://localhost:8000/menuItems", {
+      params: {
+        newSpreadSheetURL,
+      },
+    });
   }
   function checkForValidSpreadsheetLink(link) {
     // Regular expression to match the correct link structure
@@ -57,7 +50,14 @@ export default function DataLoadInput(props) {
     }
   }
   function handleLoadMenuFromSheets() {
-    be_loadMenuItems();
+    be_loadMenuItems(gs.spreadSheetURL)
+      .then((res) => {
+        console.log("res", res);
+        dispatch(updateMenu(res.data.menuItems));
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
   }
   const handleSubmit = () => {
     const formData = new FormData();

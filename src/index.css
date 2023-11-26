@@ -64,3 +64,11 @@ code {
 .p-dropdown-item {
   padding: 6px 10px;
 }
+
+.p-overlaypanel-content{
+  padding: 8px;
+}
+
+.p-overlaypanel {
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
+}

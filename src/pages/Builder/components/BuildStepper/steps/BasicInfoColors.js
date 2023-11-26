@@ -160,7 +160,7 @@ export default function BasicInfoColors(props) {
           type="text"
           id="whatsappNumberConnected"
           autoComplete="on"
-          placeholder="My brand new website"
+          placeholder="Phone number for Whatsapp"
           className="bg-white w-full border-gray-300 rounded text-slate-800 border p-2 h-8"
         />
       </div>
