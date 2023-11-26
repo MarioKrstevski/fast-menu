@@ -11,7 +11,10 @@ import BasicInfoColors from "./steps/BasicInfoColors";
 import CardDesign from "./steps/CardDesign";
 import QRCodeInfo from "./steps/QRCodeInfo";
 import { useDispatch, useSelector } from "react-redux";
-import { updateMenu } from "../../../../redux/menuSlice";
+import {
+  updateMenu,
+  updateMenuProStatus,
+} from "../../../../redux/menuSlice";
 import axios from "axios";
 import UpgradeToProPlanModal from "../../../Dashboard/components/UpgradeToProPlanModal";
 
@@ -26,7 +29,6 @@ export default function BuilderStepper(props) {
   const dispatch = useDispatch();
   const { menuId, menu, isPro } = useSelector((store) => store.menu);
 
-  const [isProNow, setIsProNow] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   function be_loadMenuItems(menuId) {
@@ -62,7 +64,7 @@ export default function BuilderStepper(props) {
 
   return (
     <div className="w-[400px] overflow-x-hidden border-r-2  border-r-gray-400 ">
-      {isModalOpen && !(isPro || isProNow) && (
+      {isModalOpen && !isPro && (
         <div
           onClick={() => {
             setIsModalOpen(false);
@@ -72,7 +74,7 @@ export default function BuilderStepper(props) {
           <UpgradeToProPlanModal
             closeModal={() => {
               setIsModalOpen(false);
-              setIsProNow(true);
+              dispatch(updateMenuProStatus(true));
             }}
           />
         </div>
@@ -101,7 +103,7 @@ export default function BuilderStepper(props) {
                 </span>
               </button>
             </span>
-            {!(isPro || isProNow) && (
+            {!isPro && (
               <button
                 onClick={() => {
                   setIsModalOpen(true);

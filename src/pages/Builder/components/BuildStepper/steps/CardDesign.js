@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateSetting } from "../../../../../redux/globalSettingsSlice";
 
 export default function CardDesign(props) {
-  const menu = useSelector((store) => {
-    return store.menu.menu;
+  const { menu, isPro } = useSelector((store) => {
+    return store.menu;
   });
 
   const gs = useSelector((store) => {
@@ -41,9 +41,19 @@ export default function CardDesign(props) {
     { name: "no action" },
   ];
 
-  if (gs.ordersEnabled) {
+  console.log("menu", menu);
+
+  if (!isPro) {
+    cardButtonActionOptions.push({
+      name: "cart (PRO version only)",
+      disabled: true,
+    });
+  }
+
+  if (isPro) {
     cardButtonActionOptions.push({
       name: "cart",
+      disabled: !gs.ordersEnabled,
     });
   }
 
@@ -173,6 +183,32 @@ export default function CardDesign(props) {
       <div className="divider h-[1px] bg-slate-400 w-full my-4"></div>
 
       <div className="my-2 font-bold">Button Action</div>
+
+      {isPro && (
+        <div className="flex align-middle items-center gap-2">
+          <input
+            value={gs.ordersEnabled}
+            onChange={(e) => {
+              dispatch(
+                updateSetting({
+                  field: "ordersEnabled",
+                  value: e.target.checked,
+                })
+              );
+            }}
+            type="checkbox"
+            id="ordersEnabled"
+            autoComplete="on"
+            className="bg-white  border-gray-300 rounded text-slate-800 border p-2 h-8"
+          />
+          <label
+            htmlFor="ordersEnabled"
+            className="text-slate-900 inline-block font-bold mb-2 mt-3 "
+          >
+            Enable Orders (shopping cart)
+          </label>
+        </div>
+      )}
 
       <Dropdown
         value={cardButtonActionOptions.find(

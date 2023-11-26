@@ -96,6 +96,10 @@ export default function BasicInfoColors(props) {
           className="text-slate-900 font-bold mb-2 mt-3 block"
         >
           Menu Name
+          <br />
+          <span className="text-sm font-normal">
+            (only visible in dashboard)
+          </span>
         </label>{" "}
         <input
           value={gs.menuName}
@@ -145,7 +149,10 @@ export default function BasicInfoColors(props) {
           htmlFor="whatsappNumberConnected"
           className="text-slate-900 font-bold mb-2 mt-3 block"
         >
-          Phone Number
+          Phone Number <br />
+          <span className="text-sm font-normal">
+            (used for whatsapp and calls)
+          </span>
         </label>{" "}
         <input
           value={gs.whatsappNumberConnected}
@@ -333,7 +340,7 @@ export default function BasicInfoColors(props) {
       <div className="h-[1px] bg-slate-400 w-full my-4"></div>
 
       {/* --- */}
-      <h2>Hero Settings</h2>
+      <h2 className="text-lg">Hero/Header Settings</h2>
 
       <div className="flex align-middle items-center gap-2">
         <input
@@ -356,7 +363,7 @@ export default function BasicInfoColors(props) {
           htmlFor="isHeaderShown"
           className="text-slate-900 inline-block font-bold mb-2 mt-3 "
         >
-          Show
+          Show Hero
         </label>{" "}
       </div>
       <div className="field">
@@ -448,7 +455,7 @@ export default function BasicInfoColors(props) {
           htmlFor="heroImage"
           className="text-slate-900 font-bold mb-2 mt-3 block"
         >
-          Hero Image
+          Hero Background Image
         </label>{" "}
         <div className="control is-clearfix">
           <input

@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { updateWithNewMenus } from "../../../redux/authSlice";
 import {
+  clearMenuInfo,
   updateIsPublished,
   updateMenuId,
   updateMenuProStatus,
@@ -42,10 +43,12 @@ export default function WebsitesList(props) {
   const deleteMenuRef = useRef();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
+  const menu = useSelector((state) => state.menu);
+  console.log("menu", menu);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFetchingMenus, setIsFetchingMenus] = useState(false);
-
   const [isCreatingNewMenu, setIsCreatingNewMenu] = useState(false);
+  const menuLimit = 6;
 
   async function be_loadGlobalSettingsForMenu(menuId) {
     return axios.get("http://localhost:8000/globalSettings", {
@@ -140,6 +143,7 @@ export default function WebsitesList(props) {
   //refresh menu on load
   useEffect(() => {
     handleRefreshMenus();
+    dispatch(clearMenuInfo());
   }, []);
 
   return (
@@ -183,17 +187,19 @@ lg:grid-cols-3
 xl:grid-cols-3
 "
       >
-        <div
-          onClick={createNewMenu}
-          className="new-menu transition-shadow duration-300 w-full h-64 text-center rounded shadow-lg hover:shadow-xl bg-white overflow-hidden flex items-center justify-center cursor-pointer"
-        >
-          <div className="">
-            <FontAwesomeIcon icon={faPlus} className="mx-2" />
-            <span className="is-block has-text-weight-bold">
-              New Menu
-            </span>
+        {menuLimit > user.menus.length && (
+          <div
+            onClick={createNewMenu}
+            className="new-menu transition-shadow duration-300 w-full h-64 text-center rounded shadow-lg hover:shadow-xl bg-white overflow-hidden flex items-center justify-center cursor-pointer"
+          >
+            <div className="">
+              <FontAwesomeIcon icon={faPlus} className="mx-2" />
+              <span className="is-block has-text-weight-bold">
+                New Menu
+              </span>
+            </div>
           </div>
-        </div>
+        )}
         {user.menus.map((menu) => {
           return (
             <div

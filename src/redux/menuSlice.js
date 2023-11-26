@@ -13,6 +13,15 @@ export const menuSlice = createSlice({
   name: "menu",
   initialState,
   reducers: {
+    clearMenuInfo(state) {
+      // used when loading dashboard, to guarantee clean setup for next menu
+      state.menu = [];
+      state.menuId = "";
+      state.isPro = false;
+      state.canPublishOrSaveChanges = true;
+      state.subdomainWhenLoaded = null;
+      state.isPublished = false;
+    },
     updateMenu(state, action) {
       state.menu = action.payload;
     },
@@ -36,6 +45,7 @@ export const menuSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
+  clearMenuInfo,
   updateMenu,
   updateMenuId,
   updateMenuProStatus,
