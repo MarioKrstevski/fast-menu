@@ -70,7 +70,7 @@ export default function BasicInfoColors(props) {
 
   function isValidSubdomainCheck(value) {
     // Use a regular expression to check if the value contains only small letters and dashes
-    const regex = /^[a-z-]+$/;
+    const regex = /^[a-z0-9-]+$/;
     return regex.test(value);
   }
   function checkSubdomainStructure() {
