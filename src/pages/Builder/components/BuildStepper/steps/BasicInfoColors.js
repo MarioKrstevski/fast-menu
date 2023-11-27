@@ -639,7 +639,7 @@ export default function BasicInfoColors(props) {
       </div>
       {!(isPro || isOnFreeTrial) && (
         <div className="text-sm font-normal mb-2 text-gray-600">
-          (only for Pro)
+          (PRO version only)
         </div>
       )}
       {/*  */}

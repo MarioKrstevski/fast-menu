@@ -184,32 +184,43 @@ export default function CardDesign(props) {
 
       <div className="my-2 font-bold">Button Action</div>
 
-      {isPro ||
-        (isOnFreeTrial && (
-          <div className="flex align-middle items-center gap-2">
-            <input
-              value={gs.ordersEnabled}
-              onChange={(e) => {
-                dispatch(
-                  updateSetting({
-                    field: "ordersEnabled",
-                    value: e.target.checked,
-                  })
-                );
-              }}
-              type="checkbox"
-              id="ordersEnabled"
-              autoComplete="on"
-              className="bg-white  border-gray-300 rounded text-slate-800 border p-2 h-8"
-            />
-            <label
-              htmlFor="ordersEnabled"
-              className="text-slate-900 inline-block font-bold mb-2 mt-3 "
-            >
-              Enable Orders (shopping cart)
-            </label>
-          </div>
-        ))}
+      <div className="flex align-middle items-center gap-2">
+        <input
+          checked={gs.ordersEnabled}
+          disabled={!(isPro || isOnFreeTrial)}
+          onChange={(e) => {
+            dispatch(
+              updateSetting({
+                field: "ordersEnabled",
+                value: e.target.checked,
+              })
+            );
+          }}
+          type="checkbox"
+          id="ordersEnabled"
+          autoComplete="on"
+          className={` border-gray-300 rounded text-slate-800 border  p-2 h-8
+         
+          `}
+        />
+        <label
+          htmlFor="ordersEnabled"
+          className={`inline-block font-bold  mt-3 mb-3
+          ${
+            !(isPro || isOnFreeTrial)
+              ? "text-gray-500"
+              : "text-slate-900 "
+          }
+          `}
+        >
+          Enable Orders (shopping cart)
+        </label>
+      </div>
+      {!(isPro || isOnFreeTrial) && (
+        <div className="text-sm font-normal mb-3 text-gray-600">
+          (PRO version only)
+        </div>
+      )}
 
       <Dropdown
         value={cardButtonActionOptions.find(
