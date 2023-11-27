@@ -13,13 +13,12 @@ import {
   faTimes,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ShoppingCart({ setIsCheckoutModalVisible }) {
   const cart = useSelector((state) => state.shoppingCart.cart);
   const gs = useSelector((state) => state.globalSettings);
   const [bs, setBs] = useState(null);
-  const bsRef = useRef();
 
   console.log("gs", gs);
   const [isShoppingCartOpen, setIsShoppingCartOpen] = useState(false);
@@ -120,6 +119,7 @@ export default function ShoppingCart({ setIsCheckoutModalVisible }) {
                     <div className="h-16 w-16 min-w-[64px] rounded-lg overflow-hidden bg-gray-100">
                       <img
                         className="object-cover h-full w-full inset-0"
+                        alt="Item"
                         src={entry.item[gs.card.image]}
                         lazy="loaded"
                       />

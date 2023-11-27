@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateGlobalSettings } from "../../redux/globalSettingsSlice";
 import WebsitePreview from "../Builder/components/WebsitePreview";
 import { updateMenu } from "../../redux/menuSlice";
@@ -15,7 +14,6 @@ function MenuIsNotPublished() {
 }
 export default function Menu(props) {
   const { subdomain } = useParams();
-  const gs = useSelector((store) => store.globalSettings);
   const dispatch = useDispatch();
   const [menuErrorCode, setMenuErrorCode] = useState(null);
   const [isMenuLoading, setisMenuLoading] = useState(true);

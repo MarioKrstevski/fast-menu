@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../redux/authSlice";
-import axios from "axios";
 import { useSignIn } from "react-auth-kit";
 import { api } from "../../api/backend";
 
 export default function Login() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const signIn = useSignIn();
 
   const [email, setEmail] = useState("");
@@ -28,7 +24,6 @@ export default function Login() {
       .be_trylogin(email, password)
       .then((res) => {
         console.log("res", res);
-        // dispatch(login(res.data.user));
 
         signIn({
           token: res.data.token,
