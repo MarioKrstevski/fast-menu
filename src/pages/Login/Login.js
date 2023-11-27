@@ -3,10 +3,13 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../redux/authSlice";
 import axios from "axios";
+import { useSignIn } from "react-auth-kit";
 
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const signIn = useSignIn();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setloginError] = useState("");
@@ -28,7 +31,16 @@ export default function Login() {
     e.preventDefault();
     trylogin()
       .then((res) => {
-        dispatch(login(res.data.user));
+        console.log("res", res);
+        // dispatch(login(res.data.user));
+
+        signIn({
+          token: res.data.token,
+          expiresIn: 3600,
+          tokenType: "Bearer",
+          authState: res.data.user,
+        });
+
         navigate("/dashboard");
       })
       .catch((err) => {

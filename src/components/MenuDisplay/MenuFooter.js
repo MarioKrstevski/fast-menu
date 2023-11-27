@@ -18,7 +18,7 @@ export default function MenuFooter(props) {
     <footer>
       {gs.footer.isShown && (
         <div
-          class=" mx-auto  text-center"
+          className=" mx-auto  text-center"
           style={{
             backgroundColor: gs.footer.backgroundColor,
           }}
@@ -69,8 +69,8 @@ export default function MenuFooter(props) {
               </div>
             )}
             {gs.footer.text && (
-              <div class="py-4">
-                <div class="markup-content text-center">
+              <div className="py-4">
+                <div className="markup-content text-center">
                   <div>
                     <p
                       className="whitespace-pre-line"
@@ -88,8 +88,8 @@ export default function MenuFooter(props) {
         </div>
       )}
       {gs.footer.isFreeMenuTrademarkShown && (
-        <div class="bg-white">
-          <div class="container mx-auto px-4 py-6 text-center">
+        <div className="bg-white">
+          <div className="container mx-auto px-4 py-6 text-center">
             <p>
               Made with
               <strong className="ml-1">

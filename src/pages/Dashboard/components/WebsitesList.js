@@ -24,6 +24,7 @@ import {
 import { updateSelectedMenuForPlan } from "../../../redux/planUpgradeSlice";
 import UpgradeToProPlanModal from "./UpgradeToProPlanModal";
 import { OverlayPanel } from "primereact/overlaypanel";
+import { useAuthUser, useSignIn } from "react-auth-kit";
 
 function NewMenuCreationIndicator() {
   return (
@@ -43,13 +44,18 @@ export default function WebsitesList(props) {
   const opRef = useRef();
   const deleteMenuRef = useRef();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.auth.user);
+  // const user = useSelector((state) => state.auth.user);
+  const auth = useAuthUser();
+  const user = auth();
+  const signIn = useSignIn();
+
   const menu = useSelector((state) => state.menu);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFetchingMenus, setIsFetchingMenus] = useState(false);
   const [isCreatingNewMenu, setIsCreatingNewMenu] = useState(false);
   const menuLimit = 6;
 
+  console.log("auth", auth());
   async function be_loadGlobalSettingsForMenu(menuId) {
     return axios.get("http://localhost:8000/globalSettings", {
       params: {
@@ -125,7 +131,20 @@ export default function WebsitesList(props) {
     be_getMenusForClient(user.clientName)
       .then((res) => {
         console.log("newMenus", res.data.menus);
-        dispatch(updateWithNewMenus(res.data.menus));
+        // dispatch(updateWithNewMenus(res.data.menus));
+        signIn({
+          token: localStorage.getItem("_auth"),
+          expiresIn: 3600,
+          tokenType: "Bearer",
+          authState: {
+            ...user,
+            menus: res.data.menus,
+          },
+        });
+        // signIn({
+        //   ...user,
+        //   menus: res.data.menus,
+        // });
       })
       .catch((err) => console.log("error", err))
       .finally(() => {
@@ -138,7 +157,16 @@ export default function WebsitesList(props) {
     be_generateNewMenu(user.clientName)
       .then((res) => {
         console.log("res", res);
-        dispatch(updateWithNewMenus(res.data.newMenus));
+        // dispatch(updateWithNewMenus(res.data.newMenus));
+        signIn({
+          token: localStorage.getItem("_auth"),
+          expiresIn: 3600,
+          tokenType: "Bearer",
+          authState: {
+            ...user,
+            menus: res.data.newMenus,
+          },
+        });
       })
       .catch((err) => console.log("error", err))
       .finally(() => {

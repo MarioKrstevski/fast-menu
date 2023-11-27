@@ -15,48 +15,58 @@ import Landing from "./pages/Landing/Landing";
 import Login from "./pages/Login/Login";
 import NotFound from "./pages/NotFound.js/NotFound";
 import SignUp from "./pages/SignUp/SignUp";
+import { AuthProvider } from "react-auth-kit";
+import { RequireAuth } from "react-auth-kit";
 
-function ProtectedRoute({ redirectPath = "/", children }) {
-  const user = useSelector((store) => store.auth.user);
-  if (!user) {
-    return <Navigate to={redirectPath} replace />;
-  }
+// function ProtectedRoute({ redirectPath = "/", children }) {
+//   const user = useSelector((store) => store.auth.user);
 
-  return children;
-}
+//   if (!user) {
+//     return <Navigate to={redirectPath} replace />;
+//   }
+
+//   return children;
+// }
 export function FastMenu(props) {
   return (
     <div>
-      <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="menu/:subdomain" element={<Menu />} />
-            <Route path="login" element={<Login />} />
-            <Route path="signup" element={<SignUp />} />
+      <AuthProvider
+        authType={"localstorage"}
+        authName={"_auth"}
+        cookieDomain={window.location.hostname}
+        cookieSecure={false}
+      >
+        <Provider store={store}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="menu/:subdomain" element={<Menu />} />
+              <Route path="login" element={<Login />} />
+              <Route path="signup" element={<SignUp />} />
 
-            <Route
-              path="Dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="builder"
-              element={
-                <ProtectedRoute>
-                  <Builder />
-                </ProtectedRoute>
-              }
-            />
+              <Route
+                path="Dashboard"
+                element={
+                  <RequireAuth loginPath="/login">
+                    <Dashboard />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="builder"
+                element={
+                  <RequireAuth loginPath="/login">
+                    <Builder />
+                  </RequireAuth>
+                }
+              />
 
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-        <Toaster />
-      </Provider>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+          <Toaster />
+        </Provider>
+      </AuthProvider>
     </div>
   );
 }

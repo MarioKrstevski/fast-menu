@@ -13,11 +13,13 @@ import {
   faTimes,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function ShoppingCart({ setIsCheckoutModalVisible }) {
   const cart = useSelector((state) => state.shoppingCart.cart);
   const gs = useSelector((state) => state.globalSettings);
+  const [bs, setBs] = useState(null);
+  const bsRef = useRef();
 
   console.log("gs", gs);
   const [isShoppingCartOpen, setIsShoppingCartOpen] = useState(false);
@@ -29,8 +31,6 @@ export default function ShoppingCart({ setIsCheckoutModalVisible }) {
     cartTotal += entry.item.Price * entry.amount;
   }
 
-  const bs = document.getElementById("build-stepper");
-  const isInBuilder = bs;
   let updatedWidth = {};
   if (bs) {
     const bsWidth = bs.offsetWidth;
@@ -38,6 +38,11 @@ export default function ShoppingCart({ setIsCheckoutModalVisible }) {
       width: `calc(100vw - ${bsWidth}px)`,
     };
   }
+
+  //check build stepper existence
+  useEffect(() => {
+    setBs(document.getElementById("build-stepper"));
+  }, []);
   return (
     <div
       className={`shopping-cart fixed p-4 top-0 z-20  w-full h-full flex flex-col items-end transition duration-300 ease-in-out ${

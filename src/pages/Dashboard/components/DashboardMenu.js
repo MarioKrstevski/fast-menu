@@ -4,11 +4,19 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../../redux/authSlice";
 import { Dialog } from "primereact/dialog";
+import { useAuthUser, useSignIn, useSignOut } from "react-auth-kit";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardMenu(props) {
   const [isMenuInfoOpen, setIsMenuInfoOpen] = useState(false);
-  const user = useSelector((state) => state.auth.user);
+  // const user = useSelector((state) => state.auth.user);
+  const auth = useAuthUser();
+  const user = auth();
+
+  const signIn = useSignIn();
+  const navigate = useNavigate();
+  const signOut = useSignOut();
   const dispatch = useDispatch();
   console.log("user", user);
   const [userInfo, setUserInfo] = useState({
@@ -37,7 +45,17 @@ export default function DashboardMenu(props) {
     be_updateUserInfo(userInfo, user.email)
       .then((res) => {
         console.log("res", res);
-        dispatch(login(res.data.user));
+        // dispatch(login(res.data.user));
+        signIn({
+          token: res.data.token,
+          expiresIn: 3600,
+          tokenType: "Bearer",
+          authState: {
+            ...user,
+            contactName: res.data.user.contactName,
+            contactNumber: res.data.user.contactNumber,
+          },
+        });
         setIsMenuInfoOpen(false);
       })
       .catch((err) => {
@@ -120,14 +138,16 @@ export default function DashboardMenu(props) {
                       : "bg-gray-500"
                   }`}
                 >
-                  Sign Up
+                  Update
                 </button>
               </form>
             </Dialog>
 
             <button
               onClick={() => {
-                dispatch(logout());
+                // dispatch(logout());
+                navigate("/login");
+                signOut();
               }}
               className="button is-white has-text-weight-bold p-6"
             >
