@@ -15,6 +15,8 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [clientName, setClientName] = useState("");
+  const [contactName, setContactName] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
   const [signUpError, setsignUpError] = useState("");
   const [signUpSuccess, setsignUpSuccess] = useState("");
   const [testedName, setTestedName] = useState("");
@@ -29,6 +31,14 @@ export default function SignUp() {
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
+  };
+
+  const handleContactNameChange = (e) => {
+    setContactName(e.target.value);
+  };
+
+  const handleContactNumberChange = (e) => {
+    setContactNumber(e.target.value);
   };
 
   const handleClientNameChange = async (e) => {
@@ -70,6 +80,8 @@ export default function SignUp() {
       email,
       password,
       clientName,
+      contactName,
+      contactNumber,
     });
   }
 
@@ -141,6 +153,40 @@ export default function SignUp() {
               <FontAwesomeIcon icon={faSpinner} spin />
             )}
           </div>
+          <div className="mb-4">
+            <label
+              htmlFor="contactName"
+              className="block font-medium text-gray-700"
+            >
+              Contact Name
+            </label>
+            <input
+              type="text"
+              id="contactName"
+              className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:ring focus:ring-indigo-200"
+              placeholder="John Petterson"
+              value={contactName}
+              onChange={handleContactNameChange}
+            />
+          </div>
+
+          <div className="mb-4">
+            <label
+              htmlFor="contactNumber"
+              className="block font-medium text-gray-700"
+            >
+              Contact Number
+            </label>
+            <input
+              type="text"
+              id="contactName"
+              className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:ring focus:ring-indigo-200"
+              placeholder="077444222"
+              value={contactNumber}
+              onChange={handleContactNumberChange}
+            />
+          </div>
+
           <div className="mb-4">
             <label
               htmlFor="email"

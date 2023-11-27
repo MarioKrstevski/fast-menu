@@ -12,6 +12,7 @@ import CardDesign from "./steps/CardDesign";
 import QRCodeInfo from "./steps/QRCodeInfo";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  updateIsOnFreeTrial,
   updateMenu,
   updateMenuProStatus,
 } from "../../../../redux/menuSlice";
@@ -82,9 +83,17 @@ export default function BuilderStepper(props) {
           className={` bg-black/40 global-modal fixed p-4 top-0 left-0 z-20  w-full h-full flex flex-col items-center transition duration-300 ease-in-out `}
         >
           <UpgradeToProPlanModal
-            closeModal={() => {
+            enablePro={() => {
               setIsModalOpen(false);
               dispatch(updateMenuProStatus(true));
+            }}
+            enableFreeTrial={() => {
+              setIsModalOpen(false);
+              const timestampForTomorrow =
+                new Date().getTime() + 24 * 60 * 60 * 1000;
+              dispatch(
+                updateIsOnFreeTrial(timestampForTomorrow.toString())
+              );
             }}
           />
         </div>

@@ -615,6 +615,7 @@ export default function BasicInfoColors(props) {
       <div className="flex align-middle items-center gap-2">
         <input
           checked={gs.footer.isFreeMenuTrademarkShown}
+          disabled={!(isPro || isOnFreeTrial)}
           onChange={(e) => {
             dispatch(
               updateSetting({
@@ -627,15 +628,20 @@ export default function BasicInfoColors(props) {
           id="isFastMenuTrademarkShown"
           autoComplete="on"
           placeholder="My brand new website"
-          className="bg-white  border-gray-300 rounded text-slate-800 border p-2 h-8"
+          className="bg-white  border-gray-300 rounded text-slate-800 border  p-2 h-8"
         />
         <label
           htmlFor="isFastMenuTrademarkShown"
-          className="text-slate-900 inline-block font-bold mb-2 mt-3 "
+          className="text-slate-900 inline-block font-bold  my-2 "
         >
           Show FastMenu Footer
         </label>
       </div>
+      {!(isPro || isOnFreeTrial) && (
+        <div className="text-sm font-normal mb-2 text-gray-600">
+          (only for Pro)
+        </div>
+      )}
       {/*  */}
 
       <div className="field">

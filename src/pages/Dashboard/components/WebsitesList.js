@@ -45,7 +45,6 @@ export default function WebsitesList(props) {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
   const menu = useSelector((state) => state.menu);
-  console.log("menu", menu);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFetchingMenus, setIsFetchingMenus] = useState(false);
   const [isCreatingNewMenu, setIsCreatingNewMenu] = useState(false);
@@ -163,7 +162,11 @@ export default function WebsitesList(props) {
           className={` bg-black/40 overflow-y-auto  global-modal fixed p-4 top-0 left-0 z-20  w-full h-full flex flex-col items-center transition duration-300 ease-in-out `}
         >
           <UpgradeToProPlanModal
-            closeModal={() => {
+            enablePro={() => {
+              setIsModalOpen(false);
+              handleRefreshMenus();
+            }}
+            enableFreeTrial={() => {
               setIsModalOpen(false);
               handleRefreshMenus();
             }}
