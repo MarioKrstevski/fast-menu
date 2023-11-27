@@ -18,14 +18,14 @@ export default function MenuFooter(props) {
     <footer>
       {gs.footer.isShown && (
         <div
-          class=" mx-auto px-4 text-center"
+          class=" mx-auto  text-center"
           style={{
             backgroundColor: gs.footer.backgroundColor,
           }}
         >
           <div className="custom-footer">
             {anySocialIsEnabled && (
-              <div className="my-2 p-2 flex justify-center text-3xl">
+              <div className="p-2 flex justify-center text-3xl">
                 {gs.footer.isFacebookLinkShown && (
                   <div className="social-account m-2">
                     <a target="_blank" href={gs.footer.facebookURL}>
@@ -68,24 +68,26 @@ export default function MenuFooter(props) {
                 )}
               </div>
             )}
-            <div class="py-4">
-              <div class="markup-content text-center">
-                <div>
-                  <p
-                    className="whitespace-pre-line"
-                    style={{
-                      color: gs.footer.textColor,
-                    }}
-                  >
-                    {gs.footer.text}
-                  </p>
+            {gs.footer.text && (
+              <div class="py-4">
+                <div class="markup-content text-center">
+                  <div>
+                    <p
+                      className="whitespace-pre-line"
+                      style={{
+                        color: gs.footer.textColor,
+                      }}
+                    >
+                      {gs.footer.text}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       )}
-      {!gs.footer.removeFreeMenuTrademark && (
+      {gs.footer.isFreeMenuTrademarkShown && (
         <div class="bg-white">
           <div class="container mx-auto px-4 py-6 text-center">
             <p>

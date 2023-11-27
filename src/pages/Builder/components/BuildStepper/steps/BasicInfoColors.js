@@ -348,7 +348,7 @@ export default function BasicInfoColors(props) {
 
       <div className="flex align-middle items-center gap-2">
         <input
-          value={gs.isNavbarFixed}
+          checked={gs.isNavbarFixed}
           onChange={(e) => {
             dispatch(
               updateSetting({
@@ -399,7 +399,7 @@ export default function BasicInfoColors(props) {
 
       <div className="flex align-middle items-center gap-2">
         <input
-          value={gs.hero.isShown}
+          checked={gs.hero.isShown}
           onChange={(e) => {
             dispatch(
               updateSetting({
@@ -611,6 +611,31 @@ export default function BasicInfoColors(props) {
           Show Footer
         </label>
       </div>
+
+      <div className="flex align-middle items-center gap-2">
+        <input
+          checked={gs.footer.isFreeMenuTrademarkShown}
+          onChange={(e) => {
+            dispatch(
+              updateSetting({
+                field: "footer.isFreeMenuTrademarkShown",
+                value: e.target.checked,
+              })
+            );
+          }}
+          type="checkbox"
+          id="isFastMenuTrademarkShown"
+          autoComplete="on"
+          placeholder="My brand new website"
+          className="bg-white  border-gray-300 rounded text-slate-800 border p-2 h-8"
+        />
+        <label
+          htmlFor="isFastMenuTrademarkShown"
+          className="text-slate-900 inline-block font-bold mb-2 mt-3 "
+        >
+          Show FastMenu Footer
+        </label>
+      </div>
       {/*  */}
 
       <div className="field">
@@ -688,7 +713,7 @@ export default function BasicInfoColors(props) {
 
       <div className="flex align-middle items-center gap-2">
         <input
-          value={gs.footer.isFacebookLinkShown}
+          checked={gs.footer.isFacebookLinkShown}
           onChange={(e) => {
             dispatch(
               updateSetting({
@@ -711,7 +736,7 @@ export default function BasicInfoColors(props) {
       </div>
       <div className="flex align-middle items-center gap-2">
         <input
-          value={gs.footer.isFacebookLinkShown}
+          checked={gs.footer.isInstagramLinkShown}
           onChange={(e) => {
             dispatch(
               updateSetting({
@@ -735,7 +760,7 @@ export default function BasicInfoColors(props) {
 
       <div className="flex align-middle items-center gap-2">
         <input
-          value={gs.footer.isTiktokLinkShown}
+          checked={gs.footer.isTiktokLinkShown}
           onChange={(e) => {
             dispatch(
               updateSetting({
@@ -759,7 +784,7 @@ export default function BasicInfoColors(props) {
 
       <div className="flex align-middle items-center gap-2">
         <input
-          value={gs.footer.isTwitterLinkShown}
+          checked={gs.footer.isTwitterLinkShown}
           onChange={(e) => {
             dispatch(
               updateSetting({
