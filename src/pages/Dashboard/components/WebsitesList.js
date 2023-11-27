@@ -23,7 +23,7 @@ import { updateSelectedMenuForPlan } from "../../../redux/planUpgradeSlice";
 import UpgradeToProPlanModal from "./UpgradeToProPlanModal";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { useAuthUser, useSignIn } from "react-auth-kit";
-import { api, baseUrl } from "../../../api/backend";
+import { api, frontendBaseUrl } from "../../../api/backend";
 
 function NewMenuCreationIndicator() {
   return (
@@ -268,11 +268,13 @@ xl:grid-cols-3
                   </span>
                   <div>
                     <a
-                      href={baseUrl + menu.subdomain}
+                      href={
+                        frontendBaseUrl + "menu/" + menu.subdomain
+                      }
                       target="_blank"
                       className="text-sm break-all hover:underline mb-0"
                     >
-                      {baseUrl + menu.subdomain}
+                      {frontendBaseUrl + "menu/" + menu.subdomain}
                     </a>
                   </div>
                   <div></div>
@@ -297,7 +299,9 @@ xl:grid-cols-3
                   {menu.isPublished && (
                     <a
                       target="_blank"
-                      href={baseUrl + menu.subdomain}
+                      href={
+                        frontendBaseUrl + "menu/" + menu.subdomain
+                      }
                       className="ml-4 cursor-pointer text-white hover:text-white font-semibold px-3 py-2 bg-gray-800 hover:bg-gray-900 rounded shadow-md "
                     >
                       <FontAwesomeIcon

@@ -9,11 +9,11 @@ import { QRCode } from "react-qrcode-logo";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateIsPublished } from "../../../../../redux/menuSlice";
-import { api, baseUrl } from "../../../../../api/backend";
+import { api, frontendBaseUrl } from "../../../../../api/backend";
 export default function QRCodeInfo(props) {
   const qrRef = useRef();
   const gs = useSelector((store) => store.globalSettings);
-  const qrlink = baseUrl + "menu/" + gs.subdomain;
+  const qrlink = frontendBaseUrl + "menu/" + gs.subdomain;
   const [settingsUpdated, setSettingsUpdated] = useState(false);
   //   const qrlink = "http://www.fastmenu.com/menu/" + gs.subdomain;
   const dispatch = useDispatch();
@@ -86,7 +86,7 @@ export default function QRCodeInfo(props) {
           <div className="w-full">
             <a
               target="_blank"
-              href={baseUrl + "menu/" + gs.subdomain}
+              href={frontendBaseUrl + "menu/" + gs.subdomain}
             >
               <button
                 disabled={!canPublishOrSaveChanges}
@@ -111,7 +111,7 @@ export default function QRCodeInfo(props) {
           <div className="w-full">
             <a
               target="_blank"
-              href={baseUrl + "menu/" + gs.subdomain}
+              href={frontendBaseUrl + "menu/" + gs.subdomain}
             >
               <button
                 type="button"
