@@ -3,7 +3,7 @@ import axios from "axios";
 const localUrl = "http://localhost:8000/";
 const publishedUrl = "https://api-omjz.onrender.com/";
 
-const baseUrl = publishedUrl;
+export const baseUrl = publishedUrl;
 
 const fastmenu = axios.create({
   baseURL: baseUrl,
@@ -127,6 +127,13 @@ function be_signup(data) {
   return fastmenu.post("signup", data);
 }
 
+function be_placeOrder(message, number) {
+  return fastmenu.post("placeOrder", {
+    message,
+    number,
+  });
+}
+
 export const api = {
   be_loadMenuItemsByMenuId,
   be_checkSubdomainAvailability,
@@ -145,4 +152,5 @@ export const api = {
   be_trylogin,
   be_checkClientNameAvailability,
   be_signup,
+  be_placeOrder,
 };

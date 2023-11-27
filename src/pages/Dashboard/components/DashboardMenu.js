@@ -1,11 +1,6 @@
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "../../../redux/authSlice";
 import { Dialog } from "primereact/dialog";
 import { useAuthUser, useSignIn, useSignOut } from "react-auth-kit";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../../api/backend";
 

@@ -7,12 +7,10 @@ import {
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
 import { updateGlobalSettings } from "../../../redux/globalSettingsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { updateWithNewMenus } from "../../../redux/authSlice";
 import {
   clearMenuInfo,
   updateIsOnFreeTrial,
@@ -25,7 +23,7 @@ import { updateSelectedMenuForPlan } from "../../../redux/planUpgradeSlice";
 import UpgradeToProPlanModal from "./UpgradeToProPlanModal";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { useAuthUser, useSignIn } from "react-auth-kit";
-import { api } from "../../../api/backend";
+import { api, baseUrl } from "../../../api/backend";
 
 function NewMenuCreationIndicator() {
   return (
@@ -147,6 +145,7 @@ export default function WebsitesList(props) {
   }
 
   //refresh menu on load
+
   useEffect(() => {
     handleRefreshMenus();
     dispatch(clearMenuInfo());
@@ -269,13 +268,11 @@ xl:grid-cols-3
                   </span>
                   <div>
                     <a
-                      href={
-                        "http://localhost:3000/menu/" + menu.subdomain
-                      }
+                      href={baseUrl + menu.subdomain}
                       target="_blank"
                       className="text-sm break-all hover:underline mb-0"
                     >
-                      {"http://localhost:3000/menu/" + menu.subdomain}
+                      {baseUrl + menu.subdomain}
                     </a>
                   </div>
                   <div></div>
@@ -300,9 +297,7 @@ xl:grid-cols-3
                   {menu.isPublished && (
                     <a
                       target="_blank"
-                      href={
-                        "http://localhost:3000/menu/" + menu.subdomain
-                      }
+                      href={baseUrl + menu.subdomain}
                       className="ml-4 cursor-pointer text-white hover:text-white font-semibold px-3 py-2 bg-gray-800 hover:bg-gray-900 rounded shadow-md "
                     >
                       <FontAwesomeIcon

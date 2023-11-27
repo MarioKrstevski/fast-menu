@@ -11,6 +11,7 @@ import { clearCart } from "../../../redux/shoppingCartSlice";
 import axios from "axios";
 import OrderPlacedMessage from "./OrderPlacedModal";
 import { useState } from "react";
+import { api } from "../../../api/backend";
 function generateOrderMessage(formData, cart) {
   //   console.log(formData, cart);
 
@@ -64,12 +65,7 @@ ${
 }
 export default function CheckoutModal({ setIsCheckoutModalVisible }) {
   const [isOrderSent, setIsOrderSent] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit, watch } = useForm({
     defaultValues: {
       paymentType: "bycash",
       wayToPackage: "pickup",
@@ -79,12 +75,10 @@ export default function CheckoutModal({ setIsCheckoutModalVisible }) {
   const dispatch = useDispatch();
   const cart = useSelector((store) => store.shoppingCart.cart);
   const gs = useSelector((store) => store.globalSettings);
+
   function processOrder(message) {
-    axios
-      .post("http://localhost:8000/placeOrder", {
-        message,
-        number: gs.whatsappNumberConnected,
-      })
+    api
+      .be_placeOrder(message, gs.whatsappNumberConnected)
       .then((data) => {
         dispatch(clearCart());
         setIsOrderSent(true);
