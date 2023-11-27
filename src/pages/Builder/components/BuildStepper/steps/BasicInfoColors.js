@@ -101,7 +101,7 @@ export default function BasicInfoColors(props) {
           <span className="text-sm font-normal">
             (only visible in dashboard)
           </span>
-        </label>{" "}
+        </label>
         <input
           value={gs.menuName}
           onChange={(e) => {
@@ -124,7 +124,7 @@ export default function BasicInfoColors(props) {
           className="text-slate-900 font-bold mb-2 mt-3 block"
         >
           Website name
-        </label>{" "}
+        </label>
         <input
           value={gs.websiteName}
           onChange={(e) => {
@@ -154,7 +154,7 @@ export default function BasicInfoColors(props) {
           <span className="text-sm font-normal">
             (used for whatsapp and calls)
           </span>
-        </label>{" "}
+        </label>
         <input
           value={gs.whatsappNumberConnected}
           onChange={(e) => {
@@ -181,7 +181,7 @@ export default function BasicInfoColors(props) {
           className="text-slate-900 font-bold mb-2 mt-3 block"
         >
           Subdomain name
-        </label>{" "}
+        </label>
         <div className="flex">
           <p className="control">
             <span className="text-normal">fastmenu.com/</span>
@@ -265,7 +265,7 @@ export default function BasicInfoColors(props) {
           className="text-slate-900 font-bold mb-2 mt-3 block"
         >
           Logo URL
-        </label>{" "}
+        </label>
         <div className="control is-clearfix">
           <input
             value={gs.logoURL}
@@ -322,7 +322,7 @@ export default function BasicInfoColors(props) {
           className="text-slate-900 font-bold mb-2 mt-3 block"
         >
           Favicon URL
-        </label>{" "}
+        </label>
         <div className="control is-clearfix">
           <input
             value={gs.faviconURL}
@@ -368,13 +368,34 @@ export default function BasicInfoColors(props) {
           className="text-slate-900 inline-block font-bold mb-2 mt-3 "
         >
           Fixed Navbar
-        </label>{" "}
+        </label>
       </div>
 
       <div className="h-[1px] bg-slate-400 w-full my-4"></div>
 
       {/* --- */}
       <h2 className="text-lg">Hero/Header Settings</h2>
+
+      <div className="field">
+        <div className="text-slate-900 font-bold mb-2 mt-3 block">
+          Header Backround Color
+        </div>
+        <input
+          value={gs.theme.headerColor}
+          onChange={(e) => {
+            dispatch(
+              updateSetting({
+                field: "theme.headerColor",
+                value: e.target.value,
+              })
+            );
+          }}
+          type="color"
+          id="themeHeaderColor"
+          autoComplete="on"
+          className="bg-white w-2/12 border-gray-300 rounded text-slate-800 border  h-8"
+        />
+      </div>
 
       <div className="flex align-middle items-center gap-2">
         <input
@@ -398,7 +419,7 @@ export default function BasicInfoColors(props) {
           className="text-slate-900 inline-block font-bold mb-2 mt-3 "
         >
           Show Hero
-        </label>{" "}
+        </label>
       </div>
       <div className="field">
         <label
@@ -406,7 +427,7 @@ export default function BasicInfoColors(props) {
           className="text-slate-900 font-bold mb-2 mt-3 block"
         >
           Title
-        </label>{" "}
+        </label>
         <div className="flex align-middle gap-1">
           <input
             value={gs.hero.title}
@@ -448,7 +469,7 @@ export default function BasicInfoColors(props) {
           className="text-slate-900 font-bold mb-2 mt-3 block"
         >
           Subheading
-        </label>{" "}
+        </label>
         <div className="flex align-middle gap-1">
           <input
             value={gs.hero.subheading}
@@ -490,7 +511,7 @@ export default function BasicInfoColors(props) {
           className="text-slate-900 font-bold mb-2 mt-3 block"
         >
           Hero Background Image
-        </label>{" "}
+        </label>
         <div className="control is-clearfix">
           <input
             value={gs.hero.image}
@@ -516,12 +537,32 @@ export default function BasicInfoColors(props) {
       {/* --- */}
 
       <div className="field">
+        <div className="text-slate-900 font-bold mb-2 mt-3 block">
+          Menu Backround Color
+        </div>
+        <input
+          value={gs.theme.backgroundColor}
+          onChange={(e) => {
+            dispatch(
+              updateSetting({
+                field: "theme.backgroundColor",
+                value: e.target.value,
+              })
+            );
+          }}
+          type="color"
+          id="themeBackgroundColor"
+          autoComplete="on"
+          className="bg-white w-2/12 border-gray-300 rounded text-slate-800 border  h-8"
+        />
+      </div>
+      <div className="field">
         <label
           htmlFor="menuDescription"
           className="text-slate-900 font-bold mb-2 mt-3 block"
         >
           Menu Description
-        </label>{" "}
+        </label>
         <div className="control is-clearfix">
           <textarea
             value={gs.menuDescription}
@@ -541,6 +582,324 @@ export default function BasicInfoColors(props) {
           ></textarea>
         </div>
       </div>
+      {/* --- */}
+      <div className="h-[1px] bg-slate-400 w-full my-4"></div>
+      {/* --- */}
+      <h2 className="text-lg">Footer Settings</h2>
+
+      <div className="flex align-middle items-center gap-2">
+        <input
+          value={gs.footer.isShown}
+          onChange={(e) => {
+            dispatch(
+              updateSetting({
+                field: "footer.isShown",
+                value: e.target.checked,
+              })
+            );
+          }}
+          type="checkbox"
+          id="isFooterShown"
+          autoComplete="on"
+          placeholder="My brand new website"
+          className="bg-white  border-gray-300 rounded text-slate-800 border p-2 h-8"
+        />
+        <label
+          htmlFor="isFooterShown"
+          className="text-slate-900 inline-block font-bold mb-2 mt-3 "
+        >
+          Show Footer
+        </label>
+      </div>
+      {/*  */}
+
+      <div className="field">
+        <label
+          htmlFor="footerText"
+          className="text-slate-900 font-bold mb-2 mt-3 block"
+        >
+          Footer Text
+        </label>
+        <div className="control is-clearfix">
+          <textarea
+            value={gs.footer.text}
+            name="footerText"
+            className="border w-full border-slate-500 p-2"
+            id="footerText"
+            cols="28"
+            rows="4"
+            onChange={(e) => {
+              dispatch(
+                updateSetting({
+                  field: "footer.text",
+                  value: e.target.value,
+                })
+              );
+            }}
+          ></textarea>
+        </div>
+      </div>
+      {/*  */}
+
+      <div className="field">
+        <div className="text-slate-900 font-bold mb-2 mt-3 block">
+          Footer Background Color
+        </div>
+        <input
+          value={gs.footer.backgroundColor}
+          onChange={(e) => {
+            dispatch(
+              updateSetting({
+                field: "footer.backgroundColor",
+                value: e.target.value,
+              })
+            );
+          }}
+          type="color"
+          id="footerBackgroundColor"
+          autoComplete="on"
+          className="bg-white w-2/12 border-gray-300 rounded text-slate-800 border  h-8"
+        />
+      </div>
+
+      <div className="field">
+        <div className="text-slate-900 font-bold mb-2 mt-3 block">
+          Footer Text Color
+        </div>
+        <input
+          value={gs.footer.textColor}
+          onChange={(e) => {
+            dispatch(
+              updateSetting({
+                field: "footer.textColor",
+                value: e.target.value,
+              })
+            );
+          }}
+          type="color"
+          id="footerTextColor"
+          autoComplete="on"
+          className="bg-white w-2/12 border-gray-300 rounded text-slate-800 border  h-8"
+        />
+      </div>
+
+      {/*  */}
+      {/*  */}
+
+      <div className="flex align-middle items-center gap-2">
+        <input
+          value={gs.footer.isFacebookLinkShown}
+          onChange={(e) => {
+            dispatch(
+              updateSetting({
+                field: "footer.isFacebookLinkShown",
+                value: e.target.checked,
+              })
+            );
+          }}
+          type="checkbox"
+          id="isFacebookLinkShown"
+          autoComplete="on"
+          className="bg-white  border-gray-300 rounded text-slate-800 border p-2 h-8"
+        />
+        <label
+          htmlFor="isFacebookLinkShown"
+          className="text-slate-900 inline-block font-bold mb-2 mt-3 "
+        >
+          Show Facebook
+        </label>
+      </div>
+      <div className="flex align-middle items-center gap-2">
+        <input
+          value={gs.footer.isFacebookLinkShown}
+          onChange={(e) => {
+            dispatch(
+              updateSetting({
+                field: "footer.isInstagramLinkShown",
+                value: e.target.checked,
+              })
+            );
+          }}
+          type="checkbox"
+          id="isInstagramLinkShown"
+          autoComplete="on"
+          className="bg-white  border-gray-300 rounded text-slate-800 border p-2 h-8"
+        />
+        <label
+          htmlFor="isInstagramLinkShown"
+          className="text-slate-900 inline-block font-bold mb-2 mt-3 "
+        >
+          Show Instagram
+        </label>
+      </div>
+
+      <div className="flex align-middle items-center gap-2">
+        <input
+          value={gs.footer.isTiktokLinkShown}
+          onChange={(e) => {
+            dispatch(
+              updateSetting({
+                field: "footer.isTiktokLinkShown",
+                value: e.target.checked,
+              })
+            );
+          }}
+          type="checkbox"
+          id="isTiktokLinkShown"
+          autoComplete="on"
+          className="bg-white  border-gray-300 rounded text-slate-800 border p-2 h-8"
+        />
+        <label
+          htmlFor="isTiktokLinkShown"
+          className="text-slate-900 inline-block font-bold mb-2 mt-3 "
+        >
+          Show Tiktok
+        </label>
+      </div>
+
+      <div className="flex align-middle items-center gap-2">
+        <input
+          value={gs.footer.isTwitterLinkShown}
+          onChange={(e) => {
+            dispatch(
+              updateSetting({
+                field: "footer.isTwitterLinkShown",
+                value: e.target.checked,
+              })
+            );
+          }}
+          type="checkbox"
+          id="isTwitterLinkShown"
+          autoComplete="on"
+          className="bg-white  border-gray-300 rounded text-slate-800 border p-2 h-8"
+        />
+        <label
+          htmlFor="isTwitterLinkShown"
+          className="text-slate-900 inline-block font-bold mb-2 mt-3 "
+        >
+          Show Twitter
+        </label>
+      </div>
+
+      <div className="field">
+        <label
+          htmlFor="facebookURL"
+          className="text-slate-900 font-bold mb-2 mt-3 block"
+        >
+          Link to your Facebook page
+        </label>
+        <input
+          value={gs.footer.facebookURL}
+          disabled={!gs.footer.isFacebookLinkShown}
+          onChange={(e) => {
+            dispatch(
+              updateSetting({
+                field: "footer.facebookURL",
+                value: e.target.value,
+              })
+            );
+          }}
+          type="text"
+          id="facebookURL"
+          placeholder=""
+          className={` w-full border-gray-300 rounded text-slate-800 border p-2 h-8
+          ${
+            !gs.footer.isFacebookLinkShown
+              ? "bg-gray-200"
+              : "bg-white"
+          }
+          `}
+        />
+      </div>
+
+      <div className="field">
+        <label
+          htmlFor="instagramURL"
+          className="text-slate-900 font-bold mb-2 mt-3 block"
+        >
+          Link to your Instagram page
+        </label>
+        <input
+          value={gs.footer.instagramURL}
+          disabled={!gs.footer.isInstagramLinkShown}
+          onChange={(e) => {
+            dispatch(
+              updateSetting({
+                field: "footer.instagramURL",
+                value: e.target.value,
+              })
+            );
+          }}
+          type="text"
+          id="instagramURL"
+          placeholder=""
+          className={` w-full border-gray-300 rounded text-slate-800 border p-2 h-8
+          ${
+            !gs.footer.isInstagramLinkShown
+              ? "bg-gray-200"
+              : "bg-white"
+          }
+          `}
+        />
+      </div>
+
+      <div className="field">
+        <label
+          htmlFor="tiktokURL"
+          className="text-slate-900 font-bold mb-2 mt-3 block"
+        >
+          Link to your Tiktok page
+        </label>
+        <input
+          value={gs.footer.tiktokURL}
+          disabled={!gs.footer.isTiktokLinkShown}
+          onChange={(e) => {
+            dispatch(
+              updateSetting({
+                field: "footer.tiktokURL",
+                value: e.target.value,
+              })
+            );
+          }}
+          type="text"
+          id="tiktokURL"
+          placeholder=""
+          className={` w-full border-gray-300 rounded text-slate-800 border p-2 h-8
+          ${!gs.footer.isTiktokLinkShown ? "bg-gray-200" : "bg-white"}
+          `}
+        />
+      </div>
+
+      <div className="field">
+        <label
+          htmlFor="twitterURL"
+          className="text-slate-900 font-bold mb-2 mt-3 block"
+        >
+          Link to your Twitter page
+        </label>
+        <input
+          value={gs.footer.twitterURL}
+          disabled={!gs.footer.isTwitterLinkShown}
+          onChange={(e) => {
+            dispatch(
+              updateSetting({
+                field: "footer.twitterURL",
+                value: e.target.value,
+              })
+            );
+          }}
+          type="text"
+          id="twitterURL"
+          placeholder=""
+          className={` w-full border-gray-300 rounded text-slate-800 border p-2 h-8
+          ${
+            !gs.footer.isTwitterLinkShown ? "bg-gray-200" : "bg-white"
+          }
+          `}
+        />
+      </div>
+
+      {/* ---- */}
     </div>
   );
 }

@@ -44,7 +44,6 @@ export const menuSlice = createSlice({
     },
     updateIsOnFreeTrial(state, action) {
       const timestampForEnd = action.payload;
-      // console.log("time", timestampForEnd);
       if (Number(timestampForEnd) < new Date().getTime()) {
         state.isOnFreeTrial = "";
       } else {

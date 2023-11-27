@@ -3,6 +3,7 @@ import MenuDescription from "./MenuDescription";
 import MenuHeader from "./MenuHeader";
 import MenuHero from "./MenuHero";
 import MenuItems from "./MenuItems";
+import MenuFooter from "./MenuFooter";
 import { useSelector } from "react-redux";
 import ShoppingCart from "../../pages/Menu/components/ShoppingCart";
 import CheckoutModal from "../../pages/Menu/components/CheckoutModal";
@@ -30,6 +31,7 @@ export default function MenuDisplay(props) {
         <MenuHero />
         <MenuDescription />
         <MenuItems />
+        <MenuFooter />
       </div>
     </div>
   );

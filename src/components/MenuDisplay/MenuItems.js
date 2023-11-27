@@ -89,7 +89,7 @@ function Pill({ label, active, updateFilter }) {
         updateFilter(label);
       }}
       type="button"
-      className={`px-4 whitespace-nowrap py-2 w-auto transition-shadow duration-200 shadow-sm hover:shadow-md inline-flex justify-center items-center rounded-md border text-base sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-2 mb-2 
+      className={`px-4 whitespace-nowrap py-2 w-auto transition-shadow duration-200 shadow-sm hover:shadow-md inline-flex justify-center items-center rounded-md  text-base sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-2 mb-2 
       ${
         active
           ? "bg-gray-900 text-white"
@@ -118,7 +118,12 @@ export default function MenuItems(props) {
   console.log("menu", menu);
 
   return (
-    <div className="min-h-full max-w-full overflow-hidden">
+    <div
+      className="min-h-full max-w-full overflow-hidden"
+      style={{
+        backgroundColor: gs.theme.backgroundColor,
+      }}
+    >
       {menu.length === 0 && (
         <div className="text-center my-8">Loading Menu</div>
       )}

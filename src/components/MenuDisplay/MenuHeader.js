@@ -18,7 +18,7 @@ export default function MenuHeader(props) {
     shadow-sm
     ${gs.isNavbarFixed ? "sticky top-0 z-10" : ""}
   `}
-      style={{ backgroundColor: "rgb(255, 255, 255)" }}
+      style={{ backgroundColor: gs.theme.headerColor }}
     >
       <div className="flex items-center flex-shrink-0 text-gray-900 h-full">
         {gs.logoURL ? (

@@ -18,6 +18,7 @@ import {
 import axios from "axios";
 import UpgradeToProPlanModal from "../../../Dashboard/components/UpgradeToProPlanModal";
 import { calculateTimeRemaining } from "../../../../helpers/helperFunctions";
+import { useNavigate } from "react-router-dom";
 
 const steps = [
   { component: <DataLoadInput />, title: "Insert Spreadsheet" },
@@ -28,9 +29,15 @@ const steps = [
 export default function BuilderStepper(props) {
   const gs = useSelector((state) => state.globalSettings);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { menuId, menu, isPro, isOnFreeTrial } = useSelector(
     (store) => store.menu
   );
+
+  if (!menuId) {
+    // need to check if this works
+    navigate("/dashboard");
+  }
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
