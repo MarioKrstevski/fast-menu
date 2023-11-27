@@ -18,7 +18,28 @@ export default function UpgradeToProPlanModal({ closeModal }) {
   const menus = useSelector((state) => state.auth.user.menus);
 
   const menu = menus.find((menu) => menu.id === menuId);
-  const { subdomain, menuName } = menu;
+  const { subdomain, menuName, isPro, isOnFreeTrial } = menu;
+
+  async function be_subscribeMenuToFreeTrial() {
+    return axios.post(
+      "http://localhost:8000/enableFreeTrialForMenu",
+      {
+        menuId,
+      }
+    );
+  }
+
+  function handleFreeTrialSubscription() {
+    be_subscribeMenuToFreeTrial()
+      .then((res) => {
+        console.log("sub to pro free trial", res);
+
+        closeModal();
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }
 
   async function be_subscribeMenuToPro() {
     return axios.post("http://localhost:8000/subscribeMenuToPro", {
@@ -29,7 +50,6 @@ export default function UpgradeToProPlanModal({ closeModal }) {
     be_subscribeMenuToPro()
       .then((res) => {
         console.log("sub to pro done", res);
-
         closeModal();
       })
       .catch((err) => {
@@ -155,6 +175,23 @@ export default function UpgradeToProPlanModal({ closeModal }) {
           </div>
         </div>
 
+        {!isOnFreeTrial && (
+          <div className="free-trial ">
+            <button
+              disabled={submitIsDisabled}
+              onClick={handleFreeTrialSubscription}
+              id="submit-premium"
+              type="submit"
+              className={` 
+          w-full py-1 mb-4 px-2 mt-4 rounded-md shadow
+          bg-green-400 text-green-950 hover:bg-green-500
+         
+          `}
+            >
+              Try Free Trial for 1 Day
+            </button>
+          </div>
+        )}
         <div className="mb-4">
           <label
             className="block text-sm font-medium text-gray-600"

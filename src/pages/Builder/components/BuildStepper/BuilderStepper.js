@@ -17,6 +17,7 @@ import {
 } from "../../../../redux/menuSlice";
 import axios from "axios";
 import UpgradeToProPlanModal from "../../../Dashboard/components/UpgradeToProPlanModal";
+import { calculateTimeRemaining } from "../../../../helpers/helperFunctions";
 
 const steps = [
   { component: <DataLoadInput />, title: "Insert Spreadsheet" },
@@ -27,7 +28,9 @@ const steps = [
 export default function BuilderStepper(props) {
   const gs = useSelector((state) => state.globalSettings);
   const dispatch = useDispatch();
-  const { menuId, menu, isPro } = useSelector((store) => store.menu);
+  const { menuId, menu, isPro, isOnFreeTrial } = useSelector(
+    (store) => store.menu
+  );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -103,7 +106,7 @@ export default function BuilderStepper(props) {
                 </span>
               </button>
             </span>
-            {!isPro && (
+            {!(isPro || isOnFreeTrial) && (
               <button
                 onClick={() => {
                   setIsModalOpen(true);
@@ -121,12 +124,21 @@ export default function BuilderStepper(props) {
         </div>
         <div className=" bg-gray-200 mt-auto">
           <div
-            className="text-sm px-4 py-2 text-white font-semibold flex justify-between bg-green-500"
-            style={{ display: "none" }}
+            className="text-sm px-3 py-2 text-white flex justify-between bg-green-500"
+            style={{ display: isOnFreeTrial ? "" : "none" }}
           >
-            <div>Free trial ends in 5 days</div>
             <div>
-              <div role="button" className="hover:underline">
+              Free trial ends in{" "}
+              {calculateTimeRemaining(isOnFreeTrial)}
+            </div>
+            <div>
+              <div
+                onClick={() => {
+                  setIsModalOpen(true);
+                }}
+                role="button"
+                className="hover:underline font-semibold"
+              >
                 Upgrade Now
               </div>
             </div>

@@ -7,6 +7,7 @@ const initialState = {
   canPublishOrSaveChanges: true,
   subdomainWhenLoaded: null,
   isPublished: false,
+  isOnFreeTrial: false,
 };
 
 export const menuSlice = createSlice({
@@ -21,6 +22,7 @@ export const menuSlice = createSlice({
       state.canPublishOrSaveChanges = true;
       state.subdomainWhenLoaded = null;
       state.isPublished = false;
+      state.isOnFreeTrial = false;
     },
     updateMenu(state, action) {
       state.menu = action.payload;
@@ -40,6 +42,15 @@ export const menuSlice = createSlice({
     updateIsPublished(state, action) {
       state.isPublished = action.payload;
     },
+    updateIsOnFreeTrial(state, action) {
+      const timestampForEnd = action.payload;
+      // console.log("time", timestampForEnd);
+      if (Number(timestampForEnd) < new Date().getTime()) {
+        state.isOnFreeTrial = "";
+      } else {
+        state.isOnFreeTrial = action.payload;
+      }
+    },
   },
 });
 
@@ -52,6 +63,7 @@ export const {
   updateMenuChangesCheck,
   updateSubdomainWhenLoaded,
   updateIsPublished,
+  updateIsOnFreeTrial,
 } = menuSlice.actions;
 
 export default menuSlice.reducer;

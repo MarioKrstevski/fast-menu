@@ -8,6 +8,7 @@ import { updateMenuChangesCheck } from "../../../../../redux/menuSlice";
 
 export default function BasicInfoColors(props) {
   const gs = useSelector((store) => store.globalSettings);
+  const { isPro, isOnFreeTrial } = useSelector((store) => store.menu);
   const dispatch = useDispatch();
 
   const [subdomainAvailability, setSubdomainAvailability] =
@@ -287,6 +288,36 @@ export default function BasicInfoColors(props) {
 
       <div className="field">
         <label
+          htmlFor="websiteTitle"
+          className="text-slate-900 font-bold mb-2 mt-3 block"
+        >
+          Website Title
+        </label>
+        <div className="control is-clearfix">
+          <input
+            disabled={!(isPro || isOnFreeTrial)}
+            value={gs.websiteTitle}
+            onChange={(e) => {
+              dispatch(
+                updateSetting({
+                  field: "websiteTitle",
+                  value: e.target.value,
+                })
+              );
+            }}
+            type="text"
+            id="websiteTitle"
+            autoComplete="on"
+            placeholder="Webiste Title"
+            className={` border-gray-300 rounded text-slate-800 border w-full p-2 h-8 ${
+              !(isPro || isOnFreeTrial) ? "bg-gray-200" : "bg-white"
+            } `}
+          />
+        </div>
+      </div>
+
+      <div className="field">
+        <label
           htmlFor="faviconURL"
           className="text-slate-900 font-bold mb-2 mt-3 block"
         >
@@ -295,6 +326,7 @@ export default function BasicInfoColors(props) {
         <div className="control is-clearfix">
           <input
             value={gs.faviconURL}
+            disabled={!(isPro || isOnFreeTrial)}
             onChange={(e) => {
               dispatch(
                 updateSetting({
@@ -307,7 +339,9 @@ export default function BasicInfoColors(props) {
             id="faviconURL"
             autoComplete="on"
             placeholder="My brand new website"
-            className="bg-white w-full border-gray-300 rounded text-slate-800 border p-2 h-8"
+            className={` border-gray-300 rounded text-slate-800 border w-full p-2 h-8 ${
+              !(isPro || isOnFreeTrial) ? "bg-gray-200" : "bg-white"
+            } `}
           />
         </div>
       </div>

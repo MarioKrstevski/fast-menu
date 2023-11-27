@@ -15,6 +15,7 @@ import { useEffect, useRef, useState } from "react";
 import { updateWithNewMenus } from "../../../redux/authSlice";
 import {
   clearMenuInfo,
+  updateIsOnFreeTrial,
   updateIsPublished,
   updateMenuId,
   updateMenuProStatus,
@@ -58,7 +59,12 @@ export default function WebsitesList(props) {
     });
   }
 
-  function loadNeededMenuInformation(menuId, isPro, isPublished) {
+  function loadNeededMenuInformation(
+    menuId,
+    isPro,
+    isPublished,
+    isOnFreeTrial
+  ) {
     be_loadGlobalSettingsForMenu(menuId)
       .then((res) => {
         dispatch(updateGlobalSettings(res.data.globalSettings));
@@ -69,6 +75,7 @@ export default function WebsitesList(props) {
           updateSubdomainWhenLoaded(res.data.globalSettings.subdomain)
         );
         dispatch(updateIsPublished(isPublished));
+        dispatch(updateIsOnFreeTrial(isOnFreeTrial));
         navigate("/builder");
       })
       .catch((err) => {
@@ -245,6 +252,11 @@ xl:grid-cols-3
                       PRO Activated
                     </span>
                   )}
+                  {!menu.isPro && menu.isOnFreeTrial && (
+                    <span className="text-green-950 font-semibold py-2 px-4 text-xs inline-flex items-center bg-green-500 rounded-full ml-3">
+                      Free Trial
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="px-6 py-2 h-full flex flex-col items-center justify-center text-xl">
@@ -273,7 +285,8 @@ xl:grid-cols-3
                       loadNeededMenuInformation(
                         menu.id,
                         menu.isPro,
-                        menu.isPublished
+                        menu.isPublished,
+                        menu.isOnFreeTrial
                       )
                     }
                     className="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white hover:text-white font-semibold px-3 py-2 rounded shadow-md"
@@ -296,11 +309,6 @@ xl:grid-cols-3
                       Visit
                     </a>
                   )}
-                </div>
-                <div>
-                  <span className="ml-4" style={{ display: "none" }}>
-                    Building menu...
-                  </span>
                 </div>
               </div>
             </div>
