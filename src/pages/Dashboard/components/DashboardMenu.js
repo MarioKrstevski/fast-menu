@@ -7,6 +7,7 @@ import { Dialog } from "primereact/dialog";
 import { useAuthUser, useSignIn, useSignOut } from "react-auth-kit";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../../api/backend";
 
 export default function DashboardMenu(props) {
   const [isMenuInfoOpen, setIsMenuInfoOpen] = useState(false);
@@ -17,7 +18,6 @@ export default function DashboardMenu(props) {
   const signIn = useSignIn();
   const navigate = useNavigate();
   const signOut = useSignOut();
-  const dispatch = useDispatch();
   console.log("user", user);
   const [userInfo, setUserInfo] = useState({
     contactName: user.contactName,
@@ -31,21 +31,14 @@ export default function DashboardMenu(props) {
     }));
   }
 
-  async function be_updateUserInfo(updatedUserInfo, email) {
-    return axios.post("http://localhost:8000/updateUserInfo", {
-      ...updatedUserInfo,
-      email,
-    });
-  }
-
   function handleSubmit(e) {
     e.preventDefault();
     console.log("e", e);
 
-    be_updateUserInfo(userInfo, user.email)
+    api
+      .be_updateUserInfo(userInfo, user.email)
       .then((res) => {
         console.log("res", res);
-        // dispatch(login(res.data.user));
         signIn({
           token: res.data.token,
           expiresIn: 3600,
@@ -67,17 +60,21 @@ export default function DashboardMenu(props) {
     <div className="bg-slate-950 text-white flex justify-center">
       <div className="container ">
         <nav className="h-12 w-full  flex justify-between px-8 items-center">
-          <div className="logo flex gap-1">
-            <img src="" alt="logo" />
+          <div className="logo flex gap-1 items-center ">
+            <img
+              className="w-8"
+              src="https://thumbs.dreamstime.com/b/design-can-be-used-as-logo-icon-complement-to-tool-speed-127653493.jpg"
+              alt="logo"
+            />
             <span>Fast Menu</span>
           </div>
           <div className="relative flex items-center mr-4">
-            <span className="px-2">Hello {user.contactName}</span>
+            <span className="pr-4">{user.contactName}</span>
             <img
               onClick={() => {
                 setIsMenuInfoOpen(true);
               }}
-              src="https://lh3.googleusercontent.com/a/ACg8ocLwfGcFWLIHtTdPW7xP5n6ylyRDXrgonZo8lNKgQ7L3=s96-c"
+              src="https://cdn-icons-png.flaticon.com/512/9131/9131529.png"
               alt="Profile image"
               className="h-8 w-8 rounded-full border-2 border-white cursor-pointer"
             />

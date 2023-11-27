@@ -18,15 +18,6 @@ import SignUp from "./pages/SignUp/SignUp";
 import { AuthProvider } from "react-auth-kit";
 import { RequireAuth } from "react-auth-kit";
 
-// function ProtectedRoute({ redirectPath = "/", children }) {
-//   const user = useSelector((store) => store.auth.user);
-
-//   if (!user) {
-//     return <Navigate to={redirectPath} replace />;
-//   }
-
-//   return children;
-// }
 export function FastMenu(props) {
   return (
     <div>

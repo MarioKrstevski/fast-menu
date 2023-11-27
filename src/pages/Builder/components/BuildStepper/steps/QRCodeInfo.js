@@ -1,18 +1,15 @@
 import {
-  faAlignLeft,
   faAngleRight,
   faArrowLeft,
   faExternalLinkAlt,
-  faLeftLong,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
 import { useRef, useState } from "react";
 import { QRCode } from "react-qrcode-logo";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import { updateIsPublished } from "../../../../../redux/menuSlice";
+import { api } from "../../../../../api/backend";
 export default function QRCodeInfo(props) {
   const qrRef = useRef();
   const gs = useSelector((store) => store.globalSettings);
@@ -24,12 +21,9 @@ export default function QRCodeInfo(props) {
   const { menuId, canPublishOrSaveChanges, isPublished } =
     useSelector((state) => state.menu);
 
-  function be_saveGlobalSettings(menuId, globalSettings) {
-    axios
-      .post("http://localhost:8000/saveGlobalSettings", {
-        menuId,
-        globalSettings,
-      })
+  function handleSaveGlobalSettings() {
+    api
+      .be_saveGlobalSettings(menuId, gs)
       .then((res) => {
         setSettingsUpdated(true);
         setTimeout(() => {
@@ -38,23 +32,15 @@ export default function QRCodeInfo(props) {
       })
       .catch((err) => {});
   }
-  function handleSaveGlobalSettings() {
-    be_saveGlobalSettings(menuId, gs);
-  }
 
-  function be_publishMenu(menuId) {
-    axios
-      .post("http://localhost:8000/publishMenu", {
-        menuId,
-      })
+  function handlePublishMenu() {
+    api
+      .be_publishMenu(menuId)
       .then((res) => {
         console.log("res", res);
         dispatch(updateIsPublished(true));
       })
       .catch((err) => {});
-  }
-  function handlePublishMenu() {
-    be_publishMenu(menuId);
   }
 
   return (

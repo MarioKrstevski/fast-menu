@@ -8,6 +8,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { updateMenu } from "../../../../../redux/menuSlice";
+import { api } from "../../../../../api/backend";
 
 export default function DataLoadInput(props) {
   const [isSuccesfullyConnected, setIsSuccesfullyConnected] =
@@ -19,13 +20,6 @@ export default function DataLoadInput(props) {
   const menuId = useSelector((store) => store.menu.menuId);
   const dispatch = useDispatch();
 
-  function be_loadMenuItems(newSpreadSheetURL) {
-    return axios.get("http://localhost:8000/menuItems", {
-      params: {
-        newSpreadSheetURL,
-      },
-    });
-  }
   function checkForValidSpreadsheetLink(link) {
     // Regular expression to match the correct link structure
     const regex =
@@ -50,7 +44,8 @@ export default function DataLoadInput(props) {
     }
   }
   function handleLoadMenuFromSheets() {
-    be_loadMenuItems(gs.spreadSheetURL)
+    api
+      .be_loadMenuItems(gs.spreadSheetURL)
       .then((res) => {
         console.log("res", res);
         dispatch(updateMenu(res.data.menuItems));
@@ -63,13 +58,8 @@ export default function DataLoadInput(props) {
     const formData = new FormData();
     formData.append("csvFile", csvFile);
 
-    const url = "http://localhost:8000/upload";
-    axios
-      .post(url, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+    api
+      .be_loadCsvFIle(formData)
       .then((data) => {
         setIsFileSubmitted(true);
       })

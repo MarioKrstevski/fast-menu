@@ -3,8 +3,8 @@ import { updateSetting } from "../../../../../redux/globalSettingsSlice";
 import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
 import { updateMenuChangesCheck } from "../../../../../redux/menuSlice";
+import { api } from "../../../../../api/backend";
 
 export default function BasicInfoColors(props) {
   const gs = useSelector((store) => store.globalSettings);
@@ -24,14 +24,6 @@ export default function BasicInfoColors(props) {
     setIsSubdomainAvailabilityLoading,
   ] = useState(false);
 
-  function be_checkSubdomainAvailability(subdomain) {
-    console.log("here");
-    return axios.get("http://localhost:8000/subdomainAvailability", {
-      params: {
-        subdomain,
-      },
-    });
-  }
   function handleCheckSubdomainAvailability() {
     if (!isValidSubdomain) {
       return;
@@ -48,7 +40,8 @@ export default function BasicInfoColors(props) {
       return;
     }
 
-    be_checkSubdomainAvailability(gs.subdomain)
+    api
+      .be_checkSubdomainAvailability(gs.subdomain)
       .then((res) => {
         console.log("res", res);
         setSubdomainAvailability(res.data);

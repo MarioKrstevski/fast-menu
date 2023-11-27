@@ -25,6 +25,7 @@ import { updateSelectedMenuForPlan } from "../../../redux/planUpgradeSlice";
 import UpgradeToProPlanModal from "./UpgradeToProPlanModal";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { useAuthUser, useSignIn } from "react-auth-kit";
+import { api } from "../../../api/backend";
 
 function NewMenuCreationIndicator() {
   return (
@@ -55,22 +56,14 @@ export default function WebsitesList(props) {
   const [isCreatingNewMenu, setIsCreatingNewMenu] = useState(false);
   const menuLimit = 6;
 
-  console.log("auth", auth());
-  async function be_loadGlobalSettingsForMenu(menuId) {
-    return axios.get("http://localhost:8000/globalSettings", {
-      params: {
-        menuId,
-      },
-    });
-  }
-
   function loadNeededMenuInformation(
     menuId,
     isPro,
     isPublished,
     isOnFreeTrial
   ) {
-    be_loadGlobalSettingsForMenu(menuId)
+    api
+      .be_loadGlobalSettingsForMenu(menuId)
       .then((res) => {
         dispatch(updateGlobalSettings(res.data.globalSettings));
         dispatch(updateMenuId(menuId));
@@ -88,32 +81,9 @@ export default function WebsitesList(props) {
       });
   }
 
-  async function be_generateNewMenu(client) {
-    return axios.get("http://localhost:8000/generateNewMenu", {
-      params: {
-        client,
-      },
-    });
-  }
-
-  async function be_getMenusForClient(client) {
-    return axios.get("http://localhost:8000/getMenus", {
-      params: {
-        client,
-      },
-    });
-  }
-
-  async function be_deleteMenu(menuId) {
-    console.log("menuid", menuId);
-    return axios.delete("http://localhost:8000/deleteMenu", {
-      params: {
-        menuId,
-      },
-    });
-  }
   function handleDeleteMenu(menuId) {
-    be_deleteMenu(menuId)
+    api
+      .be_deleteMenu(menuId)
       .then((res) => {
         console.log("res", res);
         handleRefreshMenus();
@@ -128,7 +98,8 @@ export default function WebsitesList(props) {
     setTimeout(() => {
       setIsFetchingMenus(false);
     }, 1000);
-    be_getMenusForClient(user.clientName)
+    api
+      .be_getMenusForClient(user.clientName)
       .then((res) => {
         console.log("newMenus", res.data.menus);
         // dispatch(updateWithNewMenus(res.data.menus));
@@ -154,7 +125,8 @@ export default function WebsitesList(props) {
 
   function createNewMenu() {
     setIsCreatingNewMenu(true);
-    be_generateNewMenu(user.clientName)
+    api
+      .be_generateNewMenu(user.clientName)
       .then((res) => {
         console.log("res", res);
         // dispatch(updateWithNewMenus(res.data.newMenus));

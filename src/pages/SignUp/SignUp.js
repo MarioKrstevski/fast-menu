@@ -8,10 +8,9 @@ import {
   faCheckCircle,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
+import { api } from "../../api/backend";
 
 export default function SignUp() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [clientName, setClientName] = useState("");
@@ -57,7 +56,8 @@ export default function SignUp() {
     }
     setIsCheckingAvailableClientName(true);
 
-    be_checkClientNameAvailability(e.target.value)
+    api
+      .be_checkClientNameAvailability(e.target.value)
       .then((res) => {
         setIsClientNameAvailable(true);
       })
@@ -69,28 +69,22 @@ export default function SignUp() {
         setIsCheckingAvailableClientName(false);
       });
   }
-  async function be_checkClientNameAvailability(clientName) {
-    return axios.get("http://localhost:8000/checkClientName", {
-      params: { clientName },
-    });
-  }
-
-  async function signup() {
-    return axios.post("http://localhost:8000/signup", {
-      email,
-      password,
-      clientName,
-      contactName,
-      contactNumber,
-    });
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle the signup logic here
     setsignUpError("");
     setsignUpSuccess("");
-    signup()
+
+    const signUpData = {
+      email,
+      password,
+      clientName,
+      contactName,
+      contactNumber,
+    };
+    api
+      .be_signup(signUpData)
       .then((res) => {
         setsignUpSuccess(res.data);
       })

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateGlobalSettings } from "../../redux/globalSettingsSlice";
 import WebsitePreview from "../Builder/components/WebsitePreview";
 import { updateMenu } from "../../redux/menuSlice";
+import { api } from "../../api/backend";
 
 function MenuDoesntExist() {
   return <div>menu doesnt exist</div>;
@@ -18,13 +19,10 @@ export default function Menu(props) {
   const dispatch = useDispatch();
   const [menuErrorCode, setMenuErrorCode] = useState(null);
   const [isMenuLoading, setisMenuLoading] = useState(true);
+
   function loadMenuAtStart() {
-    axios
-      .get("http://localhost:8000/menu", {
-        params: {
-          subdomain,
-        },
-      })
+    api
+      .be_loadMenu(subdomain)
       .then((res) => {
         console.log("res", res);
         dispatch(updateMenu(res.data.menuItems));

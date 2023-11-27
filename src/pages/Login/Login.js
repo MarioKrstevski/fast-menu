@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../../redux/authSlice";
 import axios from "axios";
 import { useSignIn } from "react-auth-kit";
+import { api } from "../../api/backend";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -21,15 +22,10 @@ export default function Login() {
     setPassword(e.target.value);
   };
 
-  async function trylogin() {
-    return axios.post("http://localhost:8000/login", {
-      email,
-      password,
-    });
-  }
   const handleSubmit = (e) => {
     e.preventDefault();
-    trylogin()
+    api
+      .be_trylogin(email, password)
       .then((res) => {
         console.log("res", res);
         // dispatch(login(res.data.user));

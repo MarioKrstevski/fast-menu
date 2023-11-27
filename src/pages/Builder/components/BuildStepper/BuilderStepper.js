@@ -16,10 +16,10 @@ import {
   updateMenu,
   updateMenuProStatus,
 } from "../../../../redux/menuSlice";
-import axios from "axios";
 import UpgradeToProPlanModal from "../../../Dashboard/components/UpgradeToProPlanModal";
 import { calculateTimeRemaining } from "../../../../helpers/helperFunctions";
 import { Navigate, useNavigate } from "react-router-dom";
+import { api } from "../../../../api/backend";
 
 const steps = [
   { component: <DataLoadInput />, title: "Insert Spreadsheet" },
@@ -40,15 +40,9 @@ export default function BuilderStepper(props) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  function be_loadMenuItems(menuId) {
-    return axios.get("http://localhost:8000/menu", {
-      params: {
-        menuId,
-      },
-    });
-  }
   function handleLoadMenu() {
-    be_loadMenuItems(menuId)
+    api
+      .be_loadMenuItemsByMenuId(menuId)
       .then((res) => {
         console.log("ressss", res);
         dispatch(updateMenu(res.data.menuItems));

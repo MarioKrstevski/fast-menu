@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useAuthUser } from "react-auth-kit";
 import { useSelector } from "react-redux";
+import { api } from "../../../api/backend";
 
 export default function UpgradeToProPlanModal({
   enablePro,
@@ -26,17 +27,10 @@ export default function UpgradeToProPlanModal({
   const menu = menus.find((menu) => menu.id === menuId);
   const { subdomain, menuName, isPro, isOnFreeTrial } = menu;
   console.log("enableFreeTrial", menu);
-  async function be_subscribeMenuToFreeTrial(menuId) {
-    return axios.post(
-      "http://localhost:8000/enableFreeTrialForMenu",
-      {
-        menuId,
-      }
-    );
-  }
 
   function handleFreeTrialSubscription() {
-    be_subscribeMenuToFreeTrial(menuId)
+    api
+      .be_subscribeMenuToFreeTrial(menuId)
       .then((res) => {
         console.log("sub to pro free trial", res);
         enableFreeTrial();
@@ -46,13 +40,9 @@ export default function UpgradeToProPlanModal({
       });
   }
 
-  async function be_subscribeMenuToPro(menuId) {
-    return axios.post("http://localhost:8000/subscribeMenuToPro", {
-      menuId,
-    });
-  }
   function handleSubscription() {
-    be_subscribeMenuToPro(menuId)
+    api
+      .be_subscribeMenuToPro(menuId)
       .then((res) => {
         console.log("sub to pro done", res);
         enablePro();
