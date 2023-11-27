@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useAuthUser } from "react-auth-kit";
 import { useSelector } from "react-redux";
 
 export default function UpgradeToProPlanModal({
@@ -18,7 +19,9 @@ export default function UpgradeToProPlanModal({
     (state) => state.planUpgrade.selectedMenuId
   );
 
-  const menus = useSelector((state) => state.auth.user.menus);
+  const auth = useAuthUser();
+  const user = auth();
+  const { menus } = user;
 
   const menu = menus.find((menu) => menu.id === menuId);
   const { subdomain, menuName, isPro, isOnFreeTrial } = menu;
