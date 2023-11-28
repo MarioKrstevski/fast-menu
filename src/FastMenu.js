@@ -19,6 +19,7 @@ import { AuthProvider } from "react-auth-kit";
 import { RequireAuth } from "react-auth-kit";
 import AllExistingMenus from "./devComponents/AllExistingMenus";
 import AllExistingUsers from "./devComponents/AllExistingUsers";
+import GenerateCSV from "./devComponents/GenerateCSV";
 
 export function FastMenu(props) {
   return (
@@ -64,6 +65,7 @@ export function FastMenu(props) {
                 path="/allExistingUsers"
                 element={<AllExistingUsers />}
               />
+              <Route path="/csv" element={<GenerateCSV />} />
             </Routes>
           </BrowserRouter>
           <Toaster />

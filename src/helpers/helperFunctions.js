@@ -48,3 +48,22 @@ export function calculateTimeRemaining(timestamp) {
 
   return timeRemainingString;
 }
+export function convertDriveLinkToDirect(link) {
+  if (!link) {
+    return link;
+  }
+  // Check if the link matches the Google Drive pattern
+  const driveLinkRegex =
+    /^https:\/\/drive\.google\.com\/file\/d\/([^/]+)\/view\?usp=sharing$/;
+  const match = link.match(driveLinkRegex);
+
+  if (match) {
+    // If it's a match, construct the direct link
+    const fileId = match[1];
+    const directLink = `https://drive.google.com/uc?id=${fileId}`;
+    return directLink;
+  } else {
+    // If it's not a match, return the original link
+    return link;
+  }
+}

@@ -2,10 +2,13 @@ import { useDispatch, useSelector } from "react-redux";
 import lodash from "lodash";
 import { useState } from "react";
 import { addItem } from "../../redux/shoppingCartSlice";
+import { convertDriveLinkToDirect } from "../../helpers/helperFunctions";
 
 function Card({ item }) {
   const gs = useSelector((store) => store.globalSettings);
   const dispatch = useDispatch();
+
+  const imageLink = convertDriveLinkToDirect(item[gs.card.image]);
 
   return (
     <div className="w-full  sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 px-2 mb-8 md:mb-4">
@@ -14,7 +17,7 @@ function Card({ item }) {
           <img
             alt="Item Image"
             className="object-cover absolute h-full w-full inset-0"
-            src={item[gs.card.image]}
+            src={imageLink}
             lazy="loaded"
           />
         </div>
@@ -64,7 +67,7 @@ function Card({ item }) {
             {gs.card.buttonAction === "link" && (
               <a
                 target="_blank"
-                href={item.OutsideLink}
+                href={item[gs.card.buttonLink]}
                 className="w-full mt-4 block cursor-pointer bg-blue-500 hover:bg-blue-700 font-medium py-2 px-4 rounded text-center hover:shadow-md transition-shadow duration-300 focus:outline-none"
                 // style="background-color: rgb(39, 175, 96); color: rgb(255, 255, 255);"
                 style={{

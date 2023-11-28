@@ -240,6 +240,31 @@ export default function CardDesign(props) {
         className="w-full md:w-14rem"
       />
 
+      {gs.card.buttonAction === "link" && (
+        <>
+          <div className="my-2 font-bold">Button Link</div>
+
+          <Dropdown
+            showClear
+            value={allFields.find(
+              (field) => field.name === gs.card.buttonLink
+            )}
+            onChange={(e) => {
+              dispatch(
+                updateSetting({
+                  field: "card.buttonLink",
+                  value: e.value ? e.value.name : "",
+                })
+              );
+            }}
+            options={allFields}
+            optionLabel="name"
+            placeholder="Select link field"
+            className="w-full md:w-14rem"
+          />
+        </>
+      )}
+
       <div className="my-2 font-bold">Button Text</div>
 
       <div className="flex align-middle gap-1">
