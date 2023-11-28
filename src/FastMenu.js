@@ -17,6 +17,8 @@ import NotFound from "./pages/NotFound.js/NotFound";
 import SignUp from "./pages/SignUp/SignUp";
 import { AuthProvider } from "react-auth-kit";
 import { RequireAuth } from "react-auth-kit";
+import AllExistingMenus from "./devComponents/AllExistingMenus";
+import AllExistingUsers from "./devComponents/AllExistingUsers";
 
 export function FastMenu(props) {
   return (
@@ -53,6 +55,15 @@ export function FastMenu(props) {
               />
 
               <Route path="*" element={<NotFound />} />
+
+              <Route
+                path="/allExistingMenus"
+                element={<AllExistingMenus />}
+              />
+              <Route
+                path="/allExistingUsers"
+                element={<AllExistingUsers />}
+              />
             </Routes>
           </BrowserRouter>
           <Toaster />

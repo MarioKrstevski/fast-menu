@@ -23,7 +23,8 @@ import { updateSelectedMenuForPlan } from "../../../redux/planUpgradeSlice";
 import UpgradeToProPlanModal from "./UpgradeToProPlanModal";
 import { OverlayPanel } from "primereact/overlaypanel";
 import { useAuthUser, useSignIn } from "react-auth-kit";
-import { api, frontendBaseUrl } from "../../../api/backend";
+import { api } from "../../../api/backend";
+import { frontendBaseUrl } from "../../../constants/global";
 
 function NewMenuCreationIndicator() {
   return (

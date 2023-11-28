@@ -9,7 +9,8 @@ import { QRCode } from "react-qrcode-logo";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateIsPublished } from "../../../../../redux/menuSlice";
-import { api, frontendBaseUrl } from "../../../../../api/backend";
+import { api } from "../../../../../api/backend";
+import { frontendBaseUrl } from "../../../../../constants/global";
 export default function QRCodeInfo(props) {
   const qrRef = useRef();
   const gs = useSelector((store) => store.globalSettings);
