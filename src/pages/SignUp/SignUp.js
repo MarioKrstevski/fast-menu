@@ -100,7 +100,7 @@ export default function SignUp() {
               htmlFor="clientName"
               className="block font-medium text-gray-700"
             >
-              Client Name{" "}
+              Client Name
               <small>(all lower case, dashes as space)</small>
             </label>
             <input
@@ -127,11 +127,9 @@ export default function SignUp() {
                   <span>
                     {isClientNameAvailable ? (
                       <span>
-                        {" "}
                         <i>
-                          {" "}
                           <b>{testedName}</b>
-                        </i>{" "}
+                        </i>
                         is good to go
                       </span>
                     ) : (
@@ -228,10 +226,10 @@ export default function SignUp() {
               <>
                 <div className="text-green-600">{signUpSuccess}</div>
                 <div>
-                  Proceed to{" "}
+                  Proceed to
                   <Link className="text-blue-500" to={"/login"}>
                     login
-                  </Link>{" "}
+                  </Link>
                 </div>
               </>
             )}
@@ -240,6 +238,13 @@ export default function SignUp() {
             )}
           </div>
         </form>
+
+        <div className="mt-2">
+          You already have an account?
+          <Link to={"/login"} className="text-blue-400 ml-1">
+            Log in
+          </Link>
+        </div>
       </div>
     </div>
   );

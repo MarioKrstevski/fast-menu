@@ -32,9 +32,23 @@ export default function CardDesign(props) {
   const customFields =
     gs.card.customFields === ""
       ? []
-      : gs.card.customFields.split(",").map((cf) => ({
-          name: cf,
-        }));
+      : gs.card.customFields
+          .split(",")
+          .map((cf) => ({
+            name: cf,
+          }))
+          .filter((cf) => {
+            // we remove the option if it doesnt exist in all the options,
+            // this happenes when we change menus, old fields selected show up here,
+            // because it is a custom field (more tolerable to mistakes)
+            // after something is selected everything updates as it should
+            const found = allFields.find((f) => f.name === cf.name);
+            if (!found) {
+              return false;
+            } else {
+              return true;
+            }
+          });
 
   const cardButtonActionOptions = [
     { name: "link" },

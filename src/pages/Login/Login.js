@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSignIn } from "react-auth-kit";
 import { api } from "../../api/backend";
 
@@ -90,6 +90,13 @@ export default function Login() {
             )}
           </div>
         </form>
+
+        <div className="mt-2">
+          You don't have an account?{" "}
+          <Link to={"/signup"} className="text-blue-400">
+            Register here
+          </Link>
+        </div>
       </div>
     </div>
   );
