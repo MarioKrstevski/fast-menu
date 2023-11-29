@@ -36,12 +36,12 @@ function Landing(props) {
       </nav>
 
       {/* Hero Section */}
-      <header className="bg-indigo-500 py-24 text-white text-center">
+      <header className="bg-indigo-500 py-12 md:py-24 text-white text-center">
         <div className="container mx-auto">
-          <h1 className="text-4xl font-extrabold mb-4">
+          <h1 className="text-3xl md:text-4xl  font-extrabold mb-4">
             Create Beautiful Menus with Google Sheets
           </h1>
-          <p className="text-lg mb-8">
+          <p className="md:text-lg mb-8">
             Make beautiful and customizable menus
           </p>
           <Link to={"/signup"}>
@@ -124,8 +124,8 @@ function Landing(props) {
               <p className="my-2">
                 Start for free and cancel at any time
               </p>
-              <div className="flex w-full justify-center gap-6">
-                <div className="border shadow-md p-6 flex flex-col justify-start w-1/3">
+              <div className=" flex flex-col  w-full  md:flex-row  justify-center gap-6 ">
+                <div className="border shadow-md p-6 flex flex-col justify-start w-full md:w-1/3">
                   <div className="mb-12">
                     <div className="mb-6">
                       <div className="my-2 text-2xl font-semibold">
@@ -155,7 +155,7 @@ function Landing(props) {
                     <button>Start now</button>{" "}
                   </Link>
                 </div>
-                <div className="border shadow-md p-6 flex flex-col justify-start w-1/3">
+                <div className="border shadow-md p-6 flex flex-col justify-start w-full md:w-1/3">
                   <div className="mb-12">
                     <div className="mb-6">
                       <div className="my-2 text-2xl font-semibold">

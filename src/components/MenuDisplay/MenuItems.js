@@ -167,7 +167,7 @@ export default function MenuItems(props) {
 
   return (
     <div
-      className="min-h-full max-w-full overflow-hidden"
+      className="min-h-full pt-4 max-w-full overflow-hidden"
       style={{
         backgroundColor: gs.theme.backgroundColor,
       }}
@@ -179,7 +179,7 @@ export default function MenuItems(props) {
       {menu.length > 0 && (
         <div className="main w-[90%] mx-auto sm:w-full ">
           {filters && filters.length > 1 && (
-            <div className="filters flex flex-nowrap  overflow-y-auto py-2 px-2 mt-4 mb-2 sm:flex-wrap ">
+            <div className="filters flex flex-nowrap  overflow-y-auto py-2 px-2  mb-2 sm:flex-wrap ">
               <Pill
                 label={"All"}
                 active={currentFilter === "All"}
