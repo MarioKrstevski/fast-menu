@@ -143,7 +143,7 @@ export default function DashboardMenu(props) {
                 navigate("/login");
                 signOut();
               }}
-              className="button is-white has-text-weight-bold p-6"
+              className="button border-white border rounded-lg px-2 py-1 is-white has-text-weight-bold ml-6 hover:bg-slate-800"
             >
               Log out
             </button>
