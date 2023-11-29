@@ -50,19 +50,21 @@ export default function DashboardMenu(props) {
         console.log("err", err);
       });
   }
-
+  const logo = (
+    <>
+      <img
+        className="w-8"
+        src="https://thumbs.dreamstime.com/b/design-can-be-used-as-logo-icon-complement-to-tool-speed-127653493.jpg"
+        alt="logo"
+      />
+      <span>Fast Menu</span>
+    </>
+  );
   return (
     <div className="bg-slate-950 text-white flex justify-center">
       <div className="container ">
         <nav className="h-12 w-full  flex justify-between px-8 items-center">
-          <div className="logo flex gap-1 items-center ">
-            <img
-              className="w-8"
-              src="https://thumbs.dreamstime.com/b/design-can-be-used-as-logo-icon-complement-to-tool-speed-127653493.jpg"
-              alt="logo"
-            />
-            <span>Fast Menu</span>
-          </div>
+          <div className="logo flex gap-1 items-center ">{logo}</div>
           <div className="relative flex items-center mr-4">
             <span className="pr-4">{user.contactName}</span>
             <img
