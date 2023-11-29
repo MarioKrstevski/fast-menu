@@ -170,7 +170,7 @@ export default function UpgradeToProPlanModal({
           </div>
         </div>
 
-        {!isOnFreeTrial && (
+        {isOnFreeTrial && (
           <div className="free-trial ">
             <button
               disabled={submitIsDisabled}

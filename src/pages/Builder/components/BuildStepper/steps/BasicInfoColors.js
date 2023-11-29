@@ -627,7 +627,7 @@ export default function BasicInfoColors(props) {
           htmlFor="isFastMenuTrademarkShown"
           className="text-slate-900 inline-block font-bold  my-2 "
         >
-          Show FastMenu Footer
+          Show FastMenu Trademarks
         </label>
       </div>
       {!(isPro || isOnFreeTrial) && (
