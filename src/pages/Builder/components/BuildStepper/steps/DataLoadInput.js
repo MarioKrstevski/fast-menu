@@ -264,6 +264,26 @@ export default function DataLoadInput(props) {
             size="lg"
           />
         )}
+
+        <div class="w-full text-center mt-3 font-medium text-green-600">
+          <a
+            href="https://drive.google.com/drive/search?q=type:spreadsheet"
+            target="_blank"
+            class="underline hover:text-green-900"
+          >
+            Open your spreadsheets{" "}
+          </a>
+        </div>
+
+        <div class="w-full text-center mt-3 font-medium text-gray-600">
+          <a
+            href="https://docs.google.com/spreadsheets/d/1i8s74vfPOwOyckvrwzxXBE7j_-0LPJR2rGRgyfwNDWU/edit#gid=0"
+            target="_blank"
+            class="underline"
+          >
+            Open example spreadsheet
+          </a>
+        </div>
       </div>
     </div>
   );
