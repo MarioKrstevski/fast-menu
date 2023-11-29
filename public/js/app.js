@@ -346,6 +346,7 @@
     console.log("fastMenuWidget", subdomain);
   }
 
+  window.startWidget = startWidget;
   document.addEventListener("DOMContentLoaded", function () {
     const intervalRef = setInterval(() => {
       const fastMenuWidget =
