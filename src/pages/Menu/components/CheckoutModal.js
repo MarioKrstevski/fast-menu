@@ -8,10 +8,10 @@ import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../../../redux/shoppingCartSlice";
-import axios from "axios";
-import OrderPlacedMessage from "./OrderPlacedModal";
 import { useState } from "react";
 import { api } from "../../../api/backend";
+import OrderPlacedMessage from "./OrderPlacedMessage";
+import OrderErrorMessage from "./OrderErrorMessage";
 function generateOrderMessage(formData, cart) {
   //   console.log(formData, cart);
 
@@ -80,10 +80,12 @@ export default function CheckoutModal({ setIsCheckoutModalVisible }) {
     api
       .be_placeOrder(message, gs.whatsappNumberConnected)
       .then((data) => {
+        setIsOrderSent("success");
         dispatch(clearCart());
-        setIsOrderSent(true);
       })
       .catch((err) => {
+        setIsOrderSent("error");
+
         console.log("error placing oreder", err);
       });
   }
@@ -313,8 +315,14 @@ export default function CheckoutModal({ setIsCheckoutModalVisible }) {
               </div>
             </form>
           </div>
-          {isOrderSent && (
+          {isOrderSent === "success" && (
             <OrderPlacedMessage
+              setIsCheckoutModalVisible={setIsCheckoutModalVisible}
+            />
+          )}
+
+          {isOrderSent === "error" && (
+            <OrderErrorMessage
               setIsCheckoutModalVisible={setIsCheckoutModalVisible}
             />
           )}

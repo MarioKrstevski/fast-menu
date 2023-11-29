@@ -235,7 +235,7 @@ export default function CardDesign(props) {
           dispatch(
             updateSetting({
               field: "card.buttonAction",
-              value: e.value.name,
+              value: e.value ? e.value.name : "",
             })
           );
         }}
@@ -262,7 +262,7 @@ export default function CardDesign(props) {
                 })
               );
             }}
-            options={allFields}
+            options={allFieldThatAreLinks}
             optionLabel="name"
             placeholder="Select link field"
             className="w-full md:w-14rem"

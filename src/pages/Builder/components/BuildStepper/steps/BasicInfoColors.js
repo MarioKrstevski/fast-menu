@@ -175,9 +175,11 @@ export default function BasicInfoColors(props) {
         >
           Subdomain name
         </label>
-        <div className="flex">
+        <div className="flex flex-col">
           <p className="control">
-            <span className="text-normal">fastmenu.com/</span>
+            <span className="text-normal">
+              www.fastmenu.com/menu/
+            </span>
           </p>
           <div>
             <input
@@ -196,7 +198,7 @@ export default function BasicInfoColors(props) {
               type="text"
               autoComplete="on"
               placeholder="mywebsite"
-              className={`bg-white inline-block h-6 ml-1  rounded text-slate-800 border p-2 w-11/12 ${
+              className={`bg-white inline-block h-6   rounded text-slate-800 border p-2 w-11/12 ${
                 subdomainAvailability === "taken" || !isValidSubdomain
                   ? "border-red-300"
                   : subdomainAvailability === "owned" ||

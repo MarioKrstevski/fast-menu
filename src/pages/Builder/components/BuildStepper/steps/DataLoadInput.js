@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateSetting } from "../../../../../redux/globalSettingsSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dropdown } from "primereact/dropdown";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheckCircle,
+  faCircleXmark,
+  faX,
+} from "@fortawesome/free-solid-svg-icons";
 import { updateMenu } from "../../../../../redux/menuSlice";
 import { api } from "../../../../../api/backend";
 import { checkForValidSpreadsheetLink } from "../../../../../helpers/helperFunctions";
@@ -48,7 +52,7 @@ export default function DataLoadInput(props) {
       .be_syncNewSheets(gs.spreadSheetURL, menuId)
       .then((res) => {
         console.log("New sheet items ", res);
-        setNewSheetConnected(true);
+        setNewSheetConnected("success");
         setTimeout(() => {
           setNewSheetConnected(false);
         }, 850);
@@ -56,6 +60,10 @@ export default function DataLoadInput(props) {
       })
       .catch((err) => {
         console.log("err", err);
+        setNewSheetConnected("error");
+        setTimeout(() => {
+          setNewSheetConnected(false);
+        }, 850);
       });
   }
   const handleLoadItemsFromCSV = () => {
@@ -76,6 +84,10 @@ export default function DataLoadInput(props) {
       })
       .catch((err) => {
         setIsFileSubmitted("error");
+
+        setTimeout(() => {
+          setIsFileSubmitted(false);
+        }, 850);
       });
   };
   const handleFileChange = (e) => {
@@ -125,11 +137,20 @@ export default function DataLoadInput(props) {
         >
           Load
         </button>
-        {newSheetConnected && (
+        {newSheetConnected === "success" && (
           <FontAwesomeIcon
             icon={faCheckCircle}
             fade
             className="text-green-500 ml-1"
+            size="lg"
+          />
+        )}
+
+        {newSheetConnected === "error" && (
+          <FontAwesomeIcon
+            icon={faCircleXmark}
+            fade
+            className="text-red-500 ml-1"
             size="lg"
           />
         )}
@@ -159,11 +180,20 @@ export default function DataLoadInput(props) {
           >
             Load csv
           </button>
-          {isFileSubmitted && (
+          {isFileSubmitted === "success" && (
             <FontAwesomeIcon
               icon={faCheckCircle}
               fade
               className="text-green-500 ml-1"
+              size="lg"
+            />
+          )}
+
+          {isFileSubmitted === "error" && (
+            <FontAwesomeIcon
+              icon={faCircleXmark}
+              fade
+              className="text-red-500 ml-1"
               size="lg"
             />
           )}
@@ -186,6 +216,8 @@ export default function DataLoadInput(props) {
         onChange={(e) => {
           console.log("e");
           setSelectedSheet(e.value);
+          setIsValidSheetsLink(true);
+
           dispatch(
             updateSetting({
               field: "spreadSheetURL",
@@ -198,6 +230,41 @@ export default function DataLoadInput(props) {
         placeholder="Select Menu"
         className="w-full mt-4 border md:w-14rem"
       />
+      <div className="text-sm mt-2">
+        Click to load items from spreadsheet{" "}
+      </div>
+      <div>
+        <button
+          disabled={!isValidSheetsLink}
+          className={` text-gray-800 font-semibold py-1 px-2 my-2 border border-gray-400 rounded shadow
+          ${
+            !isValidSheetsLink
+              ? "bg-gray-300 "
+              : "bg-white hover:bg-gray-100 "
+          }
+          `}
+          onClick={handleConnectNewSheetForMenu}
+        >
+          Load
+        </button>
+        {newSheetConnected === "success" && (
+          <FontAwesomeIcon
+            icon={faCheckCircle}
+            fade
+            className="text-green-500 ml-1"
+            size="lg"
+          />
+        )}
+
+        {newSheetConnected === "error" && (
+          <FontAwesomeIcon
+            icon={faCircleXmark}
+            fade
+            className="text-red-500 ml-1"
+            size="lg"
+          />
+        )}
+      </div>
     </div>
   );
 }

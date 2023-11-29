@@ -109,10 +109,10 @@ export default function ShoppingCart({ setIsCheckoutModalVisible }) {
           style={{ display: cart.length !== 0 ? "block" : "none" }}
         >
           <div className="items border-b overflow-auto">
-            {cart.map((entry) => {
+            {cart.map((entry, idx) => {
               return (
                 <div
-                  key={entry.item.ID}
+                  key={idx}
                   className="flex justify-between px-2 sm:px-4 pb-4"
                 >
                   <div className="flex">

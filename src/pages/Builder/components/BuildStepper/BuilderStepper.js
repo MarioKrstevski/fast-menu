@@ -75,8 +75,9 @@ export default function BuilderStepper(props) {
 
   //load menu if spreadSheetURL is setup and they haven't been loaded before
   useEffect(() => {
-    const menuIsLoaded = menu.length !== 0;
-    if (!menuIsLoaded && gs.spreadSheetURL) {
+    console.log("this executes", menuId);
+    const menuIsLoaded = menuId !== "";
+    if (menuIsLoaded && gs.spreadSheetURL) {
       handleLoadItems();
     }
   }, []);
