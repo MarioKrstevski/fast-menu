@@ -1,8 +1,7 @@
 (function () {
-  const fastMenuWidget = document.querySelector("fastmenu-widget");
   function startWidget() {
     // const fastMenuWidget = document.querySelector("fastmenu-widget");
-
+    const fastMenuWidget = document.querySelector("fastmenu-widget");
     const subdomain = fastMenuWidget.getAttribute("subdomain");
     let currentFilter = "All";
     let groupedByFilter = null;
@@ -348,11 +347,17 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    if (!fastMenuWidget) {
-      console.log("nema widget");
-    } else {
-      console.log("ima widget");
-      startWidget();
-    }
+    const intervalRef = setInterval(() => {
+      const fastMenuWidget =
+        document.querySelector("fastmenu-widget");
+
+      if (!fastMenuWidget) {
+        console.log("nema widget");
+      } else {
+        console.log("ima widget");
+        startWidget();
+        clearInterval(intervalRef);
+      }
+    }, 500);
   });
 })();
