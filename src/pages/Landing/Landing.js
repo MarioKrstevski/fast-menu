@@ -87,9 +87,24 @@ function Landing(props) {
         </div>
       </section>
 
+      {/* Gallery */}
+
+      <section id="gallery">
+        <div className="text-center">
+          <h3 className="text-2xl md:text-3xl font-bold">Gallery</h3>
+          <h4 className="text-xl text-slate-700 my-2">
+            Look around these cool menus built using FastMenu
+          </h4>
+
+          {/* FastMenu Widget for menu */}
+
+          <fastmenu-widget subdomain="agorademo"></fastmenu-widget>
+        </div>
+      </section>
+
       {/* Pricing */}
 
-      <section id="pricing" className="container my-16 px-10">
+      <section id="pricing" className=" my-16 px-10">
         <div className="text-center gap-4">
           <div className="column text-slate-900">
             <div>
@@ -138,12 +153,11 @@ function Landing(props) {
                     </div>
                     <div className="font-semibold font-sans ">
                       <ul className="flex flex-col gap-2">
-                        <li>2 free websites</li>
+                        <li>6 free websites</li>
                         <li>Unlimited rows</li>
                         <li>Custom subdomain</li>
                         <li>Filters</li>
                         <li>Mobile first design</li>
-                        <li>List &amp; single page view</li>
                         <li>SSL Security</li>
                       </ul>
                     </div>
@@ -168,12 +182,33 @@ function Landing(props) {
                     </div>
                     <div className="font-semibold font-sans ">
                       <ul className="flex flex-col gap-2">
-                        <li>Use your own domain</li>
-                        <li>Add Google Analytics</li>
-                        <li>SEO features</li>
-                        <li>Download files &amp; images</li>
-                        <li>Remove Biew branding</li>
-                        <li>PWA support</li>
+                        <li>Remove FastMenu branding</li>
+                        <li>Shopping Cart</li>
+                        <li>
+                          Use your own domain{" "}
+                          <span className="bg-gray-500 text-white rounded px-1 py-0.5 text-[10px]">
+                            soon
+                          </span>{" "}
+                        </li>
+                        <li>
+                          Add Google Analytics{" "}
+                          <span className="bg-gray-500 text-white rounded px-1 py-0.5 text-[10px]">
+                            soon
+                          </span>
+                        </li>
+                        <li>
+                          SEO features{" "}
+                          <span className="bg-gray-500 text-white rounded px-1 py-0.5 text-[10px]">
+                            soon
+                          </span>
+                        </li>
+
+                        <li>
+                          PWA support{" "}
+                          <span className="bg-gray-500 text-white rounded px-1 py-0.5 text-[10px]">
+                            soon
+                          </span>
+                        </li>
                         <li>Access to all future integrations</li>
                         <li>Plus all free options</li>
                       </ul>
