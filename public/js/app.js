@@ -347,18 +347,15 @@
   }
 
   window.startWidget = startWidget;
-  document.addEventListener("DOMContentLoaded", function () {
-    const intervalRef = setInterval(() => {
-      const fastMenuWidget =
-        document.querySelector("fastmenu-widget");
+  const intervalRef = setInterval(() => {
+    const fastMenuWidget = document.querySelector("fastmenu-widget");
 
-      if (!fastMenuWidget) {
-        console.log("nema widget");
-      } else {
-        console.log("ima widget");
-        startWidget();
-        clearInterval(intervalRef);
-      }
-    }, 500);
-  });
+    if (!fastMenuWidget) {
+      console.log("nema widget");
+    } else {
+      console.log("ima widget");
+      startWidget();
+      clearInterval(intervalRef);
+    }
+  }, 500);
 })();
