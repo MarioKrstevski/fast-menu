@@ -1,107 +1,62 @@
-(function () {
-  function startWidget() {
-    // const fastMenuWidget = document.querySelector("fastmenu-widget");
-    const fastMenuWidget = document.querySelector("fastmenu-widget");
-    const subdomain = fastMenuWidget.getAttribute("subdomain");
-    let currentFilter = "All";
-    let groupedByFilter = null;
-    let filters = null;
-    let gs = null;
-    let menu = null;
-
-    function loadTailwindStylesheet() {
-      const link = document.createElement("link");
-      link.href =
-        "https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css";
-      link.rel = "stylesheet";
-
-      document.head.appendChild(link);
+!(function () {
+  function t() {
+    const t = document.querySelector("fastmenu-widget"),
+      e = t.getAttribute("subdomain");
+    let n = "All",
+      o = null,
+      l = null,
+      d = null,
+      i = null;
+    function c(t) {
+      a(null, t), r();
     }
-
-    function convertDriveLinkToDirect(link) {
-      if (!link) {
-        return link;
-      }
-      // Check if the link matches the Google Drive pattern
-      const driveLinkRegex =
-        /^https:\/\/drive\.google\.com\/file\/d\/([^/]+)\/view\?usp=sharing$/;
-      const match = link.match(driveLinkRegex);
-
-      if (match) {
-        // If it's a match, construct the direct link
-        const fileId = match[1];
-        const directLink = `https://drive.google.com/uc?id=${fileId}`;
-        return directLink;
-      } else {
-        // If it's not a match, return the original link
-        return link;
-      }
-    }
-    function groupBy(array, key) {
-      return array.reduce((acc, item) => {
-        const keyValue = item[key];
-        acc[keyValue] = acc[keyValue] || [];
-        acc[keyValue].push(item);
-        return acc;
-      }, {});
-    }
-
-    function debugMenu(gs, menu) {
-      window.ss = function () {
-        console.log("gs", gs);
-        console.log("menu", menu);
-      };
-    }
-    function updateFilter(filters) {
-      generateFilters(null, filters);
-      generateItems();
-    }
-
-    function createPill(label, active, clickHandler, filters) {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.classList.add(
-        "px-4",
-        "whitespace-nowrap",
-        "py-2",
-        "w-auto",
-        "transition-shadow",
-        "duration-200",
-        "shadow-sm",
-        "hover:shadow-md",
-        "inline-flex",
-        "justify-center",
-        "items-center",
-        "rounded-md",
-        "text-base",
-        "sm:text-sm",
-        "font-medium",
-        "focus:outline-none",
-        "focus:ring-2",
-        "focus:ring-offset-2",
-        "focus:ring-indigo-500",
-        "mr-2",
-        "mb-2",
-        active ? "bg-gray-900" : "bg-white",
-        active ? "text-white" : "text-gray-600",
-        active ? "hover:text-white" : "hover:text-gray-700"
+    function s(t, e, o, l) {
+      const d = document.createElement("button");
+      return (
+        (d.type = "button"),
+        d.classList.add(
+          "px-4",
+          "whitespace-nowrap",
+          "py-2",
+          "w-auto",
+          "transition-shadow",
+          "duration-200",
+          "shadow-sm",
+          "hover:shadow-md",
+          "inline-flex",
+          "justify-center",
+          "items-center",
+          "rounded-md",
+          "text-base",
+          "sm:text-sm",
+          "font-medium",
+          "focus:outline-none",
+          "focus:ring-2",
+          "focus:ring-offset-2",
+          "focus:ring-indigo-500",
+          "mr-2",
+          "mb-2",
+          e ? "bg-gray-900" : "bg-white",
+          e ? "text-white" : "text-gray-600",
+          e ? "hover:text-white" : "hover:text-gray-700"
+        ),
+        (d.textContent = t),
+        d.addEventListener("click", () => {
+          (n = t), o(l);
+        }),
+        d
       );
-      button.textContent = label;
-      button.addEventListener("click", () => {
-        currentFilter = label;
-        clickHandler(filters);
-      });
-      return button;
     }
-    function generateFilters(filtersWrapper, filters) {
-      if (!filtersWrapper) {
-        filtersWrapper = document.getElementById("fastmenu-filters");
-        filtersWrapper.innerHTML = "";
-      }
-
-      if (filters && filters.length > 1) {
-        const filtersDiv = document.createElement("div");
-        filtersDiv.classList.add(
+    function a(t, e) {
+      if (
+        (t ||
+          ((t = document.getElementById(
+            "fastmenu-filters"
+          )).innerHTML = ""),
+        e && e.length > 1)
+      ) {
+        const o = document.createElement("div");
+        o.classList.add(
           "filters-div",
           "filters",
           "flex",
@@ -112,250 +67,190 @@
           "mb-2",
           "sm:flex-wrap"
         );
-
-        const pillAll = createPill(
-          "All",
-          currentFilter === "All",
-          updateFilter,
-          filters
-        );
-        filtersDiv.appendChild(pillAll);
-
-        filters.forEach((filter) => {
-          const pill = createPill(
-            filter,
-            currentFilter === filter,
-            updateFilter,
-            filters
+        const l = s("All", "All" === n, c, e);
+        o.appendChild(l),
+          e.forEach((t) => {
+            const l = s(t, n === t, c, e);
+            o.appendChild(l);
+          }),
+          t.appendChild(o);
+      }
+    }
+    function r(t) {
+      t ||
+        ((t = document.getElementById("fastmenu-items")).innerHTML =
+          ""),
+        "All" === n
+          ? i.forEach((e, n) => {
+              u(e, d, n, t);
+            })
+          : o[n].forEach((e, n) => {
+              u(e, d, n, t);
+            });
+    }
+    function u(t, e, n, o) {
+      const l = (function (t) {
+          if (!t) return t;
+          const e = t.match(
+            /^https:\/\/drive\.google\.com\/file\/d\/([^/]+)\/view\?usp=sharing$/
           );
-          filtersDiv.appendChild(pill);
-        });
-
-        filtersWrapper.appendChild(filtersDiv);
-      }
-    }
-    function generateItems(itemsWrapper) {
-      if (!itemsWrapper) {
-        itemsWrapper = document.getElementById("fastmenu-items");
-        itemsWrapper.innerHTML = "";
-      }
-
-      if (currentFilter === "All") {
-        menu.forEach((item, idx) => {
-          createCard(item, gs, idx, itemsWrapper);
-        });
-      } else {
-        groupedByFilter[currentFilter].forEach((item, idx) => {
-          createCard(item, gs, idx, itemsWrapper);
-        });
-      }
-    }
-    function createCard(item, gs, idx, itemsWrapper) {
-      function handleAddItem(item) {
-        console.log("item added", item);
-      }
-
-      const imageLink = convertDriveLinkToDirect(item[gs.card.image]);
-
-      const cardContainer = document.createElement("div");
-      cardContainer.className =
-        "card w-full  sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 px-2 mb-8 md:mb-4";
-      cardContainer.innerHTML = `
-              <div class="content-card overflow-hidden bg-white rounded shadow flex flex-grow flex-col text-gray-800 text-left h-full">
-                ${
-                  imageLink
-                    ? `
-                  <div class="relative w-full pb-[100%] bg-gray-300" style="padding-bottom: 100%;">
-                    <img alt="Item Image" class="object-cover absolute h-full w-full inset-0" src="${imageLink}" lazy="loaded"/>
-                  </div>`
+          if (e) return `https://drive.google.com/uc?id=${e[1]}`;
+          return t;
+        })(t[e.card.image]),
+        d = document.createElement("div");
+      (d.className =
+        "card w-full  sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 px-2 mb-8 md:mb-4"),
+        (d.innerHTML = `\n            <div class="content-card overflow-hidden bg-white rounded shadow flex flex-grow flex-col text-gray-800 text-left h-full">\n              ${
+          l
+            ? `\n                <div class="relative w-full pb-[100%] bg-gray-300" style="padding-bottom: 100%;">\n                  <img alt="Item Image" class="object-cover absolute h-full w-full inset-0" src="${l}" lazy="loaded"/>\n                </div>`
+            : ""
+        }\n              <div class="h-full p-4 flex flex-col justify-between">\n                <div>\n                  ${
+          t[e.card.title]
+            ? `<p class="title font-semibold text-2xl">${
+                t[e.card.title]
+              }</p>`
+            : ""
+        }\n                  ${
+          t[e.card.description]
+            ? `<p class="description text-base text-gray-700">${
+                t[e.card.description]
+              }</p>`
+            : ""
+        }\n                </div>\n                <div class="caption-and-custom-fields">\n                  ${
+          e.card.caption
+            ? `<p class="caption text-gray-600 text-sm ${
+                t[e.card.title] || t[e.card.description] ? "mt-4" : ""
+              }">${t[e.card.caption]}</p>`
+            : ""
+        }\n                  ${
+          e.card.customFields.length > 0 &&
+          e.card.customFields.split(",").length > 0
+            ? `\n                    <ul class="${
+                t[e.card.title] ||
+                t[e.card.description] ||
+                t[e.card.caption]
+                  ? "mt-4"
+                  : ""
+              }">\n                      ${e.card.customFields
+                .split(",")
+                .map((e) =>
+                  t[e]
+                    ? `\n                          <li class="${e} custom-field flex justify-between">\n                            <span class="font-bold">${e}</span>\n                            <span class="text-right">${
+                        t[e]
+                      }${
+                        "Price" === e ? t.Currency : ""
+                      }</span>\n                          </li>`
                     : ""
-                }
-                <div class="h-full p-4 flex flex-col justify-between">
-                  <div>
-                    ${
-                      item[gs.card.title]
-                        ? `<p class="title font-semibold text-2xl">${
-                            item[gs.card.title]
-                          }</p>`
-                        : ""
-                    }
-                    ${
-                      item[gs.card.description]
-                        ? `<p class="description text-base text-gray-700">${
-                            item[gs.card.description]
-                          }</p>`
-                        : ""
-                    }
-                  </div>
-                  <div class="caption-and-custom-fields">
-                    ${
-                      gs.card.caption
-                        ? `<p class="caption text-gray-600 text-sm ${
-                            item[gs.card.title] ||
-                            item[gs.card.description]
-                              ? "mt-4"
-                              : ""
-                          }">${item[gs.card.caption]}</p>`
-                        : ""
-                    }
-                    ${
-                      gs.card.customFields.length > 0 &&
-                      gs.card.customFields.split(",").length > 0
-                        ? `
-                      <ul class="${
-                        item[gs.card.title] ||
-                        item[gs.card.description] ||
-                        item[gs.card.caption]
-                          ? "mt-4"
-                          : ""
-                      }">
-                        ${gs.card.customFields
-                          .split(",")
-                          .map((cf) => {
-                            if (!item[cf]) {
-                              return "";
-                            }
-                            return `
-                            <li class="${cf} custom-field flex justify-between">
-                              <span class="font-bold">${cf}</span>
-                              <span class="text-right">${item[cf]}${
-                              cf === "Price" ? item.Currency : ""
-                            }</span>
-                            </li>`;
-                          })
-                          .join("")}
-                      </ul>`
-                        : ""
-                    }
-                    ${gs.card.buttonAction === "no action" ? "" : ""}
-                    ${
-                      gs.card.buttonAction === "cart" &&
-                      gs.ordersEnabled
-                        ? `
-                      <button id='item-button-${idx}' class="w-full mt-4 bg-blue-500 hover:bg-blue-700 font-medium py-2 px-4 rounded text-center hover:shadow-md transition-shadow duration-300 focus:outline-none" style="background-color: ${gs.card.buttonBgColor}; color: ${gs.card.buttonTextColor};">
-                        ${gs.card.buttonText}
-                      </button>`
-                        : ""
-                    }
-                    ${
-                      gs.card.buttonAction === "link"
-                        ? `
-                      <a target="_blank" href="${
-                        item[gs.card.buttonLink]
-                      }" class="w-full mt-4 block cursor-pointer bg-blue-500 hover:bg-blue-700 font-medium py-2 px-4 rounded text-center hover:shadow-md transition-shadow duration-300 focus:outline-none" style="background-color: ${
-                            gs.card.buttonBgColor
-                          }; color: ${gs.card.buttonTextColor};">
-                        ${gs.card.buttonText}
-                      </a>`
-                        : ""
-                    }
-                  </div>
-                </div>
-              </div>
-            `;
-
-      itemsWrapper.appendChild(cardContainer);
-
-      const button = document.getElementById("item-button-" + idx);
-      if (button) {
-        button.addEventListener("click", () => {
-          handleAddItem(item);
+                )
+                .join("")}\n                    </ul>`
+            : ""
+        }\n                  ${
+          (e.card.buttonAction, "")
+        }\n                  ${
+          "cart" === e.card.buttonAction && e.ordersEnabled
+            ? `\n                    <button id='item-button-${n}' class="w-full mt-4 bg-blue-500 hover:bg-blue-700 font-medium py-2 px-4 rounded text-center hover:shadow-md transition-shadow duration-300 focus:outline-none" style="background-color: ${e.card.buttonBgColor}; color: ${e.card.buttonTextColor};">\n                      ${e.card.buttonText}\n                    </button>`
+            : ""
+        }\n                  ${
+          "link" === e.card.buttonAction
+            ? `\n                    <a target="_blank" href="${
+                t[e.card.buttonLink]
+              }" class="w-full mt-4 block cursor-pointer bg-blue-500 hover:bg-blue-700 font-medium py-2 px-4 rounded text-center hover:shadow-md transition-shadow duration-300 focus:outline-none" style="background-color: ${
+                e.card.buttonBgColor
+              }; color: ${
+                e.card.buttonTextColor
+              };">\n                      ${
+                e.card.buttonText
+              }\n                    </a>`
+            : ""
+        }\n                </div>\n              </div>\n            </div>\n          `),
+        o.appendChild(d);
+      const i = document.getElementById("item-button-" + n);
+      i &&
+        i.addEventListener("click", () => {
+          !(function (t) {
+            console.log("item added", t);
+          })(t);
         });
-      }
-      // console.log("itemsWrapper", itemsWrapper);
     }
-
-    function createMenuStructure({ gs, menu }) {
-      const container = document.createElement("div");
-      container.classList.add(
-        "min-h-full",
-        "pt-4",
-        "max-w-full",
-        "overflow-hidden"
-      );
-      container.style.backgroundColor = gs.theme.backgroundColor;
-
-      const mainDiv = document.createElement("div");
-      mainDiv.id = "fastmenu-main-container";
-      mainDiv.classList.add(
-        "main",
-        "w-[90%]",
-        "mx-auto",
-        "sm:w-full"
-      );
-
-      groupedByFilter = groupBy(menu, gs.card.filterBy);
-      filters = Object.keys(groupedByFilter);
-
-      const filtersDiv = document.createElement("div");
-      filtersDiv.id = "fastmenu-filters";
-      mainDiv.appendChild(filtersDiv);
-
-      const itemsDiv = document.createElement("div");
-      itemsDiv.id = "fastmenu-items";
-      itemsDiv.classList.add("items", "flex", "flex-wrap");
-
-      mainDiv.appendChild(itemsDiv);
-      container.appendChild(mainDiv);
-
-      return container;
-    }
-
-    function loadMenu(subdomain) {
-      // before load show loading
-      fastMenuWidget.innerHTML =
-        "<div id='fastmenu-loading'>Loading</div>";
-
-      fetch("http://localhost:8000/menu?subdomain=" + subdomain)
-        .then(function (response) {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then(function (data) {
-          console.log("data", data);
-          menu = data.menuItems;
-          gs = data.globalSettings;
-
-          // Call the effect manually
-          debugMenu(gs, menu);
-          fastMenuWidget.appendChild(
-            createMenuStructure({ gs, menu })
-          );
-          generateFilters(null, filters);
-          generateItems(null);
-        })
-        .finally(() => {
-          const fastmenuLoader = document.getElementById(
-            "fastmenu-loading"
-          );
-          fastmenuLoader.remove();
-        });
-      //   .catch(function (err) {
-      //     console.log("Loading menu", err);
-      //     fastMenuWidget.innerHTML = "<div>Error happened</div>";
-      //   });
-    }
-
-    loadTailwindStylesheet();
-    loadMenu(subdomain);
-
-    // Create an instance of LoadMenuWidget
-
-    console.log("fastMenuWidget", subdomain);
+    !(function () {
+      const t = document.createElement("link");
+      (t.href =
+        "https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"),
+        (t.rel = "stylesheet"),
+        document.head.appendChild(t);
+    })(),
+      (function (e) {
+        (t.innerHTML = "<div id='fastmenu-loading'>Loading</div>"),
+          fetch("http://localhost:8000/menu?subdomain=" + e)
+            .then(function (t) {
+              if (!t.ok)
+                throw new Error("Network response was not ok");
+              return t.json();
+            })
+            .then(function (e) {
+              console.log("data", e),
+                (i = e.menuItems),
+                (function (t, e) {
+                  window.ss = function () {
+                    console.log("gs", t), console.log("menu", e);
+                  };
+                })((d = e.globalSettings), i),
+                t.appendChild(
+                  (function ({ gs: t, menu: e }) {
+                    const n = document.createElement("div");
+                    n.classList.add(
+                      "min-h-full",
+                      "pt-4",
+                      "max-w-full",
+                      "overflow-hidden"
+                    ),
+                      (n.style.backgroundColor =
+                        t.theme.backgroundColor);
+                    const d = document.createElement("div");
+                    var i, c;
+                    (d.id = "fastmenu-main-container"),
+                      d.classList.add(
+                        "main",
+                        "w-[90%]",
+                        "mx-auto",
+                        "sm:w-full"
+                      ),
+                      (i = e),
+                      (c = t.card.filterBy),
+                      (o = i.reduce((t, e) => {
+                        const n = e[c];
+                        return (t[n] = t[n] || []), t[n].push(e), t;
+                      }, {})),
+                      (l = Object.keys(o));
+                    const s = document.createElement("div");
+                    (s.id = "fastmenu-filters"), d.appendChild(s);
+                    const a = document.createElement("div");
+                    return (
+                      (a.id = "fastmenu-items"),
+                      a.classList.add("items", "flex", "flex-wrap"),
+                      d.appendChild(a),
+                      n.appendChild(d),
+                      n
+                    );
+                  })({ gs: d, menu: i })
+                ),
+                a(null, l),
+                r(null);
+            })
+            .finally(() => {
+              document.getElementById("fastmenu-loading").remove();
+            });
+      })(e),
+      console.log("fastMenuWidget", e);
   }
-
-  window.startWidget = startWidget;
-  const intervalRef = setInterval(() => {
-    const fastMenuWidget = document.querySelector("fastmenu-widget");
-
-    if (!fastMenuWidget) {
-      console.log("nema widget");
-    } else {
-      console.log("ima widget");
-      startWidget();
-      clearInterval(intervalRef);
-    }
-  }, 500);
+  (window.startWidget = t),
+    document.addEventListener("DOMContentLoaded", function () {
+      const e = setInterval(() => {
+        document.querySelector("fastmenu-widget") &&
+          (t(), clearInterval(e));
+      }, 500);
+      setTimeout(() => {
+        clearInterval(e);
+      }, 1e4);
+    });
 })();
