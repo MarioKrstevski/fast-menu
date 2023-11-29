@@ -112,8 +112,15 @@ export default function MenuItems(props) {
 
   const [currentFilter, setCurrentFilter] = useState("All");
 
-  const groupedByFilter = lodash.groupBy(menu, gs.card.filterBy);
-  const filters = Object.keys(groupedByFilter);
+  let groupedByFilter = null;
+  let filters = null;
+
+  if (gs.card.filterBy) {
+    groupedByFilter = lodash.groupBy(menu, gs.card.filterBy);
+    filters = Object.keys(groupedByFilter);
+  }
+
+  console.log("filters", filters);
 
   function updateFilter(newFilter) {
     setCurrentFilter(newFilter);
@@ -133,27 +140,31 @@ export default function MenuItems(props) {
 
       {menu.length > 0 && (
         <div className="main w-[90%] mx-auto sm:w-full ">
-          <div className="filters flex flex-nowrap  overflow-y-auto py-2 px-2 mt-4 mb-2 sm:flex-wrap ">
-            <Pill
-              label={"All"}
-              active={currentFilter === "All"}
-              updateFilter={updateFilter}
-            />
-            {filters.map((filter) => (
+          {filters && filters.length > 1 && (
+            <div className="filters flex flex-nowrap  overflow-y-auto py-2 px-2 mt-4 mb-2 sm:flex-wrap ">
               <Pill
+                label={"All"}
+                active={currentFilter === "All"}
                 updateFilter={updateFilter}
-                key={filter}
-                label={filter}
-                active={currentFilter === filter}
               />
-            ))}
-          </div>
+              {filters.map((filter) => (
+                <Pill
+                  updateFilter={updateFilter}
+                  key={filter}
+                  label={filter}
+                  active={currentFilter === filter}
+                />
+              ))}
+            </div>
+          )}
 
           <div className="items  flex flex-wrap">
             {currentFilter === "All"
-              ? menu.map((item) => <Card key={item.ID} item={item} />)
-              : groupedByFilter[currentFilter].map((item) => (
-                  <Card key={item.ID} item={item} />
+              ? menu.map((item, idx) => (
+                  <Card key={idx} item={item} />
+                ))
+              : groupedByFilter[currentFilter].map((item, idx) => (
+                  <Card key={idx} item={item} />
                 ))}
           </div>
         </div>

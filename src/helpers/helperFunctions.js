@@ -67,3 +67,11 @@ export function convertDriveLinkToDirect(link) {
     return link;
   }
 }
+export function checkForValidSpreadsheetLink(link) {
+  // Regular expression to match the correct link structure
+  const regex =
+    /https:\/\/docs\.google\.com\/spreadsheets\/d\/([a-zA-Z0-9_-]+)\/edit/;
+
+  // Use the regular expression to check if the link matches
+  return regex.test(link);
+}

@@ -20,7 +20,6 @@ import UpgradeToProPlanModal from "../../../Dashboard/components/UpgradeToProPla
 import { calculateTimeRemaining } from "../../../../helpers/helperFunctions";
 import { Navigate, useNavigate } from "react-router-dom";
 import { api } from "../../../../api/backend";
-import CheckoutForm from "./steps/CheckoutForm";
 
 const steps = [
   { component: <DataLoadInput />, title: "Insert Spreadsheet" },
@@ -42,12 +41,32 @@ export default function BuilderStepper(props) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  function handleLoadMenu() {
+  /**
+   * Gets items for the menu/page from db that are already loaded from the Sheet
+   */
+
+  function handleLoadItems() {
     api
-      .be_loadMenuItemsByMenuId(menuId)
+      .be_getItems(menuId)
       .then((res) => {
-        console.log("ressss", res);
-        dispatch(updateMenu(res.data.menuItems));
+        console.log("Loaded items", res);
+        dispatch(updateMenu(res.data.items));
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }
+
+  /**
+   * Called when we make a change to the spreadsheet and we want to reimport the new items
+   * into the db and then get here to display on the UI
+   */
+  function handleGetUpdatedSheetItems() {
+    api
+      .be_syncExistingSheets(menuId)
+      .then((res) => {
+        console.log("New updated items", res);
+        dispatch(updateMenu(res.data.items));
       })
       .catch((err) => {
         console.log("err", err);
@@ -58,7 +77,7 @@ export default function BuilderStepper(props) {
   useEffect(() => {
     const menuIsLoaded = menu.length !== 0;
     if (!menuIsLoaded && gs.spreadSheetURL) {
-      handleLoadMenu();
+      handleLoadItems();
     }
   }, []);
   window.ss = function () {
@@ -111,7 +130,7 @@ export default function BuilderStepper(props) {
               style={{ transitionDelay: "0ms" }}
             >
               <button
-                onClick={handleLoadMenu}
+                onClick={handleGetUpdatedSheetItems}
                 type="button"
                 className="button w-8 is-small mr-2"
               >

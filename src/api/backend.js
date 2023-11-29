@@ -4,22 +4,28 @@ import { backendBaseUrl } from "../constants/global";
 
 const fastmenu = axios.create({
   baseURL: backendBaseUrl,
-  timeout: 2000,
+  timeout: 4000,
   headers: {},
 });
 
-function be_loadMenuItemsByMenuId(menuId) {
-  return fastmenu.get("menu", {
+function be_getItems(menuId) {
+  return fastmenu.get("items", {
     params: {
       menuId,
     },
   });
 }
-function be_loadMenuItems(newSpreadSheetURL) {
-  return fastmenu.get("menuItems", {
-    params: {
-      newSpreadSheetURL,
-    },
+
+function be_syncExistingSheets(menuId) {
+  return fastmenu.post("syncExistingSheets", {
+    menuId,
+  });
+}
+
+function be_syncNewSheets(newSpreadSheetURL, menuId) {
+  return fastmenu.post("syncNewSheets", {
+    newSpreadSheetURL,
+    menuId,
   });
 }
 function be_checkSubdomainAvailability(subdomain) {
@@ -99,7 +105,7 @@ function be_loadMenu(subdomain) {
   });
 }
 
-function be_loadCsvFIle(formData) {
+function be_uploadFromCSV(formData) {
   return fastmenu.post("upload", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -132,9 +138,10 @@ function be_placeOrder(message, number) {
 }
 
 export const api = {
-  be_loadMenuItemsByMenuId,
+  be_getItems,
+  be_syncExistingSheets,
   be_checkSubdomainAvailability,
-  be_loadMenuItems,
+  be_syncNewSheets,
   be_saveGlobalSettings,
   be_publishMenu,
   be_updateUserInfo,
@@ -145,7 +152,7 @@ export const api = {
   be_getMenusForClient,
   be_deleteMenu,
   be_loadMenu,
-  be_loadCsvFIle,
+  be_uploadFromCSV,
   be_trylogin,
   be_checkClientNameAvailability,
   be_signup,

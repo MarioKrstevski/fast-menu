@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  updateGlobalSettings,
-  updateSetting,
-} from "../../../../../redux/globalSettingsSlice";
-import axios from "axios";
+import { updateSetting } from "../../../../../redux/globalSettingsSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faCheckCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import { updateMenu } from "../../../../../redux/menuSlice";
 import { api } from "../../../../../api/backend";
+import { checkForValidSpreadsheetLink } from "../../../../../helpers/helperFunctions";
 
 export default function DataLoadInput(props) {
   const [isSuccesfullyConnected, setIsSuccesfullyConnected] =
@@ -16,19 +16,13 @@ export default function DataLoadInput(props) {
   const [csvFile, setCSVFile] = useState(null);
   const [isFileSubmitted, setIsFileSubmitted] = useState(false);
   const [isValidSheetsLink, setIsValidSheetsLink] = useState(true);
+
+  const [newSheetConnected, setNewSheetConnected] = useState(false);
   const gs = useSelector((store) => store.globalSettings);
   const menuId = useSelector((store) => store.menu.menuId);
   const dispatch = useDispatch();
 
-  function checkForValidSpreadsheetLink(link) {
-    // Regular expression to match the correct link structure
-    const regex =
-      /https:\/\/docs\.google\.com\/spreadsheets\/d\/([a-zA-Z0-9_-]+)\/edit/;
-
-    // Use the regular expression to check if the link matches
-    return regex.test(link);
-  }
-  function reloadMenuFromNewSheetURL(e) {
+  function validateSheetURL(e) {
     setIsValidSheetsLink(true);
 
     dispatch(
@@ -43,25 +37,41 @@ export default function DataLoadInput(props) {
       setIsValidSheetsLink(false);
     }
   }
-  function handleLoadMenuFromSheets() {
+  /**
+   * Used when we enter new spreadsheetURL and we call this function,
+   * to update the spreadsheetURL with the new one, and we also load
+   * the items from the sheet and put them in our db and get the items
+   */
+  function handleConnectNewSheetForMenu() {
     api
-      .be_loadMenuItems(gs.spreadSheetURL)
+      .be_syncNewSheets(gs.spreadSheetURL, menuId)
       .then((res) => {
-        console.log("res", res);
-        dispatch(updateMenu(res.data.menuItems));
+        console.log("New sheet items ", res);
+        setNewSheetConnected(true);
+        setTimeout(() => {
+          setNewSheetConnected(false);
+        }, 850);
+        dispatch(updateMenu(res.data.items));
       })
       .catch((err) => {
         console.log("err", err);
       });
   }
-  const handleSubmit = () => {
+  const handleLoadItemsFromCSV = () => {
     const formData = new FormData();
     formData.append("csvFile", csvFile);
+    formData.append("menuId", menuId);
 
     api
-      .be_loadCsvFIle(formData)
-      .then((data) => {
+      .be_uploadFromCSV(formData)
+      .then((res) => {
+        console.log("Loaded items from CSV ", res);
+        dispatch(updateMenu(res.data.items));
+
         setIsFileSubmitted(true);
+        setTimeout(() => {
+          setIsFileSubmitted(false);
+        }, 850);
       })
       .catch((err) => {});
   };
@@ -80,7 +90,7 @@ export default function DataLoadInput(props) {
           type="text"
           value={gs.spreadSheetURL}
           autoComplete="on"
-          onChange={reloadMenuFromNewSheetURL}
+          onChange={validateSheetURL}
           placeholder="Insert your spreadsheet url or id"
           autoFocus={"autofocus"}
           className={`input is-success is-large w-[94%] placeholder-gray-500 border rounded p-2  ${
@@ -94,16 +104,36 @@ export default function DataLoadInput(props) {
             The link is invalid, correct it
           </div>
         )}
+      </div>
+      <div className="text-sm">
+        Click to load items from spreadsheet{" "}
+      </div>
+      <div>
         <button
-          className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-2 my-2 border border-gray-400 rounded shadow"
-          onClick={handleLoadMenuFromSheets}
+          disabled={!isValidSheetsLink}
+          className={` text-gray-800 font-semibold py-1 px-2 my-2 border border-gray-400 rounded shadow
+          ${
+            !isValidSheetsLink
+              ? "bg-gray-300 "
+              : "bg-white hover:bg-gray-100 "
+          }
+          `}
+          onClick={handleConnectNewSheetForMenu}
         >
-          Sync Menu
+          Load
         </button>
+        {newSheetConnected && (
+          <FontAwesomeIcon
+            icon={faCheckCircle}
+            fade
+            className="text-green-500 ml-1"
+            size="lg"
+          />
+        )}
       </div>
       <div className="my-4 break-words">
-        <label htmlFor="spreadsheetupload">
-          Select file from device
+        <label htmlFor="spreadsheetupload" className="my-1 block">
+          Upload csv file from device
         </label>
         <input
           className="w-full"
@@ -113,24 +143,28 @@ export default function DataLoadInput(props) {
           accept=".csv"
           onChange={handleFileChange}
         />
-        <button
-          disabled={!csvFile}
-          className={`my-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded ${
-            !csvFile ? "bg-gray-400" : ""
-          }`}
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
-        {isFileSubmitted && (
-          <>
+        <div className="text-sm mt-3">
+          Click to load items from csv
+        </div>
+        <div>
+          <button
+            disabled={!csvFile}
+            className={` text-gray-800 font-semibold py-1 px-2 border border-gray-400 rounded shadow
+          ${!csvFile ? "bg-gray-300 " : "bg-white hover:bg-gray-100 "}
+          `}
+            onClick={handleLoadItemsFromCSV}
+          >
+            Load csv
+          </button>
+          {isFileSubmitted && (
             <FontAwesomeIcon
-              icon={faCheck}
-              className="mx-2 text-green-800"
+              icon={faCheckCircle}
+              fade
+              className="text-green-500 ml-1"
+              size="lg"
             />
-            <span className="text-sm text-green-800">Done</span>
-          </>
-        )}
+          )}
+        </div>
       </div>
       <p className="mt-4 text-sm text-gray-600">
         The ID is the value between the "/d/" and the "/edit" in the
