@@ -99,7 +99,7 @@ function Landing(props) {
           {/* FastMenu Widget for menu */}
 
           <div className="container w-[80%] mx-auto">
-            <fastmenu-widget subdomain="agorademo"></fastmenu-widget>
+            <fastmenu-widget subdomain="fastmenu"></fastmenu-widget>
           </div>
         </div>
       </section>
