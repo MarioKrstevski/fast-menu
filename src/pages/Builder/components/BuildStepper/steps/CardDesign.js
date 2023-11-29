@@ -61,6 +61,7 @@ export default function CardDesign(props) {
     <div className="p-2 card-design">
       <div className="my-2 font-bold">Filter by</div>
       <Dropdown
+        showClear
         value={allFields.find(
           (field) => field.name === gs.card.filterBy
         )}
@@ -68,7 +69,7 @@ export default function CardDesign(props) {
           dispatch(
             updateSetting({
               field: "card.filterBy",
-              value: e.value.name,
+              value: e.value ? e.value.name : "",
             })
           );
         }}
@@ -83,6 +84,7 @@ export default function CardDesign(props) {
 
       <div className="my-2 font-bold">Image</div>
       <Dropdown
+        showClear
         value={allFields.find(
           (field) => field.name === gs.card.image
         )}
@@ -90,7 +92,7 @@ export default function CardDesign(props) {
           dispatch(
             updateSetting({
               field: "card.image",
-              value: e.value.name,
+              value: e.value ? e.value.name : "",
             })
           );
         }}
@@ -102,6 +104,7 @@ export default function CardDesign(props) {
       {/* ---- */}
       <div className="my-2 font-bold">Title</div>
       <Dropdown
+        showClear
         value={allFields.find(
           (field) => field.name === gs.card.title
         )}
@@ -109,7 +112,7 @@ export default function CardDesign(props) {
           dispatch(
             updateSetting({
               field: "card.title",
-              value: e.value.name,
+              value: e.value ? e.value.name : "",
             })
           );
         }}
@@ -122,6 +125,7 @@ export default function CardDesign(props) {
 
       <div className="my-2 font-bold">Description</div>
       <Dropdown
+        showClear
         value={allFields.find(
           (field) => field.name === gs.card.description
         )}
@@ -129,7 +133,7 @@ export default function CardDesign(props) {
           dispatch(
             updateSetting({
               field: "card.description",
-              value: e.value.name,
+              value: e.value ? e.value.name : "",
             })
           );
         }}
@@ -223,6 +227,7 @@ export default function CardDesign(props) {
       )}
 
       <Dropdown
+        showClear
         value={cardButtonActionOptions.find(
           (field) => field.name === gs.card.buttonAction
         )}

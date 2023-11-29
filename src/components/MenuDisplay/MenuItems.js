@@ -13,39 +13,77 @@ function Card({ item }) {
   return (
     <div className="w-full  sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 px-2 mb-8 md:mb-4">
       <div className="content-card overflow-hidden bg-white rounded shadow flex flex-grow flex-col text-gray-800 text-left h-full">
-        <div className="relative w-full pb-[100%] bg-gray-300">
-          <img
-            alt="Item Image"
-            className="object-cover absolute h-full w-full inset-0"
-            src={imageLink}
-            lazy="loaded"
-          />
-        </div>
+        {imageLink && (
+          <div className="relative w-full pb-[100%] bg-gray-300">
+            <img
+              alt="Item Image"
+              className="object-cover absolute h-full w-full inset-0"
+              src={imageLink}
+              lazy="loaded"
+            />
+          </div>
+        )}
         <div className="h-full p-4 flex flex-col justify-between">
           <div>
-            <p className="font-semibold text-2xl">
-              {item[gs.card.title]}
-            </p>
-            <p className="text-base text-gray-700">
-              {item[gs.card.description]}
-            </p>
+            {item[gs.card.title] && (
+              <p className="title font-semibold text-2xl">
+                {item[gs.card.title]}
+              </p>
+            )}
+            {item[gs.card.description] && (
+              <p className="description text-base text-gray-700">
+                {item[gs.card.description]}
+              </p>
+            )}
           </div>
-          <div>
-            <p className="mt-4 text-gray-600 text-sm">
-              {item[gs.card.caption]}
-            </p>
-            <ul className="mt-4">
-              {gs.card.customFields.split(",").map((cf) => (
-                <li key={cf} className="flex justify-between">
-                  <span className="font-bold">{cf}</span>
-                  <span className="text-right">
-                    {item[cf]}
-                    {cf === "Price" && item.Currency}
-                  </span>
-                </li>
-              ))}
-            </ul>
+          <div className="caption-and-custom-fields">
+            {gs.card.caption && (
+              <p
+                className={`caption  text-gray-600 text-sm ${
+                  item[gs.card.title] || item[gs.card.description]
+                    ? "mt-4"
+                    : ""
+                }`}
+              >
+                {item[gs.card.caption]}
+              </p>
+            )}
+            {gs.card.customFields.length > 0 &&
+              gs.card.customFields.split(",").length > 0 && (
+                <ul
+                  className={`
+                ${
+                  item[gs.card.title] ||
+                  item[gs.card.description] ||
+                  item[gs.card.caption]
+                    ? "mt-4"
+                    : ""
+                }
+                `}
+                >
+                  {gs.card.customFields.split(",").map((cf) => {
+                    if (!item[cf]) {
+                      return null;
+                    }
 
+                    return (
+                      <li
+                        key={cf}
+                        className={
+                          `${cf} custom-field ` +
+                          "flex justify-between "
+                        }
+                      >
+                        <span className="font-bold">{cf}</span>
+                        <span className="text-right">
+                          {item[cf]}
+                          {cf === "Price" && item.Currency}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
             {gs.card.buttonAction === "no action" && null}
             {gs.card.buttonAction === "cart" && gs.ordersEnabled && (
               <button

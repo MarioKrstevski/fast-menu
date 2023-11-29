@@ -2,13 +2,12 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateSetting } from "../../../../../redux/globalSettingsSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheck,
-  faCheckCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { Dropdown } from "primereact/dropdown";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { updateMenu } from "../../../../../redux/menuSlice";
 import { api } from "../../../../../api/backend";
 import { checkForValidSpreadsheetLink } from "../../../../../helpers/helperFunctions";
+import { sheetOptions } from "../../../../../constants/options";
 
 export default function DataLoadInput(props) {
   const [isSuccesfullyConnected, setIsSuccesfullyConnected] =
@@ -16,6 +15,7 @@ export default function DataLoadInput(props) {
   const [csvFile, setCSVFile] = useState(null);
   const [isFileSubmitted, setIsFileSubmitted] = useState(false);
   const [isValidSheetsLink, setIsValidSheetsLink] = useState(true);
+  const [selectedSheet, setSelectedSheet] = useState(null);
 
   const [newSheetConnected, setNewSheetConnected] = useState(false);
   const gs = useSelector((store) => store.globalSettings);
@@ -23,6 +23,7 @@ export default function DataLoadInput(props) {
   const dispatch = useDispatch();
 
   function validateSheetURL(e) {
+    setSelectedSheet(null);
     setIsValidSheetsLink(true);
 
     dispatch(
@@ -68,12 +69,14 @@ export default function DataLoadInput(props) {
         console.log("Loaded items from CSV ", res);
         dispatch(updateMenu(res.data.items));
 
-        setIsFileSubmitted(true);
+        setIsFileSubmitted("success");
         setTimeout(() => {
           setIsFileSubmitted(false);
         }, 850);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setIsFileSubmitted("error");
+      });
   };
   const handleFileChange = (e) => {
     setCSVFile(e.target.files[0]);
@@ -177,6 +180,24 @@ export default function DataLoadInput(props) {
         </span>
         /edit#gid=0
       </div>
+
+      <Dropdown
+        value={selectedSheet}
+        onChange={(e) => {
+          console.log("e");
+          setSelectedSheet(e.value);
+          dispatch(
+            updateSetting({
+              field: "spreadSheetURL",
+              value: e.value.spreadSheetURL,
+            })
+          );
+        }}
+        options={sheetOptions}
+        optionLabel="name"
+        placeholder="Select Menu"
+        className="w-full mt-4 border md:w-14rem"
+      />
     </div>
   );
 }
