@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
+import { frontendBaseUrl } from "../../constants/global";
 
 export default function MenuFooter(props) {
   const gs = useSelector((state) => state.globalSettings);
@@ -88,16 +89,31 @@ export default function MenuFooter(props) {
         </div>
       )}
       {gs.footer.isFreeMenuTrademarkShown && (
-        <div className="bg-white">
-          <div className="container mx-auto px-4 py-6 text-center">
-            <p>
-              Made with
-              <strong className="ml-1">
-                <a href="https://fastmenu.com/">Fast Menu</a>
-              </strong>
-            </p>
+        <>
+          <a
+            href={
+              frontendBaseUrl +
+              "?ref=" +
+              gs.client +
+              "&subomdain=" +
+              gs.subdomain
+            }
+            className="bottom-1 right-1 border rounded-2xl  fixed px-4 py-2 bg-gray-900 text-white font-light shadow-lg"
+          >
+            Made with
+            <span className="font-bold ml-1">FastMenu</span>
+          </a>
+          <div className="bg-white">
+            <div className="container mx-auto px-4 py-6 text-center">
+              <p>
+                Made with
+                <strong className="ml-1">
+                  <a href={frontendBaseUrl}>Fast Menu</a>
+                </strong>
+              </p>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </footer>
   );
