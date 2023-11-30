@@ -2,6 +2,7 @@ import { MultiSelect } from "primereact/multiselect";
 import { Dropdown } from "primereact/dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { updateSetting } from "../../../../../redux/globalSettingsSlice";
+import { isALink } from "../../../../../helpers/helperFunctions";
 
 export default function CardDesign(props) {
   const { menu, isPro, isOnFreeTrial } = useSelector((store) => {
@@ -21,11 +22,7 @@ export default function CardDesign(props) {
     : [];
 
   const allFieldThatAreLinks = allFields.filter((field) => {
-    if (
-      typeof menu[0][field.name] === "string" &&
-      (menu[0][field.name].includes("http") ||
-        menu[0][field.name].includes("www"))
-    ) {
+    if (isALink(menu[0][field.name])) {
       return true;
     }
   });

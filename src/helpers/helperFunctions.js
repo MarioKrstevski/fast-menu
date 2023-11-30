@@ -29,6 +29,13 @@ export function updateTitle(newTitle) {
   document.title = newTitle;
 }
 
+export function isALink(string) {
+  console.log("link", string);
+  return (
+    typeof string === "string" &&
+    (string.includes("http") || string.includes("www"))
+  );
+}
 export function calculateTimeRemaining(timestamp) {
   console.log("timestamp", timestamp);
   // Get the current date and time

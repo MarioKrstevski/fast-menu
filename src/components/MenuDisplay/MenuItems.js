@@ -2,7 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import lodash from "lodash";
 import { useState } from "react";
 import { addItem } from "../../redux/shoppingCartSlice";
-import { convertDriveLinkToDirect } from "../../helpers/helperFunctions";
+import {
+  convertDriveLinkToDirect,
+  isALink,
+} from "../../helpers/helperFunctions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLink } from "@fortawesome/free-solid-svg-icons";
 
 function Card({ item }) {
   const gs = useSelector((store) => store.globalSettings);
@@ -76,7 +81,13 @@ function Card({ item }) {
                       >
                         <span className="font-bold">{cf}</span>
                         <span className="text-right">
-                          {item[cf]}
+                          {isALink(item[cf]) ? (
+                            <a href={item[cf]}>
+                              <FontAwesomeIcon icon={faLink} />
+                            </a>
+                          ) : (
+                            item[cf]
+                          )}
                           {cf === "Price" && item.Currency}
                         </span>
                       </li>
