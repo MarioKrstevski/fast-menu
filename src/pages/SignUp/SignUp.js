@@ -270,8 +270,8 @@ export default function SignUp() {
                 <div className="text-green-600">{signUpSuccess}</div>
                 <div>
                   Proceed to
-                  <Link className="text-blue-500" to={"/login"}>
-                    login
+                  <Link className="text-blue-500 ml-2" to={"/login"}>
+                    Login
                   </Link>
                 </div>
               </>
@@ -282,12 +282,14 @@ export default function SignUp() {
           </div>
         </form>
 
-        <div className="mt-2">
-          You already have an account?
-          <Link to={"/login"} className="text-blue-400 ml-1">
-            Log in
-          </Link>
-        </div>
+        {!signUpSuccess && (
+          <div className="mt-2">
+            You already have an account?
+            <Link to={"/login"} className="text-blue-400 ml-1">
+              Log in
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
