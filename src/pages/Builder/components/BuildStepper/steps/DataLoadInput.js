@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateSetting } from "../../../../../redux/globalSettingsSlice";
+import {
+  updateGlobalSettings,
+  updateSetting,
+} from "../../../../../redux/globalSettingsSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dropdown } from "primereact/dropdown";
 import {
@@ -76,6 +79,7 @@ export default function DataLoadInput(props) {
       .then((res) => {
         console.log("Loaded items from CSV ", res);
         dispatch(updateMenu(res.data.items));
+        dispatch(updateGlobalSettings(res.data.globalSettings));
 
         setIsFileSubmitted("success");
         setTimeout(() => {
