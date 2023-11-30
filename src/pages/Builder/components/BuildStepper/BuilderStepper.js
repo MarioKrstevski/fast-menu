@@ -20,11 +20,13 @@ import UpgradeToProPlanModal from "../../../Dashboard/components/UpgradeToProPla
 import { calculateTimeRemaining } from "../../../../helpers/helperFunctions";
 import { Navigate, useNavigate } from "react-router-dom";
 import { api } from "../../../../api/backend";
+import Integrations from "./steps/Integrations";
 
 const steps = [
   { component: <DataLoadInput />, title: "Insert Spreadsheet" },
   { component: <BasicInfoColors />, title: "Website Info" },
   { component: <CardDesign />, title: "Items Design" },
+  { component: <Integrations />, title: "Integrations" },
   { component: <QRCodeInfo />, title: "QR Code" },
   // { component: <CheckoutForm />, title: "Checkout Form" },
 ];
