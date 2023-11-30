@@ -5,6 +5,11 @@ export const sheetOptions = [
       "https://docs.google.com/spreadsheets/d/19tZNxPncefhaL_-cTKvKDrhklppD0-l050NCVXU2wPQ/edit#gid=25943294",
   },
   {
+    name: "Fast Menu Demos",
+    spreadSheetURL:
+      "https://docs.google.com/spreadsheets/d/1C5IgGgBct10Q-yFW2V8L2ZVI7LfEyyuj2ruposFRjbQ/edit#gid=0",
+  },
+  {
     name: "Verdemio",
     spreadSheetURL:
       "https://docs.google.com/spreadsheets/d/1xP83VPTMRXFo00d8RCBekyLMSmTNgSj4PcNyIi7n8vY/edit#gid=742981095",
