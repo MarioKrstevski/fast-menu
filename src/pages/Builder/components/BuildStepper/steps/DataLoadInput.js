@@ -51,6 +51,9 @@ export default function DataLoadInput(props) {
    * the items from the sheet and put them in our db and get the items
    */
   function handleConnectNewSheetForMenu() {
+    if (gs.spreadSheetURL || !isValidSheetsLink) {
+      return;
+    }
     api
       .be_syncNewSheets(gs.spreadSheetURL, menuId)
       .then((res) => {
