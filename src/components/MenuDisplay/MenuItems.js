@@ -7,7 +7,10 @@ import {
   isALink,
 } from "../../helpers/helperFunctions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLink } from "@fortawesome/free-solid-svg-icons";
+import {
+  faExternalLink,
+  faLink,
+} from "@fortawesome/free-solid-svg-icons";
 
 function Card({ item }) {
   const gs = useSelector((store) => store.globalSettings);
@@ -83,7 +86,10 @@ function Card({ item }) {
                         <span className="text-right">
                           {isALink(item[cf]) ? (
                             <a href={item[cf]}>
-                              <FontAwesomeIcon icon={faLink} />
+                              <FontAwesomeIcon
+                                className="text-blue-500"
+                                icon={faExternalLink}
+                              />
                             </a>
                           ) : (
                             item[cf]

@@ -1,5 +1,11 @@
 import { Toaster } from "react-hot-toast";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
+import { Provider } from "react-redux";
 import Menu from "./pages/Menu/Menu";
 import { store } from "./redux/store";
 import Builder from "./pages/Builder/Builder";
