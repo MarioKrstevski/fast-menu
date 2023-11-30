@@ -51,8 +51,6 @@ export function FastMenu(props) {
                 }
               />
 
-              <Route path="*" element={<NotFound />} />
-
               <Route
                 path="/allExistingMenus"
                 element={<AllExistingMenus />}
@@ -61,6 +59,11 @@ export function FastMenu(props) {
                 path="/allExistingUsers"
                 element={<AllExistingUsers />}
               />
+              <Route
+                path="/"
+                element={<Navigate to={"/dashboard"} />}
+              />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
           <Toaster />
