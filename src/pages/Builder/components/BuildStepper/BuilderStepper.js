@@ -94,7 +94,7 @@ export default function BuilderStepper(props) {
   }
 
   return (
-    <div className="w-[400px] overflow-x-hidden border-r-2  border-r-gray-400 ">
+    <div className="w-[480px] overflow-x-hidden border-r-2  border-r-gray-400 ">
       {isModalOpen && !isPro && (
         <div
           onClick={() => {
