@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
+  faCircleXmark,
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 import { api } from "../../api/backend";
@@ -16,6 +17,9 @@ export default function SignUp() {
   const [signUpError, setsignUpError] = useState("");
   const [signUpSuccess, setsignUpSuccess] = useState("");
   const [testedName, setTestedName] = useState("");
+  const [serverStatusCheck, setServerStatusCheck] = useState(null);
+  const [isLoadingServerStatus, setIsLoadingServerStatus] =
+    useState(false);
 
   const [
     isCheckingAvailableClientName,
@@ -67,6 +71,22 @@ export default function SignUp() {
       });
   }
 
+  function handleCheckServer() {
+    setIsLoadingServerStatus(true);
+    api
+      .be_serverCheck()
+      .then((res) => {
+        setServerStatusCheck("success");
+      })
+      .catch((err) => {
+        setServerStatusCheck("error");
+      })
+      .finally(() => {
+        setIsLoadingServerStatus(false);
+      });
+    setIsLoadingServerStatus(false);
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle the signup logic here
@@ -90,10 +110,33 @@ export default function SignUp() {
       });
   };
 
+  const checkConnection = (
+    <button
+      disabled={isLoadingServerStatus}
+      className="text-sm rounded border px-1 py-0.5"
+      onClick={handleCheckServer}
+    >
+      check server{" "}
+      {serverStatusCheck === "success" && (
+        <FontAwesomeIcon
+          className="text-green-500"
+          icon={faCheckCircle}
+        />
+      )}
+      {serverStatusCheck === "error" && (
+        <FontAwesomeIcon
+          className="text-red-500"
+          icon={faCircleXmark}
+        />
+      )}
+    </button>
+  );
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-200">
       <div className="bg-white p-8 rounded shadow-md w-96">
-        <h2 className="text-2xl font-semibold mb-4">Sign Up</h2>
+        <h2 className="text-2xl font-semibold mb-4">
+          Sign Up {checkConnection}{" "}
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label

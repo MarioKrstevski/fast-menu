@@ -2,11 +2,17 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSignIn } from "react-auth-kit";
 import { api } from "../../api/backend";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCheckCircle,
+  faCircleXmark,
+} from "@fortawesome/free-solid-svg-icons";
 export default function Login() {
   const navigate = useNavigate();
   const signIn = useSignIn();
-
+  const [serverStatusCheck, setServerStatusCheck] = useState(null);
+  const [isLoadingServerStatus, setIsLoadingServerStatus] =
+    useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setloginError] = useState("");
@@ -40,11 +46,48 @@ export default function Login() {
       });
     // Handle the login logic here
   };
-
+  function handleCheckServer() {
+    setIsLoadingServerStatus(true);
+    api
+      .be_serverCheck()
+      .then((res) => {
+        setServerStatusCheck("success");
+      })
+      .catch((err) => {
+        setServerStatusCheck("error");
+      })
+      .finally(() => {
+        setIsLoadingServerStatus(false);
+      });
+    setIsLoadingServerStatus(false);
+  }
+  const checkConnection = (
+    <button
+      disabled={isLoadingServerStatus}
+      className="text-sm rounded border px-1 py-0.5"
+      onClick={handleCheckServer}
+    >
+      check server{" "}
+      {serverStatusCheck === "success" && (
+        <FontAwesomeIcon
+          className="text-green-500"
+          icon={faCheckCircle}
+        />
+      )}
+      {serverStatusCheck === "error" && (
+        <FontAwesomeIcon
+          className="text-red-500"
+          icon={faCircleXmark}
+        />
+      )}
+    </button>
+  );
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-200">
       <div className="bg-white p-8 rounded shadow-md w-96">
-        <h2 className="text-2xl font-semibold mb-4">Login</h2>
+        <h2 className="text-2xl font-semibold mb-4">
+          Login {checkConnection}{" "}
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label

@@ -8,6 +8,10 @@ const fastmenu = axios.create({
   headers: {},
 });
 
+function be_serverCheck() {
+  return fastmenu.get("test");
+}
+
 function be_getItems(menuId) {
   return fastmenu.get("items", {
     params: {
@@ -138,6 +142,7 @@ function be_placeOrder(message, number) {
 }
 
 export const api = {
+  be_serverCheck,
   be_getItems,
   be_syncExistingSheets,
   be_checkSubdomainAvailability,
