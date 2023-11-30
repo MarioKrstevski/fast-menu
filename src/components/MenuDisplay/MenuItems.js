@@ -213,11 +213,11 @@ export default function MenuItems(props) {
 
           <div className="items  flex flex-wrap">
             {currentFilter === "All"
-              ? menu.map((item, idx) => (
-                  <Card key={idx} item={item} />
+              ? menu.map((item) => (
+                  <Card key={item._uid} item={item} />
                 ))
-              : groupedByFilter[currentFilter].map((item, idx) => (
-                  <Card key={idx} item={item} />
+              : groupedByFilter[currentFilter].map((item) => (
+                  <Card key={item._uid} item={item} />
                 ))}
           </div>
         </div>
