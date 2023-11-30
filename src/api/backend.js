@@ -4,7 +4,7 @@ import { backendBaseUrl } from "../constants/global";
 
 const fastmenu = axios.create({
   baseURL: backendBaseUrl,
-  timeout: 4000,
+  // timeout: 4000,
   headers: {},
 });
 
