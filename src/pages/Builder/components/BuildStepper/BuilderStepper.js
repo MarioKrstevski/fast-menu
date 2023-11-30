@@ -121,7 +121,7 @@ export default function BuilderStepper(props) {
       <div className="flex flex-col h-full">
         <div
           id="build-stepper"
-          className="flex  justify-between items-center p-4 border-b h-20"
+          className="flex  justify-between items-center p-2 md:p-4 border-b h-20"
         >
           <div className="text-lg font-bold w-[120px] ">
             {steps[currentStep - 1].title}
@@ -135,7 +135,7 @@ export default function BuilderStepper(props) {
               <button
                 onClick={handleGetUpdatedSheetItems}
                 type="button"
-                className="button w-8 is-small mr-2"
+                className="button w-8 is-small mr-2 border rounded "
               >
                 <span title="Sync Spreadsheet">
                   <FontAwesomeIcon icon={faSyncAlt} />
