@@ -189,11 +189,9 @@ export default function MenuItems(props) {
         backgroundColor: gs.theme.backgroundColor,
       }}
     >
-      {menu.length === 0 && (
-        <div className="text-center my-8">Loading Menu</div>
-      )}
+      {!menu && <div className="text-center my-8">Loading Menu</div>}
 
-      {menu.length > 0 && (
+      {menu && menu.length > 0 && (
         <div className="main w-[90%] mx-auto sm:w-full ">
           {filters && filters.length > 1 && (
             <div className="filters flex flex-nowrap  overflow-y-auto py-2 px-2  mb-2 sm:flex-wrap ">
