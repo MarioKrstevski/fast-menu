@@ -57,16 +57,20 @@ export default function DashboardMenu(props) {
         src="https://thumbs.dreamstime.com/b/design-can-be-used-as-logo-icon-complement-to-tool-speed-127653493.jpg"
         alt="logo"
       />
-      <span>Fast Menu</span>
+      <span className="whitespace-nowrap text-sm md:text-base mr-3">
+        Fast Menu
+      </span>
     </>
   );
   return (
     <div className="bg-slate-950 text-white flex justify-center">
       <div className="container ">
-        <nav className="h-12 w-full  flex justify-between px-8 items-center">
+        <nav className="h-12 w-full  flex justify-between px-4 md:px-8 items-center">
           <div className="logo flex gap-1 items-center ">{logo}</div>
-          <div className="relative flex items-center mr-4">
-            <span className="pr-4">{user.contactName}</span>
+          <div className="relative flex items-center mr-2">
+            <span className="pr-3 whitespace-nowrap text-sm md:text-base ">
+              {user.contactName}
+            </span>
             <img
               onClick={() => {
                 setIsMenuInfoOpen(true);
@@ -143,7 +147,7 @@ export default function DashboardMenu(props) {
                 navigate("/login");
                 signOut();
               }}
-              className="button border-white border rounded-lg px-2 py-1 is-white has-text-weight-bold ml-6 hover:bg-slate-800"
+              className="button border-white border  whitespace-nowrap rounded-lg px-2 py-1 is-white has-text-weight-bold ml-4 hover:bg-slate-800"
             >
               Log out
             </button>
