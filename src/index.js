@@ -6,6 +6,11 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+// prevent console log from working, useful for production
+// uncomment when in production
+
+// console.log = function() {};
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
