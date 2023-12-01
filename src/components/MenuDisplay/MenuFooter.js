@@ -16,7 +16,7 @@ export default function MenuFooter(props) {
     gs.footer.isTiktokLinkShown ||
     gs.footer.isInstagramLinkShown;
   return (
-    <footer>
+    <footer className=" border-b-2">
       {gs.footer.isShown && (
         <div
           className=" mx-auto  text-center"
