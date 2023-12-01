@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { updateGlobalSettings } from "../../../redux/globalSettingsSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -49,11 +49,10 @@ export default function WebsitesList(props) {
   const user = auth();
   const signIn = useSignIn();
 
-  const menu = useSelector((state) => state.menu);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFetchingMenus, setIsFetchingMenus] = useState(false);
   const [isCreatingNewMenu, setIsCreatingNewMenu] = useState(false);
-  const menuLimit = 6;
+  const menuLimit = 10;
 
   function loadNeededMenuInformation(
     menuId,
