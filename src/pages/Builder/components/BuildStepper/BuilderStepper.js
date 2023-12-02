@@ -172,7 +172,7 @@ export default function BuilderStepper(props) {
         <div className=" bg-gray-200 mt-auto">
           <div
             className="text-sm px-3 py-2 text-white flex justify-between bg-green-500"
-            style={{ display: isOnFreeTrial ? "" : "none" }}
+            style={{ display: !isPro && isOnFreeTrial ? "" : "none" }}
           >
             <div>
               Free trial ends in{" "}
