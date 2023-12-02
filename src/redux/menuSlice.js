@@ -7,7 +7,7 @@ const initialState = {
   canPublishOrSaveChanges: true,
   subdomainWhenLoaded: null,
   isPublished: false,
-  isOnFreeTrial: false,
+  isOnFreeTrial: "",
 };
 
 export const menuSlice = createSlice({
@@ -22,7 +22,7 @@ export const menuSlice = createSlice({
       state.canPublishOrSaveChanges = true;
       state.subdomainWhenLoaded = null;
       state.isPublished = false;
-      state.isOnFreeTrial = false;
+      state.isOnFreeTrial = "";
     },
     updateMenu(state, action) {
       state.menu = action.payload;
@@ -43,11 +43,21 @@ export const menuSlice = createSlice({
       state.isPublished = action.payload;
     },
     updateIsOnFreeTrial(state, action) {
+      // TODO POSSIBLE ERROR, when enabling first time free triald oesnt work
+      console.log("payload", action.payload);
       const timestampForEnd = action.payload;
-      if (Number(timestampForEnd) < new Date().getTime()) {
-        state.isOnFreeTrial = "";
+      const timeNow = new Date().getTime();
+      console.log("test", Number(timestampForEnd), timeNow);
+      console.log("isLessthan", Number(timestampForEnd) < timeNow);
+
+      if (Number(timestampForEnd) < timeNow) {
+        state.isOnFreeTrial = timestampForEnd;
       } else {
+        console.log("payload set", action.payload);
+
         state.isOnFreeTrial = action.payload;
+
+        console.log("payload set", state.isOnFreeTrial);
       }
     },
   },

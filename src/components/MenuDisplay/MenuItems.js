@@ -36,17 +36,13 @@ function Card({ item }) {
         <div className="h-full p-4 flex flex-col justify-between">
           <div
             className={`fm-title-description-wrapper  
-          ${
-            gs.card.customCss
-              ? gs.client + "-fm-title-description-wrapper"
-              : ""
-          }
+          ${gs.client + "-fm-title-description-wrapper"}
           `}
           >
             {item[gs.card.title] && (
               <p
                 className={`fm-title ${
-                  gs.card.customCss ? gs.client + "-fm-title" : ""
+                  gs.client + "-fm-title"
                 } font-semibold text-2xl`}
               >
                 {item[gs.card.title]}
@@ -55,9 +51,7 @@ function Card({ item }) {
             {item[gs.card.description] && (
               <p
                 className={`fm-description ${
-                  gs.card.customCss
-                    ? gs.client + "-fm-description"
-                    : ""
+                  gs.client + "-fm-description"
                 } text-base text-gray-700`}
               >
                 {item[gs.card.description]}

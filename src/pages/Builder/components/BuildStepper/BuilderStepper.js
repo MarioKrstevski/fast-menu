@@ -105,12 +105,17 @@ export default function BuilderStepper(props) {
               dispatch(updateMenuProStatus(true));
             }}
             enableFreeTrial={() => {
-              setIsModalOpen(false);
               const timestampForTomorrow =
                 new Date().getTime() + 24 * 60 * 60 * 1000;
+
+              console.log(
+                " timestampForTomorrow;",
+                timestampForTomorrow
+              );
               dispatch(
                 updateIsOnFreeTrial(timestampForTomorrow.toString())
               );
+              setIsModalOpen(false);
             }}
           />
         </div>

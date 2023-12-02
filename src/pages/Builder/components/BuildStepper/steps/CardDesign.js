@@ -197,8 +197,6 @@ export default function CardDesign(props) {
       </div>
       <div className="divider h-[1px] bg-slate-400 w-full my-4"></div>
 
-      <div className="my-2 font-bold">Button Action</div>
-
       <div className="flex align-middle items-center gap-2">
         <input
           checked={gs.ordersEnabled}
@@ -220,7 +218,7 @@ export default function CardDesign(props) {
         />
         <label
           htmlFor="ordersEnabled"
-          className={`inline-block font-bold  mt-3 mb-3
+          className={`inline-block font-bold  my-1
           ${
             !(isPro || isOnFreeTrial)
               ? "text-gray-500"
@@ -236,7 +234,7 @@ export default function CardDesign(props) {
           (PRO version only)
         </div>
       )}
-
+      <div className="my-2 font-bold">Button Action</div>
       <Dropdown
         showClear
         value={cardButtonActionOptions.find(

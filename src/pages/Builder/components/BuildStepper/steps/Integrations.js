@@ -62,13 +62,25 @@ export default function Integrations(props) {
   }
 
   function handleTab(e) {
-    if (e.code === "Tab") {
+    const lastChar = e.target.value.at(-1);
+    if (e.code === "Space" && autocompleteRef.current !== "") {
       e.preventDefault();
+      console.log("lastChar", lastChar);
+      // if (autocompleteRef.current !== "") {
       customClassesCodeRef.current.value =
         customClassesCodeRef.current.value + autocompleteRef.current;
 
       autocompleteRef.current = "";
+      // }
     }
+    const spacesAndStuff = /\s+/;
+    if (e.code === "Tab" && spacesAndStuff.test(lastChar)) {
+      e.preventDefault();
+      console.log("lastChar +", lastChar, "+");
+      console.log("we made it");
+      e.target.value += "\t";
+    }
+
     handleCreateSuggestion(e);
   }
   function handleCreateSuggestion(e) {
@@ -132,17 +144,22 @@ export default function Integrations(props) {
         cols="28"
         rows={!(isPro || isOnFreeTrial) ? "2" : "10"}
         value={generateWidgetCodeText()}
+        onChange={() => {}}
       ></textarea>
 
       <div className="font-bold mt-2">Custom CSS</div>
-
+      {(isPro || isOnFreeTrial) && (
+        <div className="text-sm font-normal text-gray-600">
+          (you have stupid intellisence, use space to autocomplete)
+        </div>
+      )}
       {(isPro || isOnFreeTrial) && (
         <div className="css-edit">
           <div className="textarea-wrapper relative bg-white w-full h-[220px] border border-black rounded">
             <textarea
               value={gs.card.customCss || ""}
               name="menuDescription"
-              className={`border-none outline-none bg-transparent absolute p-2 z-30  text-black resize-none  break-all whitespace-pre-line`}
+              className={`border-none outline-none bg-transparent absolute p-2 text-xs z-30  text-black resize-none  break-all whitespace-pre-line`}
               style={{ width: "inherit", height: "inherit" }}
               id="menuDescription"
               cols="28"
@@ -162,7 +179,7 @@ export default function Integrations(props) {
             <div
               id="suggestion"
               ref={suggestionRef}
-              className={`border-none border outline-none bg-transparent absolute p-2  z-20 flex text-gray-400  break-all whitespace-pre-line `}
+              className={`border-none border outline-none bg-transparent absolute p-2 text-xs z-20 flex text-gray-400  break-all whitespace-pre-line `}
               style={{ width: "inherit", height: "inherit" }}
             ></div>
           </div>

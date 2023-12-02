@@ -276,7 +276,7 @@ export default function BasicInfoColors(props) {
           <button
             onClick={handleCheckSubdomainAvailability}
             type="button"
-            className="mt-2 font-semibold text-sm text-white bg-blue-500 active:bg-blue-600 whitespace-nowrap text-center px-2 py-1 rounded border "
+            className="block mt-2 font-semibold text-sm text-white bg-blue-500 active:bg-blue-600 whitespace-nowrap text-center px-2 py-1 rounded border "
           >
             <span> Check availability </span>
             {isSubdomainAvailabilityLoading && (
@@ -288,7 +288,7 @@ export default function BasicInfoColors(props) {
           <button
             onClick={handleChangeDialog}
             type="button"
-            className="mt-2 font-semibold text-xs text-slate-800 bg-red-300 active:bg-blue-600 whitespace-nowrap text-center px-2 py-1 rounded border "
+            className="block mt-2 font-semibold text-xs text-slate-800  border-red-500 active:bg-blue-600 whitespace-nowrap text-center px-2 py-1 rounded border "
           >
             Change subdomain
           </button>

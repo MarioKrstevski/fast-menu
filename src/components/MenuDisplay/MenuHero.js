@@ -6,9 +6,9 @@ export default function MenuHero(props) {
     return;
   }
   return (
-    <div class="h-96 w-full relative">
+    <div className="h-96 w-full relative">
       <div
-        class="h-full bg-no-repeat bg-center bg-cover bg-gray-400"
+        className="h-full bg-no-repeat bg-center bg-cover bg-gray-400"
         data-src=""
         lazy="error"
         style={{
@@ -18,16 +18,16 @@ export default function MenuHero(props) {
 
         // style='background-image: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");'
       ></div>
-      <div class="absolute top-0 left-0 w-full h-full flex justify-center items-center text-white p-4 py-6 lg:py-8">
-        <div class="text-center">
+      <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center text-white p-4 py-6 lg:py-8">
+        <div className="text-center">
           <h1
-            class="text-4xl sm:text-6xl lg:text-7xl leading-none font-extrabold tracking-tight mb-6"
+            className="text-4xl sm:text-6xl lg:text-7xl leading-none font-extrabold tracking-tight mb-6"
             style={{ color: gs.hero.titleColor }}
           >
             {gs.hero.title}
           </h1>
           <p
-            class="max-w-screen-lg text-lg sm:text-2xl sm:leading-10 font-medium"
+            className="max-w-screen-lg text-lg sm:text-2xl sm:leading-10 font-medium"
             style={{ color: gs.hero.subheadingColor }}
           >
             {gs.hero.subheading}

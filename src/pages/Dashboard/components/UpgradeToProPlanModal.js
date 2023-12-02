@@ -25,15 +25,27 @@ export default function UpgradeToProPlanModal({
   const { menus } = user;
 
   const menu = menus.find((menu) => menu.id === menuId);
-  const { subdomain, menuName, isPro, isOnFreeTrial } = menu;
+  // used for modal in BuilderStepper
+
+  const { isOnFreeTrial: isOnFreeTrialFromState } = useSelector(
+    (state) => state.menu
+  );
+
+  const {
+    subdomain,
+    menuName,
+    isPro,
+    // used for modal in Dashboard
+    isOnFreeTrial: isOnFreeTrialFromUser,
+  } = menu;
+
+  const isOnFreeTrial =
+    isOnFreeTrialFromState || isOnFreeTrialFromUser;
+
+  console.log("isOnFreeTrial", isOnFreeTrial);
+
   console.log("enableFreeTrial", menu);
 
-  console.log(
-    "isOnFreeTrial",
-    isOnFreeTrial,
-    typeof isOnFreeTrial,
-    isOnFreeTrial === true
-  );
   function handleFreeTrialSubscription() {
     api
       .be_subscribeMenuToFreeTrial(menuId)
@@ -69,13 +81,13 @@ export default function UpgradeToProPlanModal({
     !ccState.cvv ||
     !ccState.expirationDate;
   return (
-    <div
-      onClick={(e) => {
-        e.stopPropagation();
-      }}
-      className="flex items-center justify-center  w-full m-2 sm:w-2/3 md:w-2/3 lg:w-1/2 lg:min-w-[450px] "
-    >
-      <div className="bg-white p-8 rounded-lg shadow-md max-w-md  w-full">
+    <div className="flex items-center justify-center  w-full m-2 sm:w-2/3 md:w-2/3 lg:w-1/2 lg:min-w-[450px] ">
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        className="bg-white p-8 rounded-lg shadow-md max-w-md  w-full"
+      >
         <div className="mb-4 text-center">
           <div className="font-bold text-xl">Upgrade to PRO</div>
           <div>
@@ -176,7 +188,13 @@ export default function UpgradeToProPlanModal({
           </div>
         </div>
 
-        {!isOnFreeTrial && (
+        {console.log(
+          "a",
+          isPro,
+          isOnFreeTrial !== "",
+          !isPro && !isOnFreeTrial
+        )}
+        {!isPro && !isOnFreeTrial && (
           <div className="free-trial ">
             <button
               disabled={submitIsDisabled}

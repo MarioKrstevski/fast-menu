@@ -30,7 +30,6 @@ export function updateTitle(newTitle) {
 }
 
 export function isALink(string) {
-  console.log("link", string);
   return (
     typeof string === "string" &&
     (string.includes("http") || string.includes("www"))
