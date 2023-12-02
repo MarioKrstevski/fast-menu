@@ -17,6 +17,7 @@ import { AuthProvider } from "react-auth-kit";
 import { RequireAuth } from "react-auth-kit";
 import AllExistingMenus from "./devComponents/AllExistingMenus";
 import AllExistingUsers from "./devComponents/AllExistingUsers";
+import { PrimeReactProvider } from "primereact/api";
 
 export function FastMenu(props) {
   return (
@@ -28,44 +29,47 @@ export function FastMenu(props) {
         cookieSecure={false}
       >
         <Provider store={store}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="menu/:subdomain" element={<Menu />} />
-              <Route path="login" element={<Login />} />
-              <Route path="signup" element={<SignUp />} />
+          <PrimeReactProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="menu/:subdomain" element={<Menu />} />
+                <Route path="login" element={<Login />} />
+                <Route path="signup" element={<SignUp />} />
 
-              <Route
-                path="Dashboard"
-                element={
-                  <RequireAuth loginPath="/login">
-                    <Dashboard />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="builder"
-                element={
-                  <RequireAuth loginPath="/login">
-                    <Builder />
-                  </RequireAuth>
-                }
-              />
+                <Route
+                  path="Dashboard"
+                  element={
+                    <RequireAuth loginPath="/login">
+                      <Dashboard />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="builder"
+                  element={
+                    <RequireAuth loginPath="/login">
+                      <Builder />
+                    </RequireAuth>
+                  }
+                />
 
-              <Route
-                path="/allExistingMenus"
-                element={<AllExistingMenus />}
-              />
-              <Route
-                path="/allExistingUsers"
-                element={<AllExistingUsers />}
-              />
-              <Route
-                path="/"
-                element={<Navigate to={"/dashboard"} />}
-              />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
+                <Route
+                  path="/allExistingMenus"
+                  element={<AllExistingMenus />}
+                />
+                <Route
+                  path="/allExistingUsers"
+                  element={<AllExistingUsers />}
+                />
+                <Route
+                  path="/"
+                  element={<Navigate to={"/dashboard"} />}
+                />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </PrimeReactProvider>
+
           <Toaster />
         </Provider>
       </AuthProvider>

@@ -6,9 +6,15 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { updateMenuChangesCheck } from "../../../../../redux/menuSlice";
 import { api } from "../../../../../api/backend";
 
+import { ConfirmDialog } from "primereact/confirmdialog"; // For <ConfirmDialog /> component
+import { confirmDialog } from "primereact/confirmdialog"; // For confirmDialog method
+import { Button } from "primereact/button";
+import toast from "react-hot-toast";
+
 export default function BasicInfoColors(props) {
   const gs = useSelector((store) => store.globalSettings);
   const { isPro, isOnFreeTrial } = useSelector((store) => store.menu);
+  const [canEditSubdomain, setCanEditSubdomain] = useState(false);
   const dispatch = useDispatch();
 
   const [subdomainAvailability, setSubdomainAvailability] =
@@ -81,6 +87,29 @@ export default function BasicInfoColors(props) {
   useEffect(() => {
     checkSubdomainStructure();
   }, []);
+
+  function handleChangeDialog() {
+    const accept = () => {
+      setCanEditSubdomain(true);
+
+      toast.success("Subdomain updated");
+    };
+
+    confirmDialog({
+      message: (
+        <div>
+          Are you sure you want to change your subdomain?
+          <br />
+          This will affect existing the QR codes
+        </div>
+      ),
+      header: "Confirmation",
+      icon: "fa fa-exclamation-triangle",
+      acceptClassName: "m-1 px-2 py-1",
+      rejectClassName: "m-1 px-2 py-1 border",
+      accept,
+    });
+  }
 
   return (
     <div className="p-2">
@@ -169,6 +198,8 @@ export default function BasicInfoColors(props) {
       {/* --- */}
 
       <div className="field">
+        <ConfirmDialog />
+
         <label
           htmlFor="subdomain"
           className="text-slate-900 font-bold mb-2 mt-3 block"
@@ -183,6 +214,7 @@ export default function BasicInfoColors(props) {
           </p>
           <div>
             <input
+              disabled={!canEditSubdomain}
               value={gs.subdomain}
               onBlur={checkSubdomainStructure}
               onChange={(e) => {
@@ -198,14 +230,20 @@ export default function BasicInfoColors(props) {
               type="text"
               autoComplete="on"
               placeholder="mywebsite"
-              className={`bg-white inline-block h-6   rounded text-slate-800 border p-2 w-11/12 ${
+              className={` inline-block h-6   rounded text-slate-800 border p-2 w-11/12 ${
                 subdomainAvailability === "taken" || !isValidSubdomain
                   ? "border-red-300"
                   : subdomainAvailability === "owned" ||
                     subdomainAvailability === "free"
                   ? "border-green-300"
                   : "border-gray-300"
-              }`}
+              }
+              ${
+                !canEditSubdomain
+                  ? "bg-gray-200 text-slate-400"
+                  : "bg-white"
+              }
+              `}
             />
           </div>
         </div>
@@ -246,6 +284,13 @@ export default function BasicInfoColors(props) {
                 <FontAwesomeIcon icon={faSpinner} />
               </span>
             )}
+          </button>
+          <button
+            onClick={handleChangeDialog}
+            type="button"
+            className="mt-2 font-semibold text-xs text-slate-800 bg-red-300 active:bg-blue-600 whitespace-nowrap text-center px-2 py-1 rounded border "
+          >
+            Change subdomain
           </button>
         </div>
       </div>
