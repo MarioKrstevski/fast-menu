@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,6 +12,7 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [clientName, setClientName] = useState("");
+  const clientNameRef = useRef();
   const [contactName, setContactName] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [signUpError, setsignUpError] = useState("");
@@ -52,6 +53,16 @@ export default function SignUp() {
   };
 
   function handleCheckNameAvailability(e) {
+    console.log("e.", e.target.pattern);
+    console.log("e.", e.target.value);
+    console.log(
+      "test",
+      new RegExp(e.target.pattern).test(e.target.value)
+    );
+
+    if (!new RegExp(e.target.pattern).test(e.target.value)) {
+      return;
+    }
     if (e.target.value === "") {
       return;
     }
@@ -90,6 +101,19 @@ export default function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle the signup logic here
+
+    // validation logic
+
+    // if (clientNameRef.current.validity.patternMismatch) {
+    //   alert("wrong");
+    //   return;
+    // }
+    // if (clientNameRef.current.pattern.test(clientName)) {
+    //   alert("client name wrong");
+
+    //   return;
+    // }
+
     setsignUpError("");
     setsignUpSuccess("");
 
@@ -131,6 +155,7 @@ export default function SignUp() {
       )}
     </button>
   );
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-200">
       <div className="bg-white p-8 rounded shadow-md w-96">
@@ -143,18 +168,26 @@ export default function SignUp() {
               htmlFor="clientName"
               className="block font-medium text-gray-700"
             >
-              Client Name
+              Client Name *
               <small>(all lower case, dashes as space)</small>
             </label>
             <input
               type="text"
               id="clientName"
-              className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:ring focus:ring-indigo-200"
+              ref={clientNameRef}
+              required
+              pattern="^[a-z0-9]+(-[a-z0-9]+)*$"
+              className={`w-full  p-2 invalid:bg-red-100 border rounded border-gray-300 focus:outline-none focus:ring focus:ring-indigo-200
+              `}
               value={clientName}
               placeholder="ex: dominos"
+              onFocus={(e) => {
+                e.target.dataset.touched = "touched";
+              }}
               onChange={handleClientNameChange}
               onBlur={handleCheckNameAvailability}
             />
+
             {clientName !== "" &&
               !isCheckingAvailableClientName &&
               testedName && (
@@ -211,7 +244,7 @@ export default function SignUp() {
             </label>
             <input
               type="text"
-              id="contactName"
+              id="contactNumber"
               className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:ring focus:ring-indigo-200"
               placeholder="077444222"
               value={contactNumber}
@@ -224,13 +257,15 @@ export default function SignUp() {
               htmlFor="email"
               className="block font-medium text-gray-700"
             >
-              Email
+              Email *
             </label>
             <input
               type="email"
               id="email"
-              className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:ring focus:ring-indigo-200"
+              required
+              className="w-full p-2 border invalid:bg-red-100 rounded border-gray-300 focus:outline-none focus:ring focus:ring-indigo-200"
               placeholder="Email"
+              autoComplete="username"
               value={email}
               onChange={handleEmailChange}
             />
@@ -240,11 +275,13 @@ export default function SignUp() {
               htmlFor="password"
               className="block font-medium text-gray-700"
             >
-              Password
+              Password *
             </label>
             <input
               type="password"
               id="password"
+              autoComplete="current-password"
+              required
               className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:ring focus:ring-indigo-200"
               placeholder="Password"
               value={password}

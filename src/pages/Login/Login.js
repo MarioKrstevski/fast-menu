@@ -98,7 +98,9 @@ export default function Login() {
             </label>
             <input
               type="email"
+              autoComplete="email"
               id="email"
+              required
               className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:ring focus:ring-indigo-200"
               placeholder="Email"
               value={email}
@@ -114,7 +116,9 @@ export default function Login() {
             </label>
             <input
               type="password"
+              autoComplete="current-password"
               id="password"
+              required
               className="w-full p-2 border rounded border-gray-300 focus:outline-none focus:ring focus:ring-indigo-200"
               placeholder="Password"
               value={password}
