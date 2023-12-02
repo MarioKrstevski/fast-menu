@@ -38,9 +38,6 @@ export default function BuilderStepper(props) {
     (store) => store.menu
   );
 
-  console.log("menuid", menuId);
-  console.log("menuid", typeof menuId);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   /**

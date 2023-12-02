@@ -37,7 +37,6 @@ export function isALink(string) {
   );
 }
 export function calculateTimeRemaining(timestamp) {
-  console.log("timestamp", timestamp);
   // Get the current date and time
   const currentDate = new Date();
 
@@ -54,6 +53,28 @@ export function calculateTimeRemaining(timestamp) {
   const timeRemainingString = `${hours}h ${minutes}min`;
 
   return timeRemainingString;
+}
+export function addOrReplaceStyle(style) {
+  const styleString = style;
+  const styleId = "fm-custom-style";
+
+  const head =
+    document.head || document.getElementsByTagName("head")[0];
+  const existingStyle = document.getElementById(styleId);
+
+  if (existingStyle) {
+    // If an element with the given ID exists, replace it with the new style tag
+    console.log("existin style yes", existingStyle);
+    existingStyle.remove();
+  }
+
+  // If no element with the given ID is found, append the style tag to the head
+  const styleTag = document.createElement("style");
+  styleTag.type = "text/css";
+  styleTag.appendChild(document.createTextNode(styleString));
+
+  styleTag.id = styleId;
+  head.appendChild(styleTag);
 }
 export function convertDriveLinkToDirect(link) {
   if (!link) {

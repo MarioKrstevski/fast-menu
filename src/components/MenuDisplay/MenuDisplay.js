@@ -14,7 +14,6 @@ export default function MenuDisplay(props) {
   const gs = useSelector((state) => state.globalSettings);
   const isOrderingEnabled =
     gs.card.buttonAction === "cart" && gs.ordersEnabled;
-  console.log("gs", gs, isOrderingEnabled);
   return (
     <div className="w-full relative bg-slate-200 h-full overflow-auto">
       {isOrderingEnabled && (

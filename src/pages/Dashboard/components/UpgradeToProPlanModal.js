@@ -28,6 +28,12 @@ export default function UpgradeToProPlanModal({
   const { subdomain, menuName, isPro, isOnFreeTrial } = menu;
   console.log("enableFreeTrial", menu);
 
+  console.log(
+    "isOnFreeTrial",
+    isOnFreeTrial,
+    typeof isOnFreeTrial,
+    isOnFreeTrial === true
+  );
   function handleFreeTrialSubscription() {
     api
       .be_subscribeMenuToFreeTrial(menuId)
@@ -170,7 +176,7 @@ export default function UpgradeToProPlanModal({
           </div>
         </div>
 
-        {isOnFreeTrial && (
+        {!isOnFreeTrial && (
           <div className="free-trial ">
             <button
               disabled={submitIsDisabled}

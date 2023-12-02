@@ -22,7 +22,9 @@ function Card({ item }) {
     <div className="w-full  sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 px-2 mb-8 md:mb-4">
       <div className="content-card overflow-hidden bg-white rounded shadow flex flex-grow flex-col text-gray-800 text-left h-full">
         {imageLink && (
-          <div className="relative w-full pb-[100%] bg-gray-300">
+          <div
+            className={`relative w-full pb-[100%] bg-gray-300 fm-image-wrapper `}
+          >
             <img
               alt="Item Image"
               className="object-cover absolute h-full w-full inset-0"
@@ -32,14 +34,32 @@ function Card({ item }) {
           </div>
         )}
         <div className="h-full p-4 flex flex-col justify-between">
-          <div>
+          <div
+            className={`fm-title-description-wrapper  
+          ${
+            gs.card.customCss
+              ? gs.client + "-fm-title-description-wrapper"
+              : ""
+          }
+          `}
+          >
             {item[gs.card.title] && (
-              <p className="title font-semibold text-2xl">
+              <p
+                className={`fm-title ${
+                  gs.card.customCss ? gs.client + "-fm-title" : ""
+                } font-semibold text-2xl`}
+              >
                 {item[gs.card.title]}
               </p>
             )}
             {item[gs.card.description] && (
-              <p className="description text-base text-gray-700">
+              <p
+                className={`fm-description ${
+                  gs.card.customCss
+                    ? gs.client + "-fm-description"
+                    : ""
+                } text-base text-gray-700`}
+              >
                 {item[gs.card.description]}
               </p>
             )}
@@ -175,12 +195,9 @@ export default function MenuItems(props) {
     filters = Object.keys(groupedByFilter);
   }
 
-  console.log("filters", filters);
-
   function updateFilter(newFilter) {
     setCurrentFilter(newFilter);
   }
-  console.log("menu", menu);
 
   return (
     <div
