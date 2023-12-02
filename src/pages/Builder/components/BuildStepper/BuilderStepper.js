@@ -33,6 +33,8 @@ const steps = [
 export default function BuilderStepper(props) {
   const gs = useSelector((state) => state.globalSettings);
   const dispatch = useDispatch();
+  const [isSyncingExistingItems, setIsSyncingExistingItems] =
+    useState(false);
   const navigate = useNavigate();
   const { menuId, menu, isPro, isOnFreeTrial } = useSelector(
     (store) => store.menu
@@ -61,6 +63,7 @@ export default function BuilderStepper(props) {
    * into the db and then get here to display on the UI
    */
   function handleGetUpdatedSheetItems() {
+    setIsSyncingExistingItems(true);
     api
       .be_syncExistingSheets(menuId)
       .then((res) => {
@@ -69,6 +72,9 @@ export default function BuilderStepper(props) {
       })
       .catch((err) => {
         console.log("err", err);
+      })
+      .finally(() => {
+        setIsSyncingExistingItems(false);
       });
   }
 
@@ -140,7 +146,10 @@ export default function BuilderStepper(props) {
                 className="button w-8 is-small mr-2 border rounded "
               >
                 <span title="Sync Spreadsheet">
-                  <FontAwesomeIcon icon={faSyncAlt} />
+                  <FontAwesomeIcon
+                    icon={faSyncAlt}
+                    spin={isSyncingExistingItems}
+                  />
                 </span>
               </button>
             </span>
