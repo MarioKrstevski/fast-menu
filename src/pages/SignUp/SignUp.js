@@ -176,7 +176,7 @@ export default function SignUp() {
               id="clientName"
               ref={clientNameRef}
               required
-              pattern="^[a-z0-9]+(-[a-z0-9]+)*$"
+              pattern="^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
               className={`w-full  p-2 invalid:bg-red-100 border rounded border-gray-300 focus:outline-none focus:ring focus:ring-indigo-200
               `}
               value={clientName}
