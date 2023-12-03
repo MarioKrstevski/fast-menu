@@ -19,7 +19,11 @@ function Card({ item }) {
   const imageLink = convertDriveLinkToDirect(item[gs.card.image]);
 
   return (
-    <div className="w-full  sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 px-2 mb-8 md:mb-4">
+    <div
+      className={`card  ${
+        gs.client + "-fm-card"
+      } w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 px-2 mb-8 md:mb-4`}
+    >
       <div className="content-card overflow-hidden bg-white rounded shadow flex flex-grow flex-col text-gray-800 text-left h-full">
         {imageLink && (
           <div
@@ -203,7 +207,12 @@ export default function MenuItems(props) {
       {!menu && <div className="text-center my-8">Loading Menu</div>}
 
       {menu && menu.length > 0 && (
-        <div className="main w-[90%] mx-auto sm:w-full ">
+        <div
+          id={gs.client + "-fm-main-items"}
+          className={`main ${
+            gs.client + "-fm-main"
+          } w-[90%] mx-auto sm:w-full `}
+        >
           {filters && filters.length > 1 && (
             <div className="filters flex flex-nowrap  overflow-y-auto py-2 px-2  mb-2 sm:flex-wrap ">
               <Pill

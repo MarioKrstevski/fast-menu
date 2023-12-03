@@ -2,6 +2,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 import { updateSetting } from "../../../../../redux/globalSettingsSlice";
 import { addOrReplaceStyle } from "../../../../../helpers/helperFunctions";
+function collectFmClasses(element, classes, client) {
+  if (!element || !element.classList) {
+    return;
+  }
+
+  // Check the element's own classes
+  Array.from(element.classList).forEach((className) => {
+    if (className.startsWith(client + "-fm-")) {
+      classes.add(className);
+    }
+  });
+
+  // Recursively check the children
+  Array.from(element.children).forEach((child) => {
+    collectFmClasses(child, classes, client);
+  });
+}
 
 export default function Integrations(props) {
   const gs = useSelector((store) => store.globalSettings);
@@ -11,15 +28,21 @@ export default function Integrations(props) {
   const autocompleteRef = useRef("");
   const dispatch = useDispatch();
 
-  const classes = [
-    "fm-title-description-wrapper",
-    "fm-title",
-    "fm-description",
-  ];
-
-  const customizedClasses = classes.map(
-    (c) => "." + gs.client + "-" + c
+  const mainRef = document.getElementById(
+    gs.client + "-fm-main-items"
   );
+  const allFmClasses = new Set();
+  collectFmClasses(mainRef, allFmClasses, gs.client);
+  const fmClasses = Array.from(allFmClasses);
+
+  const classes = fmClasses;
+  // const classes = [
+  //   "fm-title-description-wrapper",
+  //   "fm-title",
+  //   "fm-description",
+  // ];
+
+  const customizedClasses = [...classes];
   customizedClasses.sort((a, b) => a.length - b.length);
   // console.log("customizedClasses", customizedClasses);
 
@@ -208,8 +231,10 @@ export default function Integrations(props) {
         <div className="border p-1 text-slate-700">
           <div className="mb-2"> Available classes are:</div>
           <ul className="text-sm list-disc pl-4 ">
-            {customizedClasses.map((c) => (
-              <li className="underline mb-1">{c}</li>
+            {customizedClasses.map((c, idx) => (
+              <li key={idx} className="underline mb-1">
+                {c}
+              </li>
             ))}
           </ul>
         </div>
