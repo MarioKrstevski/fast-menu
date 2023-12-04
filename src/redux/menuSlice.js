@@ -16,7 +16,7 @@ export const menuSlice = createSlice({
   reducers: {
     clearMenuInfo(state) {
       // used when loading dashboard, to guarantee clean setup for next menu
-      state.menu = [];
+      state.menu = null;
       state.menuId = "";
       state.isPro = false;
       state.canPublishOrSaveChanges = true;

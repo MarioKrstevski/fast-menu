@@ -29,6 +29,20 @@ export function updateTitle(newTitle) {
   document.title = newTitle;
 }
 
+export function groupBy(array, key) {
+  return array.reduce((acc, item) => {
+    const keyValues = item[key]
+      .split(",")
+      .map((value) => value.trim());
+
+    keyValues.forEach((value) => {
+      acc[value] = acc[value] || [];
+      acc[value].push(item);
+    });
+
+    return acc;
+  }, {});
+}
 export function isALink(string) {
   return (
     typeof string === "string" &&
