@@ -11,7 +11,7 @@ import { store } from "./redux/store";
 import Builder from "./pages/Builder/Builder";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Login/Login";
-import NotFound from "./pages/NotFound.js/NotFound";
+import NotFound from "./pages/NotFound/NotFound";
 import SignUp from "./pages/SignUp/SignUp";
 import { AuthProvider } from "react-auth-kit";
 import { RequireAuth } from "react-auth-kit";
