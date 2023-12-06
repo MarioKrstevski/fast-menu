@@ -87,11 +87,9 @@ export default function MenuItems(props) {
           {menu && (
             <div className="items  flex flex-wrap">
               {cf === "All"
-                ? menu
-                    .slice(0, 5)
-                    .map((item) => (
-                      <Card key={item._uid} item={item} />
-                    ))
+                ? menu.map((item) => (
+                    <Card key={item._uid} item={item} />
+                  ))
                 : groupedByFilter[cf].map((item) => (
                     <Card key={item._uid} item={item} />
                   ))}
