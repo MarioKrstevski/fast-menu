@@ -176,7 +176,11 @@ export default function CardDesign(props) {
         className="w-full md:w-14rem"
       />
       {/* ---- */}
-      <div className="my-2 font-bold">Unavailable</div>
+      <div className=" font-bold mt-2">Unavailable</div>
+      <div className="text-xs mb-2 text-slate-600">
+        (use a column that has TRUE for those that should be
+        unavailable)
+      </div>
       <Dropdown
         showClear
         value={allFields.find(
@@ -196,7 +200,10 @@ export default function CardDesign(props) {
         className="w-full md:w-14rem"
       />
       {/* ---- */}
-      <div className="my-2 font-bold">Hidden</div>
+      <div className=" font-bold mt-2">Hidden</div>
+      <div className="text-xs mb-2 text-slate-600">
+        (use a column that has TRUE for those that should be hidden)
+      </div>
       <Dropdown
         showClear
         value={allFields.find(

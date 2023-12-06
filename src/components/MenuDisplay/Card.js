@@ -24,17 +24,13 @@ export default function Card({ item }) {
 
   function matchesUnavailableLogic(value) {
     const valuesThatMakesItHide = [
-      0, // useful for stocked items (if they are out of items), will actualy return undefined more often
-      "0",
-      undefined, // usefull because datasheets doesnt return false, 0, etc so it will be undefined on our part
+      // undefined, // usefull because datasheets doesnt return false, 0, etc so it will be undefined on our part
       Boolean(value),
-      "hide",
-      "yes",
-      "true",
     ];
     return valuesThatMakesItHide.includes(value);
   }
 
+  console.log("item", item[gs.card.unavailable]);
   // matchesUnavailableLogic(item[gs.card.unavailable])
   if (matchesHiddenLogic(item[gs.card.hidden])) {
     return null;
