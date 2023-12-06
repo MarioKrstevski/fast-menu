@@ -16,9 +16,11 @@ export default function CardDesign(props) {
   const dispatch = useDispatch();
 
   const allFields = menu.length
-    ? Object.keys(menu[0]).map((cf) => ({
-        name: cf,
-      }))
+    ? Object.keys(menu[0])
+        .filter((f) => !f.startsWith("_"))
+        .map((cf) => ({
+          name: cf,
+        }))
     : [];
 
   const allFieldThatAreLinks = allFields.filter((field) => {
