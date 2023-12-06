@@ -4,10 +4,7 @@ import {
   isALink,
 } from "../../helpers/helperFunctions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faExternalLink,
-  faLink,
-} from "@fortawesome/free-solid-svg-icons";
+import { faExternalLink } from "@fortawesome/free-solid-svg-icons";
 import { addItem } from "../../redux/shoppingCartSlice";
 export default function Card({ item }) {
   const gs = useSelector((store) => store.globalSettings);
@@ -15,13 +12,50 @@ export default function Card({ item }) {
 
   const imageLink = convertDriveLinkToDirect(item[gs.card.image]);
 
+  function matchesHiddenLogic(value) {
+    const valuesThatMakesItHide = [
+      Boolean(value),
+      "hide",
+      "yes",
+      "true",
+    ];
+    return valuesThatMakesItHide.includes(value);
+  }
+
+  function matchesUnavailableLogic(value) {
+    const valuesThatMakesItHide = [
+      Boolean(value),
+      "hide",
+      "yes",
+      "true",
+    ];
+    return valuesThatMakesItHide.includes(value);
+  }
+
+  if (matchesHiddenLogic(item[gs.card.hidden])) {
+    return null;
+  }
   return (
     <div
       className={`card  ${
         gs.client + "-fm-card"
-      } w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 px-2 mb-8 md:mb-4`}
+      } w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 px-2 mb-8 md:mb-4
+      ${
+        matchesUnavailableLogic(item[gs.card.unavailable])
+          ? "pointer-events-none select-none"
+          : ""
+      }
+      `}
     >
-      <div className="content-card overflow-hidden bg-white rounded shadow flex flex-grow flex-col text-gray-800 text-left h-full">
+      <div
+        className={` content-card overflow-hidden  rounded shadow flex flex-grow flex-col text-gray-800 text-left h-full
+      ${
+        matchesUnavailableLogic(item[gs.card.unavailable])
+          ? "bg-gray-100 text-slate-400"
+          : "bg-white "
+      }
+      `}
+      >
         {imageLink && (
           <div
             className={`relative w-full pb-[100%] bg-gray-300 fm-image-wrapper `}
@@ -53,7 +87,13 @@ export default function Card({ item }) {
               <p
                 className={`fm-description ${
                   gs.client + "-fm-description"
-                } text-base text-gray-700`}
+                } text-base
+                ${
+                  matchesUnavailableLogic(item[gs.card.unavailable])
+                    ? " text-slate-400"
+                    : "text-gray-700"
+                }
+                `}
               >
                 {item[gs.card.description]}
               </p>
@@ -117,37 +157,40 @@ export default function Card({ item }) {
                 </ul>
               )}
             {gs.card.buttonAction === "no action" && null}
-            {gs.card.buttonAction === "cart" && gs.ordersEnabled && (
-              <button
-                onClick={() => {
-                  console.log("added Item", item);
-                  dispatch(addItem(item));
-                }}
-                className="w-full mt-4 bg-blue-500 hover:bg-blue-700 font-medium py-2 px-4 rounded text-center hover:shadow-md transition-shadow duration-300 focus:outline-none"
-                // style="background-color: rgb(39, 175, 96); color: rgb(255, 255, 255);"
-                style={{
-                  backgroundColor: gs.card.buttonBgColor,
-                  color: gs.card.buttonTextColor,
-                }}
-              >
-                {gs.card.buttonText}
-              </button>
-            )}
+            {gs.card.buttonAction === "cart" &&
+              !matchesHiddenLogic(item[gs.card.unavailable]) &&
+              gs.ordersEnabled && (
+                <button
+                  onClick={() => {
+                    console.log("added Item", item);
+                    dispatch(addItem(item));
+                  }}
+                  className="w-full mt-4 bg-blue-500 hover:bg-blue-700 font-medium py-2 px-4 rounded text-center hover:shadow-md transition-shadow duration-300 focus:outline-none"
+                  // style="background-color: rgb(39, 175, 96); color: rgb(255, 255, 255);"
+                  style={{
+                    backgroundColor: gs.card.buttonBgColor,
+                    color: gs.card.buttonTextColor,
+                  }}
+                >
+                  {gs.card.buttonText}
+                </button>
+              )}
 
-            {gs.card.buttonAction === "link" && (
-              <a
-                target="_blank"
-                href={item[gs.card.buttonLink]}
-                className="w-full mt-4 block cursor-pointer bg-blue-500 hover:bg-blue-700 font-medium py-2 px-4 rounded text-center hover:shadow-md transition-shadow duration-300 focus:outline-none"
-                // style="background-color: rgb(39, 175, 96); color: rgb(255, 255, 255);"
-                style={{
-                  backgroundColor: gs.card.buttonBgColor,
-                  color: gs.card.buttonTextColor,
-                }}
-              >
-                {gs.card.buttonText}
-              </a>
-            )}
+            {gs.card.buttonAction === "link" &&
+              !matchesHiddenLogic(item[gs.card.unavailable]) && (
+                <a
+                  target="_blank"
+                  href={item[gs.card.buttonLink]}
+                  className="w-full mt-4 block cursor-pointer bg-blue-500 hover:bg-blue-700 font-medium py-2 px-4 rounded text-center hover:shadow-md transition-shadow duration-300 focus:outline-none"
+                  // style="background-color: rgb(39, 175, 96); color: rgb(255, 255, 255);"
+                  style={{
+                    backgroundColor: gs.card.buttonBgColor,
+                    color: gs.card.buttonTextColor,
+                  }}
+                >
+                  {gs.card.buttonText}
+                </a>
+              )}
           </div>
         </div>
       </div>

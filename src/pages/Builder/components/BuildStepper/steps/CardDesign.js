@@ -176,6 +176,46 @@ export default function CardDesign(props) {
         className="w-full md:w-14rem"
       />
       {/* ---- */}
+      <div className="my-2 font-bold">Unavailable</div>
+      <Dropdown
+        showClear
+        value={allFields.find(
+          (field) => field.name === gs.card.unavailable
+        )}
+        onChange={(e) => {
+          dispatch(
+            updateSetting({
+              field: "card.unavailable",
+              value: e.value ? e.value.name : "",
+            })
+          );
+        }}
+        options={allFields}
+        optionLabel="name"
+        placeholder="Select unavailable decider"
+        className="w-full md:w-14rem"
+      />
+      {/* ---- */}
+      <div className="my-2 font-bold">Hidden</div>
+      <Dropdown
+        showClear
+        value={allFields.find(
+          (field) => field.name === gs.card.hidden
+        )}
+        onChange={(e) => {
+          dispatch(
+            updateSetting({
+              field: "card.hidden",
+              value: e.value ? e.value.name : "",
+            })
+          );
+        }}
+        options={allFields}
+        optionLabel="name"
+        placeholder="Select hidden decider"
+        className="w-full md:w-14rem"
+      />
+      {/* ---- */}
       <div className="my-2 font-bold">Custom Fields</div>
       <div className="settings-field flex justify-content-center">
         <MultiSelect
