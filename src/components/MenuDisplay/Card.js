@@ -24,6 +24,7 @@ export default function Card({ item }) {
 
   function matchesUnavailableLogic(value) {
     const valuesThatMakesItHide = [
+      0, // useful for stocked items (if they are out of items)
       Boolean(value),
       "hide",
       "yes",
