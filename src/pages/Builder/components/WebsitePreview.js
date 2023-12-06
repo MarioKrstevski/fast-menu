@@ -6,13 +6,13 @@ import {
   updateFavicon,
   updateTitle,
 } from "../../../helpers/helperFunctions";
+import { Helmet } from "react-helmet";
 
 export default function WebsitePreview(props) {
-  // Example: Update favicon with a new URL
   const gs = useSelector((state) => state.globalSettings);
 
-  updateFavicon(gs.faviconURL);
-  updateTitle(gs.websiteTitle);
+  // updateFavicon(gs.faviconURL);
+  // updateTitle(gs.websiteTitle);
 
   console.log("test");
   //add css
@@ -20,8 +20,27 @@ export default function WebsitePreview(props) {
     addOrReplaceStyle(gs.card.appliedCustomCss);
   }, []);
 
+  console.log("gs.", gs.faviconURL);
   return (
     <div className="h-full w-full overflow-hidden">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta
+          name="description"
+          content={"The Menu for " + gs.subdomain}
+        />
+        <title>
+          {gs.websiteTitle ? gs.websiteTitle : "The Menu"}
+        </title>
+        {console.log("gggs", gs.faviconURL)}
+
+        <link
+          rel="icon"
+          data-testing="wassap"
+          type="image/png"
+          href={gs.faviconURL}
+        ></link>
+      </Helmet>
       <MenuDisplay />
     </div>
   );

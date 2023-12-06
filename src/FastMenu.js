@@ -1,4 +1,6 @@
 import { Toaster } from "react-hot-toast";
+import { Helmet } from "react-helmet";
+
 import {
   BrowserRouter,
   Navigate,
@@ -22,6 +24,14 @@ import { PrimeReactProvider } from "primereact/api";
 export function FastMenu(props) {
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta
+          name="description"
+          content="Fast Menu enables you to quickly generate a digital menu that works everywhere"
+        />
+        <title>Fast Menu App</title>
+      </Helmet>
       <AuthProvider
         authType={"localstorage"}
         authName={"_auth"}
