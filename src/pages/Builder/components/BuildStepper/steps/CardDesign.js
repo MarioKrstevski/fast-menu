@@ -28,6 +28,7 @@ export default function CardDesign(props) {
       return true;
     }
   });
+  const cardShapeOptions = [{ name: "card" }, { name: "regular" }];
   const customFields =
     gs.card.customFields === ""
       ? []
@@ -94,6 +95,26 @@ export default function CardDesign(props) {
       {/* ---- */}
 
       <div className="divider h-[1px] bg-slate-400 w-full my-4"></div>
+      <div className="my-2 font-bold">Items Design</div>
+      <Dropdown
+        showClear
+        value={cardShapeOptions.find(
+          (field) => field.name === gs.card.shape
+        )}
+        onChange={(e) => {
+          dispatch(
+            updateSetting({
+              field: "card.shape",
+              value: e.value ? e.value.name : "",
+            })
+          );
+        }}
+        options={cardShapeOptions}
+        optionLabel="name"
+        placeholder="Select shape"
+        className="w-full md:w-14rem"
+      />
+      {/* ---- */}
 
       <div className="my-2 font-bold">Image</div>
       <Dropdown

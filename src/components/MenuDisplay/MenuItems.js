@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { groupBy } from "../../helpers/helperFunctions";
 import Card from "./Card";
+import RegularItem from "./RegularItem";
 
 function Pill({ label, active, updateFilter }) {
   return (
@@ -52,6 +53,14 @@ export default function MenuItems(props) {
     cf = "All";
   }
 
+  let itemsToShow;
+
+  if (cf === "All") {
+    itemsToShow = menu;
+  } else {
+    itemsToShow = groupedByFilter[cf];
+  }
+
   return (
     <div
       className="min-h-full pt-4 max-w-full overflow-hidden"
@@ -59,7 +68,7 @@ export default function MenuItems(props) {
         backgroundColor: gs.theme.backgroundColor,
       }}
     >
-      {menu && menu.length > 0 && (
+      {itemsToShow && itemsToShow.length > 0 && (
         <div
           id={gs.client + "-fm-main-items"}
           className={`main ${
@@ -84,16 +93,24 @@ export default function MenuItems(props) {
             </div>
           )}
 
-          {menu && (
-            <div className="items  flex flex-wrap">
-              {cf === "All"
-                ? menu.map((item) => (
-                    <Card key={item._uid} item={item} />
-                  ))
-                : groupedByFilter[cf].map((item) => (
+          {itemsToShow && (
+            <>
+              {(gs.card.shape === "card" || !gs.card.shape) && (
+                <div className="items  flex flex-wrap">
+                  {itemsToShow.map((item) => (
                     <Card key={item._uid} item={item} />
                   ))}
-            </div>
+                </div>
+              )}
+
+              {gs.card.shape === "regular" && (
+                <div className="items  flex flex-wrap flex-col lg:flex-row ">
+                  {itemsToShow.map((item) => (
+                    <RegularItem key={item._uid} item={item} />
+                  ))}
+                </div>
+              )}
+            </>
           )}
         </div>
       )}
