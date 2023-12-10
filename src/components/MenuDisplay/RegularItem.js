@@ -38,10 +38,10 @@ export default function RegularItem({ item }) {
   console.log("item", item);
   return (
     <div className="regular w-full lg:w-1/2 pl-2">
-      <div className="item-content p-2 flex  border border-black bg-white w-[98%] mb-2">
-        <div className="image w-24 h-12 mr-2 ">
+      <div className="item-content p-2 flex  border  rounded border-black bg-white w-[98%] mb-2">
+        <div className="image w-24 h-12 mr-2 rounded">
           <img
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover rounded"
             src={item[gs.card.image]}
             alt="Food Image"
           />
