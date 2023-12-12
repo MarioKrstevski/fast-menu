@@ -16,6 +16,12 @@ code {
     monospace;
 }
 
+/* Signup Invalid Override */
+
+#email:user-invalid, #clientName:user-invalid {
+  background: rgb(251, 178, 178)
+}
+
 
 /* Override for PrimeReact css */
 

@@ -177,7 +177,7 @@ export default function SignUp() {
               ref={clientNameRef}
               required
               pattern="^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
-              className={`w-full  p-2 invalid:bg-red-100 border rounded border-gray-300 focus:outline-none focus:ring focus:ring-indigo-200
+              className={`w-full  p-2  border rounded border-gray-300 focus:outline-none focus:ring focus:ring-indigo-200
               `}
               value={clientName}
               placeholder="ex: dominos"
@@ -263,7 +263,7 @@ export default function SignUp() {
               type="email"
               id="email"
               required
-              className="w-full p-2 border invalid:bg-red-100 rounded border-gray-300 focus:outline-none focus:ring focus:ring-indigo-200"
+              className="w-full p-2 border  rounded border-gray-300 focus:outline-none focus:ring focus:ring-indigo-200"
               placeholder="Email"
               autoComplete="username"
               value={email}
