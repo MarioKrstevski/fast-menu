@@ -15,13 +15,24 @@ export default function CardDesign(props) {
 
   const dispatch = useDispatch();
 
+  const allHeaders = menu.reduce((acc, item) => {
+    Object.keys(item).forEach((key) => {
+      if (!acc.includes(key)) {
+        acc.push(key);
+      }
+    });
+    return acc;
+  }, []);
   const allFields = menu.length
-    ? Object.keys(menu[0])
+    ? allHeaders
         .filter((f) => !f.startsWith("_"))
         .map((cf) => ({
           name: cf,
         }))
     : [];
+
+  console.log("prv item", menu[0]);
+  console.log("allFields", allFields);
 
   const allFieldThatAreLinks = allFields.filter((field) => {
     if (isALink(menu[0][field.name])) {
@@ -196,7 +207,33 @@ export default function CardDesign(props) {
         placeholder="Select caption"
         className="w-full md:w-14rem"
       />
+
       {/* ---- */}
+      <div className="my-2 font-bold">Custom Fields</div>
+      <div className="settings-field flex justify-content-center">
+        <MultiSelect
+          value={customFields}
+          onChange={(e) => {
+            // setSelectedCities(e.value);
+            dispatch(
+              updateSetting({
+                field: "card.customFields",
+                value: e.value.map((item) => item.name).join(","),
+              })
+            );
+          }}
+          options={allFields}
+          optionLabel="name"
+          display="chip"
+          placeholder="Add Custom Fields"
+          maxSelectedLabels={allFields.length}
+          className="w-full border border-slate-800 p-1"
+        />
+      </div>
+      {/* ---- */}
+      <div className="divider h-[1px] bg-slate-400 w-full my-4"></div>
+
+      {/* --- */}
       <div className=" font-bold mt-2">Unavailable</div>
       <div className="text-xs mb-2 text-slate-600">
         (use a column that has TRUE for those that should be
@@ -243,29 +280,9 @@ export default function CardDesign(props) {
         placeholder="Select hidden decider"
         className="w-full md:w-14rem"
       />
-      {/* ---- */}
-      <div className="my-2 font-bold">Custom Fields</div>
-      <div className="settings-field flex justify-content-center">
-        <MultiSelect
-          value={customFields}
-          onChange={(e) => {
-            // setSelectedCities(e.value);
-            dispatch(
-              updateSetting({
-                field: "card.customFields",
-                value: e.value.map((item) => item.name).join(","),
-              })
-            );
-          }}
-          options={allFields}
-          optionLabel="name"
-          display="chip"
-          placeholder="Add Custom Fields"
-          maxSelectedLabels={allFields.length}
-          className="w-full border border-slate-800 p-1"
-        />
-      </div>
+      {/* --- */}
       <div className="divider h-[1px] bg-slate-400 w-full my-4"></div>
+      {/* --- */}
 
       <div className="flex align-middle items-center gap-2">
         <input

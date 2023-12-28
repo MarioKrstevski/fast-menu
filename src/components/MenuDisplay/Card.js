@@ -64,7 +64,7 @@ export default function Card({ item }) {
               alt="Item Image"
               className="object-cover absolute h-full w-full inset-0"
               src={imageLink}
-              lazy="loaded"
+              loading="lazy"
             />
           </div>
         )}
@@ -112,7 +112,7 @@ export default function Card({ item }) {
               </p>
             )}
             {gs.card.customFields.length > 0 &&
-              gs.card.customFields.split(",").length > 0 && (
+              String(gs.card.customFields).split(",").length > 0 && (
                 <ul
                   className={`
                   ${
@@ -124,36 +124,39 @@ export default function Card({ item }) {
                   }
                   `}
                 >
-                  {gs.card.customFields.split(",").map((cf) => {
-                    if (!item[cf]) {
-                      return null;
-                    }
+                  {gs.card.customFields
+                    .toString()
+                    .split(",")
+                    .map((cf) => {
+                      if (!item[cf]) {
+                        return null;
+                      }
 
-                    return (
-                      <li
-                        key={cf}
-                        className={
-                          `${cf} custom-field ` +
-                          "flex justify-between "
-                        }
-                      >
-                        <span className="font-bold">{cf}</span>
-                        <span className="text-right">
-                          {isALink(item[cf]) ? (
-                            <a href={item[cf]}>
-                              <FontAwesomeIcon
-                                className="text-blue-500"
-                                icon={faExternalLink}
-                              />
-                            </a>
-                          ) : (
-                            item[cf]
-                          )}
-                          {cf === "Price" && item.Currency}
-                        </span>
-                      </li>
-                    );
-                  })}
+                      return (
+                        <li
+                          key={cf}
+                          className={
+                            `${cf} custom-field ` +
+                            "flex justify-between "
+                          }
+                        >
+                          <span className="font-bold">{cf}</span>
+                          <span className="text-right">
+                            {isALink(item[cf]) ? (
+                              <a href={item[cf]}>
+                                <FontAwesomeIcon
+                                  className="text-blue-500"
+                                  icon={faExternalLink}
+                                />
+                              </a>
+                            ) : (
+                              item[cf]
+                            )}
+                            {cf === "Price" && item.Currency}
+                          </span>
+                        </li>
+                      );
+                    })}
                 </ul>
               )}
             {gs.card.buttonAction === "no action" && null}

@@ -44,6 +44,7 @@ export default function RegularItem({ item }) {
             className="w-full h-full object-cover rounded"
             src={item[gs.card.image]}
             alt="Food Image"
+            loading="lazy"
           />
         </div>
         <div className="info w-full">

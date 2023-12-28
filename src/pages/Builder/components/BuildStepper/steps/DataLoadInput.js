@@ -120,7 +120,7 @@ export default function DataLoadInput(props) {
           onChange={validateSheetURL}
           placeholder="Insert your spreadsheet url or id"
           autoFocus={"autofocus"}
-          className={`input is-success is-large w-[94%] placeholder-gray-500 border rounded p-2  ${
+          className={`input is-success  is-large w-[94%] placeholder-gray-500 border rounded p-2  ${
             isSuccesfullyConnected
               ? "border-green-400"
               : "border-black "
@@ -168,11 +168,14 @@ export default function DataLoadInput(props) {
         )}
       </div>
       <div className="my-4 break-words">
-        <label htmlFor="spreadsheetupload" className="my-1 block">
+        <label
+          htmlFor="spreadsheetupload"
+          className="my-1 block cursor-pointer"
+        >
           Upload csv file from device
         </label>
         <input
-          className="w-full"
+          className="w-full border inline-block max-w-[260px] cursor-pointer"
           id="spreadsheetupload"
           type="file"
           name="csvFile"

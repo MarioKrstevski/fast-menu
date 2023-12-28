@@ -1,6 +1,7 @@
 import {
   faAngleLeft,
   faAngleRight,
+  faSave,
   faSyncAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -35,6 +36,7 @@ export default function BuilderStepper(props) {
   const dispatch = useDispatch();
   const [isSyncingExistingItems, setIsSyncingExistingItems] =
     useState(false);
+  const [isSavingSettings, setIsSavingSettings] = useState(false);
   const navigate = useNavigate();
   const { menuId, menu, isPro, isOnFreeTrial } = useSelector(
     (store) => store.menu
@@ -78,6 +80,21 @@ export default function BuilderStepper(props) {
       });
   }
 
+  /**
+   * Saves the global settings to the db
+   */
+  function handleSaveGlobalSettings() {
+    setIsSavingSettings(true);
+    api
+      .be_saveGlobalSettings(menuId, gs)
+      .then((res) => {
+        setTimeout(() => {
+          setIsSavingSettings(false);
+        }, 1000);
+      })
+      .catch((err) => {});
+  }
+
   //load menu if spreadSheetURL is setup and they haven't been loaded before
   useEffect(() => {
     console.log("this executes", menuId);
@@ -97,7 +114,7 @@ export default function BuilderStepper(props) {
   }
 
   return (
-    <div className="w-[480px] overflow-x-hidden border-r-2  border-r-gray-400 ">
+    <div className="w-[520px] overflow-x-hidden border-r-2  border-r-gray-400 ">
       {isModalOpen && !isPro && (
         <div
           onClick={() => {
@@ -134,25 +151,46 @@ export default function BuilderStepper(props) {
           <div className="text-lg font-bold w-[120px] ">
             {steps[currentStep - 1].title}
           </div>
-          <div className="flex items-center ">
-            <span
-              data-label="Sync spreadsheet"
-              className="is-primary is-left is-medium b-tooltip"
-              style={{ transitionDelay: "0ms" }}
-            >
-              <button
-                onClick={handleGetUpdatedSheetItems}
-                type="button"
-                className="button w-8 is-small mr-2 border rounded "
+          <div className="flex items-center">
+            <div className="icons flex flex-col ">
+              <span
+                data-label="Sync spreadsheet"
+                className="is-primary is-left is-medium b-tooltip mb-2"
+                style={{ transitionDelay: "0ms" }}
               >
-                <span title="Sync Spreadsheet">
-                  <FontAwesomeIcon
-                    icon={faSyncAlt}
-                    spin={isSyncingExistingItems}
-                  />
-                </span>
-              </button>
-            </span>
+                <button
+                  onClick={handleGetUpdatedSheetItems}
+                  type="button"
+                  className="button w-8 is-small mr-2 border rounded "
+                >
+                  <span title="Sync Spreadsheet">
+                    <FontAwesomeIcon
+                      icon={faSyncAlt}
+                      spin={isSyncingExistingItems}
+                    />
+                  </span>
+                </button>
+              </span>
+              <span
+                data-label="Save changes"
+                className="is-primary is-left is-medium b-tooltip"
+                style={{ transitionDelay: "0ms" }}
+              >
+                <button
+                  onClick={handleSaveGlobalSettings}
+                  type="button"
+                  className="button w-8 is-small mr-2 border rounded "
+                >
+                  <span title="Save changes">
+                    <FontAwesomeIcon
+                      icon={faSave}
+                      spin={isSavingSettings}
+                    />
+                  </span>
+                </button>
+              </span>
+            </div>
+
             {!(isPro || isOnFreeTrial) && (
               <button
                 onClick={() => {

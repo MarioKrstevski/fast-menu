@@ -203,7 +203,7 @@ export default function SignUp() {
                   <span>
                     {isClientNameAvailable ? (
                       <span>
-                        <i>
+                        <i className="mr-2">
                           <b>{testedName}</b>
                         </i>
                         is good to go

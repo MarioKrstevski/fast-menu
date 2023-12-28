@@ -31,8 +31,9 @@ export function updateTitle(newTitle) {
 
 export function groupBy(array, key) {
   return array.reduce((acc, item) => {
-    const keyValues = item[key]
+    const keyValues = String(item[key])
       .split(",")
+      .filter((value) => value !== "undefined")
       .map((value) => value.trim());
 
     keyValues.forEach((value) => {

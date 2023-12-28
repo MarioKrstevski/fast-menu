@@ -31,6 +31,11 @@ export function FastMenu(props) {
           content="Fast Menu enables you to quickly generate a digital menu that works everywhere"
         />
         <title>Fast Menu App</title>
+        <link
+          rel="icon"
+          type="image/png"
+          href="https://img.icons8.com/?size=64&id=104302&format=png"
+        />
       </Helmet>
       <AuthProvider
         authType={"localstorage"}
