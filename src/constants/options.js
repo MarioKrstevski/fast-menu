@@ -1,5 +1,10 @@
 export const sheetOptions = [
   {
+    name: "Diplomska Demo",
+    spreadSheetURL:
+      "https://docs.google.com/spreadsheets/d/1ENkv0kSW_wpnxvLl7om5ViPPPMf0Ahu4um5tUUryPgQ/edit#gid=0",
+  },
+  {
     name: "Levoysushi",
     spreadSheetURL:
       "https://docs.google.com/spreadsheets/d/19tZNxPncefhaL_-cTKvKDrhklppD0-l050NCVXU2wPQ/edit#gid=25943294",

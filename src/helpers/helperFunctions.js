@@ -1,4 +1,5 @@
 export function updateFavicon(newFaviconUrl) {
+  console.log("newFaviconLink", newFaviconUrl);
   if (newFaviconUrl === "") {
     return;
   }

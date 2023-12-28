@@ -48,7 +48,7 @@ export default function Card({ item }) {
       `}
     >
       <div
-        className={` content-card overflow-hidden  rounded shadow flex flex-grow flex-col text-gray-800 text-left h-full
+        className={`relative content-card overflow-hidden  rounded shadow flex flex-grow flex-col text-gray-800 text-left h-full
       ${
         matchesUnavailableLogic(item[gs.card.unavailable])
           ? "bg-gray-100 text-slate-400"
@@ -56,6 +56,13 @@ export default function Card({ item }) {
       }
       `}
       >
+        {item[gs.card.unavailable] && (
+          <div className="unavailable absolute top-0 left-0 bottom-0 right-0 bg-black/25 flex items-center justify-center z-10 text-white">
+            <span className="bg-black p-2 rounded">
+              Продуктот не е достапен
+            </span>
+          </div>
+        )}
         {imageLink && (
           <div
             className={`relative w-full pb-[100%] bg-gray-300 fm-image-wrapper `}
@@ -153,6 +160,9 @@ export default function Card({ item }) {
                               item[cf]
                             )}
                             {cf === "Price" && item.Currency}
+                            {cf === "Цена" && item?.Валута}
+                            {cf === "Големо" && item?.Валута}
+                            {cf === "Мало" && item?.Валута}
                           </span>
                         </li>
                       );

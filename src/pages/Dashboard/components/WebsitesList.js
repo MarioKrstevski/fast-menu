@@ -29,7 +29,7 @@ import { frontendBaseUrl } from "../../../constants/global";
 function NewMenuCreationIndicator() {
   return (
     <div className="transition-shadow duration-300 w-full h-64 text-center rounded shadow-lg hover:shadow-xl bg-white overflow-hidden relative flex flex-col justify-between items-stretch">
-      <div className="p-6 text-left rounded-b-lg flex justify-center items-center h-full">
+      <div className="p-3 text-left rounded-b-lg flex justify-center items-center h-full">
         <div className="">
           <span className="mx-4 w-full h-full">Building menu</span>
           <FontAwesomeIcon icon={faSpinner} spin />
@@ -221,7 +221,7 @@ xl:grid-cols-3
                     opRef.current.toggle(e);
                     deleteMenuRef.current = menu.id;
                   }}
-                  className="focus:outline-none text-gray-600 hover:text-gray-800 font-bold py-2 px-4 text-lg inline-flex items-center"
+                  className="focus:outline-none text-gray-600 hover:text-gray-800 font-bold py-2 px-1 text-lg inline-flex items-center"
                 >
                   <FontAwesomeIcon icon={faEllipsisH} />
                 </button>
@@ -280,7 +280,7 @@ xl:grid-cols-3
                   <div></div>
                 </div>
               </div>
-              <div className="p-6 text-left rounded-b-lg flex justify-between">
+              <div className="p-3 text-left rounded-b-lg flex justify-between">
                 <div>
                   <a
                     onClick={() =>

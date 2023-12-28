@@ -27,7 +27,7 @@ export default function ShoppingCart({ setIsCheckoutModalVisible }) {
 
   let cartTotal = 0;
   for (const entry of cart) {
-    cartTotal += entry.item.Price * entry.amount;
+    cartTotal += entry.item.Price || entry.item.Цена * entry.amount;
   }
 
   let updatedWidth = {};
@@ -134,6 +134,9 @@ export default function ShoppingCart({ setIsCheckoutModalVisible }) {
                         {/* Maybe we should change this based on fields in gs, but those fields probably wont be used in gs/cards */}
                         {entry.item.Price}
                         <span>{entry.item.Currency}</span>
+
+                        {entry.item.Цена}
+                        <span>{entry.item.Валута}</span>
                       </div>
                     </div>
                   </div>
@@ -179,7 +182,9 @@ export default function ShoppingCart({ setIsCheckoutModalVisible }) {
               <div>
                 {cartTotal}
                 {cart.length > 0 && (
-                  <span>{cart[0].item.Currency}</span>
+                  <span>
+                    {cart[0].item.Currency || cart[0].item.Валута}
+                  </span>
                 )}
               </div>
             </div>

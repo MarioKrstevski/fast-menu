@@ -18,12 +18,20 @@ function generateOrderMessage(formData, cart) {
   let items = ``;
   let totalPrice = 0;
 
-  for (const entry of cart) {
-    const costPerItem = entry.item.Price * entry.amount;
-    totalPrice += costPerItem;
-    items += `*${entry.amount}* x *${entry.item.Name}*: ${
-      costPerItem * entry.amount
-    }${entry.item.Currency} \n`;
+  if (cart[0].item.Цена) {
+    for (const entry of cart) {
+      const costPerItem = entry.item.Цена * entry.amount;
+      totalPrice += costPerItem;
+      items += `*${entry.amount}* x *${entry.item.Име}*: ${costPerItem}${entry.item.Валута} \n`;
+    }
+  } else {
+    for (const entry of cart) {
+      const costPerItem = entry.item.Price * entry.amount;
+      totalPrice += costPerItem;
+      items += `*${entry.amount}* x *${entry.item.Name}*: ${
+        costPerItem * entry.amount
+      }${entry.item.Currency} \n`;
+    }
   }
 
   const finalMessage = `New Order! 
@@ -31,10 +39,11 @@ function generateOrderMessage(formData, cart) {
 Order for: *${formData.name}*
   
 --- 
-
 ${items} 
 --- 
-*Total:*  _${totalPrice}${cart[0].item.Currency}_
+*Total:*  _${totalPrice}${
+    cart[0].item.Currency || cart[0].item.Валута
+  }_
 --- 
 
 *Payment method:* ${
